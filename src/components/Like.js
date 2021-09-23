@@ -2,10 +2,6 @@ import React, { useState, useContext } from 'react'
 import firebaseConfig, { firestore, storage } from '../config'
 import GetUser from './GetUserprofile'
 
-
-
-
-
 const Liked = (postId) => {
     var isEqual = require('lodash.isequal');
     console.log(postId);

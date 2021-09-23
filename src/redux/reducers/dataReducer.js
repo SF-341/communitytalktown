@@ -1,8 +1,8 @@
-import { SET_POSTS, SET_POSTS_DATA } from '../types'
+import { SET_POSTS, SET_COVID } from '../types'
 
 const initialState = {
     posts: [],
-    postsdata: []
+    covid: []
 };
 
 export default function (state = initialState, action) {
@@ -12,12 +12,10 @@ export default function (state = initialState, action) {
                 ...state,
                 posts: [...action.payload]
             }
-        case SET_POSTS_DATA:
-
-            const updateState = [...state.postsdata, action.payload]
+        case SET_COVID:
             return {
                 ...state,
-                postsdata: updateState
+                covid: action.payload,
             }
     
         default:

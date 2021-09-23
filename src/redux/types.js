@@ -13,3 +13,5 @@ export const CLEAR_ERRORS = 'CLEAR_ERRORS'
 export const SET_POSTS = 'SET_POSTS'
 export const SET_POSTS_DATA = 'SET_POSTS_DATA'
 export const SET_REFRESH_USER = 'SET_REFRESH_USER'
+
+export const SET_COVID = 'SET_COVID'

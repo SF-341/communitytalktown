@@ -3,11 +3,12 @@ import { Redirect } from 'react-router-dom'
 import { AuthContext } from './Auth'
 import firebaseConfig from '../config'
 import './Button.css';
-import { Link } from 'react-router-dom';
-import GetUser from './GetUserprofile'
+
+// Redux stuff
+import { logoutUser } from "../redux/actions/userActions"
+import { useSelector, useDispatch } from 'react-redux'
 
 const STYLES = ['btn--primary', 'btn--outline'];
-
 const SIZES = ['btn--medium', 'btn--large'];
 
 export const Button = ({
@@ -17,6 +18,7 @@ export const Button = ({
   buttonStyle,
   buttonSize
 }) => {
+  const dispatch = useDispatch();
 
   const { currentUser } = useContext(AuthContext);
 
@@ -27,9 +29,7 @@ export const Button = ({
   const checkButtonSize = SIZES.includes(buttonSize) ? buttonSize : SIZES[0];
 
   const handleClick = () => {
-    localStorage.clear();
-    GetUser.clearUser();
-    firebaseConfig.auth().signOut();
+    dispatch(logoutUser());
   }
 
   if (!currentUser) {

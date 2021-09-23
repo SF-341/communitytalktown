@@ -1,4 +1,4 @@
-import { SET_USER, SET_REFRESH_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_AUTHENTICATION, SET_UNAUTHENTICATION } from '../types';
+import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_AUTHENTICATION, SET_UNAUTHENTICATION } from '../types';
 
 const initialState = {
     authenticated: false,
@@ -22,10 +22,6 @@ export default function(state = initialState, action) {
                 authenticated: true,
                 ...action.payload
             };
-        case SET_REFRESH_USER:
-            return {
-                ...state
-            }
         default:
             return state;
     }

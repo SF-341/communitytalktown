@@ -9,32 +9,33 @@ import { deepPurple } from "@material-ui/core/colors";
 import { Button } from "./Button";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
-import FethUser from './FethUser'
 
+
+// Redux stuff
+import { logoutUser } from "../redux/actions/userActions"
+import { useSelector, useDispatch } from 'react-redux'
 
 const Navbar = () => {
-  const { currentUser } = useContext(AuthContext);
-  const data = FethUser();
+  const dispatch = useDispatch();
+  const state = useSelector(state => state.user)
 
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
-  const [isLoading, setIsLoading] = useState(true);
-  const [userName, setUserName] = useState('');
+  // const [isLoading, setIsLoading] = useState(true);
+  const userName = state.username;
 
 
-  if (isLoading) {
-    if (data.loading) {
-      setUserName(data.data.username);
-      setIsLoading(false);
-    }
-  }
+  // if (isLoading) {
+  //   if (data.loading) {
+  //     setUserName(data.data.username);
+  //     setIsLoading(false);
+  //   }
+  // }
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
   const closeMobileMenuSignout = () => {
-    
-    firebaseConfig.auth().signOut();
-    
+    dispatch(logoutUser());
     setClick(false);
   };
 
@@ -107,7 +108,7 @@ const Navbar = () => {
             </li>
 
             <li>
-              {!currentUser ? (
+              {!state.authenticated ? (
                 <div>
                   <Link
                     to="/LogIn"
@@ -135,7 +136,7 @@ const Navbar = () => {
             </li>
           </ul>
 
-          {!currentUser
+          {!state.authenticated
             ? button && (
               <Link to="/login">
                 <Button buttonStyle="btn--outline">SIGN&nbsp;IN</Button>
@@ -145,7 +146,7 @@ const Navbar = () => {
               <Button buttonStyle="btn--outline">SIGN&nbsp;OUT</Button>
             )}
           <>&nbsp;&nbsp;</>
-          {!currentUser ? (
+          {!state.authenticated ? (
             button && (
               <Link to="/signup">
                 <Button buttonStyle="btn--outline">SIGN&nbsp;UP</Button>
@@ -155,12 +156,9 @@ const Navbar = () => {
             <></>
           )}
           <div className={classes.root}>
-            {!currentUser ? (
-              <></>
-            ) : (
+            {state.authenticated ? (
               <Link to="/profile" style={{ textDecoration: 'none' }}>
-                <Avatar className={classes.purple}>{userName[0]}</Avatar></Link>
-            )}
+                <Avatar className={classes.purple}>{userName[0]}</Avatar></Link> ) : ''}
           </div>
         </div>
       </nav>

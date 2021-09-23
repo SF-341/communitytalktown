@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Redirect,Link } from "react-router-dom";
 import { AuthContext } from "./Auth";
 import firebaseConfig from "../config";
@@ -10,10 +10,14 @@ import { TextField, Grid, Button, Card } from '@material-ui/core';
 // Redux stuff
 import { useSelector, useDispatch } from "react-redux";
 import { loginUser } from "../redux/actions/userActions";
+import { getCovid } from "../redux/actions/dataActions";
 
 const LogIn = () => {
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getCovid());
+  }, [])
   
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,8 +27,8 @@ const LogIn = () => {
       password: password.value
     }
     dispatch(loginUser(userData));
-    console.log(userData);
     
+    console.log(userData);
     
   };
 

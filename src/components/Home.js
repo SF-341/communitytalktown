@@ -14,15 +14,17 @@ import { refreshUserData } from "../redux/actions/userActions";
 
 const Home = () => {
     const dispatch = useDispatch();
-    const state = useSelector(state => state.data)
+    const state = useSelector(state => state.data);
     
     const { currentUser } = useContext(AuthContext);
 
     useEffect(() => {
-        dispatch(refreshUserData());
+        if (currentUser){
+            dispatch(refreshUserData());
+        }
         dispatch(getPosts());
-
     }, [])
+
     console.log(state);
     return (
         <>
