@@ -118,7 +118,9 @@ const Post = ({ dataPost }) => {
     // })
 
 
-
+    const handleLike = (e) => {
+        
+    }
 
     const [expanded, setExpanded] = useState(false);
 
@@ -158,7 +160,7 @@ const Post = ({ dataPost }) => {
             </CardContent>
             <CardActions disableSpacing>
                 <IconButton aria-label="add to favorites" >
-                    {checkLike ? <FavoriteIcon color="secondary" /> : <FavoriteIcon />}
+                    {checkLike ? <FavoriteIcon color="secondary" onclick={handleLike}/> : <FavoriteIcon />}
                     &nbsp;&nbsp;{like}&nbsp;
                 </IconButton>
                 <IconButton aria-label="share">
