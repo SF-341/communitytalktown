@@ -1,8 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Redirect,Link } from "react-router-dom";
 import { AuthContext } from "./Auth";
-import firebaseConfig from "../config";
-import GetUser from './GetUserprofile'
+
 
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Grid, Button, Card } from '@material-ui/core';
@@ -10,7 +9,7 @@ import { TextField, Grid, Button, Card } from '@material-ui/core';
 // Redux stuff
 import { useSelector, useDispatch } from "react-redux";
 import { loginUser } from "../redux/actions/userActions";
-import { getCovid, getPosts } from "../redux/actions/dataActions";
+import { getCovid } from "../redux/actions/dataActions";
 
 
 const LogIn = () => {
@@ -18,7 +17,7 @@ const LogIn = () => {
 
   useEffect(() => {
     dispatch(getCovid());
-    dispatch(getPosts());
+    
   }, [])
   
   const handleSubmit = (e) => {

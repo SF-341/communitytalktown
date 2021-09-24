@@ -5,6 +5,7 @@ export const SET_UNAUTHENTICATION = 'SET_UNAUTHENTICATION'
 export const SET_USER = 'SET_USER'
 export const LOAD_USER = 'LOAD_USER'
 export const SET_USER_UPDATE = 'SET_USER_UPDATE'
+export const SET_USER_REFRESH = 'SET_USER_REFRESH'
 
 
 // UI reducer types

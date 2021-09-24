@@ -1,7 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { Redirect } from 'react-router-dom'
 import { AuthContext } from './Auth'
-import firebaseConfig from '../config'
 import './Button.css';
 
 // Redux stuff

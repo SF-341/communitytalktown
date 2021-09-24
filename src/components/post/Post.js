@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect, useReducer } from 'react'
 import firebaseConfig, { firestore, storage } from '../../config'
-import { Liked, DelLikeid, SetLikeid } from '../Like'
 
 
 import { makeStyles } from '@material-ui/core/styles';

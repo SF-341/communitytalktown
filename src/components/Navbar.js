@@ -1,7 +1,4 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
-import { AuthContext } from "./Auth";
-import firebaseConfig from "../config";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";

@@ -1,4 +1,4 @@
-import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_AUTHENTICATION, SET_UNAUTHENTICATION, UNLIKE_POST, LIKE_POST, SET_USER_LOADDING, SET_USER_UPDATE } from '../types';
+import { SET_USER, SET_USER_REFRESH, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_AUTHENTICATION, SET_UNAUTHENTICATION, UNLIKE_POST, LIKE_POST, SET_USER_LOADDING, SET_USER_UPDATE } from '../types';
 
 const initialState = {
     authenticated: false,
@@ -10,7 +10,7 @@ const initialState = {
 export default function (state = initialState, action) {
     switch (action.type) {
         case SET_USER_LOADDING:
-            return{
+            return {
                 ...state,
                 loading: true,
             }
@@ -29,6 +29,14 @@ export default function (state = initialState, action) {
                 loading: false,
                 ...action.payload
             };
+        case SET_USER_REFRESH:
+            return {
+
+                authenticated: true,
+                loading: false,
+                ...action.payload
+
+            };
         case LIKE_POST:
             return {
                 ...state,
@@ -36,13 +44,18 @@ export default function (state = initialState, action) {
                 likes: [
                     ...state.likes,
                     {
-                        postId: action.payload.id,
-                        username: state.username,
+                        postid: action.payload.id,
+                        userid: state.id,
                     }
                 ]
             }
         case UNLIKE_POST:
-            const updateLikes = state.likes.filter(like => like.postId === action.payload.id)
+
+            let updateLikes = state.likes.filter(like => like.postid !== action.payload.id)
+            
+            // let index = state.likes.findIndex((post) => post.postid === action.payload.id);
+            // let updateLikes = [...state.likes.splice(index)];
+
             return {
                 ...state,
                 loading: false,

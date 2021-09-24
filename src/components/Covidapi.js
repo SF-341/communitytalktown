@@ -1,7 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Redirect } from "react-router-dom";
-import { AuthContext } from "./Auth";
-import firebaseConfig from "../config";
 
 import { makeStyles, withStyle } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -10,10 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { Container } from '@material-ui/core/'
 
-
 // Redux stuff
 import { useSelector, useDispatch } from "react-redux";
 import { getCovid } from "../redux/actions/dataActions";
+import { isEmpty } from "lodash";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,9 +67,11 @@ const Covidapi = () => {
   console.log(items);
 
   useEffect(() => {
-    dispatch(getCovid())
+    if(isEmpty(state.covid)){
+      dispatch(getCovid())
+    }
+    
   }, [])
-
 
 
   const classes = useStyles();

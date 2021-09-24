@@ -17,7 +17,7 @@ import { UNLIKE_POST, LIKE_POST, SET_USER_LOADDING } from '../types'
 
 
 export const Like = (postid) => (dispatch) => {
-    dispatch({ type: SET_USER_LOADDING})
+    dispatch({ type: SET_USER_LOADDING })
     let postData;
     let userData;
 
@@ -28,9 +28,9 @@ export const Like = (postid) => (dispatch) => {
 
     refUser.get().then(doc => {
         userData = doc.data()
-        userData.likes.push({postid, userid})
+        userData.likes.push({ postid, userid })
     })
-    
+
     refDoc.get().then(doc => {
         if (doc.exists) {
             postData = doc.data()
@@ -44,13 +44,13 @@ export const Like = (postid) => (dispatch) => {
             await (firestore.collection("likes")
                 .add({ userid: userid, postid: postid }));
             postData.likecount++;
+
+            dispatch({ type: LIKE_POST, payload: postData });
+
             await (
                 refDoc.update({ likecount: postData.likecount }),
-                refUser.update({ likes: userData.likes})
-
-
+                refUser.update({ likes: userData.likes })
             );
-            dispatch({ type: LIKE_POST, payload: postData });
         } else {
             console.log("liked it!")
         }
@@ -59,7 +59,7 @@ export const Like = (postid) => (dispatch) => {
 
 
 export const UnLike = (postid) => (dispatch) => {
-    dispatch({ type: SET_USER_LOADDING})
+    dispatch({ type: SET_USER_LOADDING })
     let userData;
     let postData;
 
@@ -90,12 +90,14 @@ export const UnLike = (postid) => (dispatch) => {
                     firestore.doc('likes/' + data.docs[0].id).delete()
                         .then(() => {
                             postData.likecount--;
+                            dispatch({ type: UNLIKE_POST, payload: postData });
+
                             return (
                                 refDoc.update({ likecount: postData.likecount }),
-                                refUser.update({ likes: userData.likes})
-                                );
+                                refUser.update({ likes: userData.likes })
+                            );
                         }));
-                dispatch({ type: UNLIKE_POST, payload: postData });
+
             }
         }).catch(error => { console.log(error.message) })
 }

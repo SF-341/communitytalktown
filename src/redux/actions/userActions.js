@@ -1,4 +1,4 @@
-import { SET_USER, SET_UNAUTHENTICATION, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_USER_UPDATE } from '../types';
+import { SET_USER, SET_USER_REFRESH, SET_UNAUTHENTICATION, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_USER_UPDATE } from '../types';
 import firebaseConfig, { firestore } from '../../config'
 
 
@@ -50,7 +50,20 @@ export const getUserData = () => (dispatch) => {
 }
 
 export const refreshUserData = () => (dispatch) => {
-    dispatch(getUserData());
+    const IdToken = localStorage.getItem('IdToken');
+    const documentRef = firestore.doc("User/" + IdToken);
+    try {
+        documentRef.get().then(documentSnapshot => {
+            let data = documentSnapshot.data();
+            dispatch({
+                type: SET_USER_REFRESH,
+                payload: data
+            })
+        });
+    } catch (error) {
+        dispatch({ type: SET_ERRORS, payload: error.message });
+        console.log(error.message);
+    }
 }
 
 export const logoutUser = () => (dispatch) => {
@@ -71,7 +84,7 @@ export const updateUser = (data) => (dispatch) => {
     const userid = localStorage.IdToken;
     const ref = firestore.doc("User/" + userid);
     try {
-        ref.update({ data })
+        ref.update({ username: data.username, firstname: data.firstname, lastname: data.lastname })
             .then(function () {
                 dispatch({ type: SET_USER_UPDATE });
             })

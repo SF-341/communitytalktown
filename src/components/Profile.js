@@ -2,9 +2,6 @@ import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Grid, Button } from '@material-ui/core';
-import { firestore } from '../config'
-import { AuthContext } from './Auth'
-import FethUser from './FethUser'
 
 // Redux stuff
 import { useSelector, useDispatch } from 'react-redux'

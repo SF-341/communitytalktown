@@ -4,8 +4,6 @@ import { Typography, Button, Container, makeStyles, TextField } from '@material-
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
 
 
-import firebaseConfig, { storage, firestore } from '../../config'
-
 // Redux stuff
 import { useDispatch, useSelector } from "react-redux";
 import { createPost } from "../../redux/actions/dataActions";
@@ -20,7 +18,6 @@ const CreatePost = () => {
     const [image, setImage] = useState(null);
 
     
-
     const handleChange = (e) => {
         if (e.target.name === "title") {
             setTitle(e.target.value)
