@@ -1,4 +1,4 @@
-import { SET_USER, SET_UNAUTHENTICATION, SET_ERRORS, CLEAR_ERRORS, LOADING_UI } from '../types';
+import { SET_USER, SET_UNAUTHENTICATION, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_USER_UPDATE } from '../types';
 import firebaseConfig, { firestore } from '../../config'
 
 
@@ -67,6 +67,16 @@ export const logoutUser = () => (dispatch) => {
     }
 }
 
-export const updateUser = () => (dispatch) => {
-    
+export const updateUser = (data) => (dispatch) => {
+    const userid = localStorage.IdToken;
+    const ref = firestore.doc("User/" + userid);
+    try {
+        ref.update({ data })
+            .then(function () {
+                dispatch({ type: SET_USER_UPDATE });
+            })
+    } catch (error) {
+        alert(error);
+    }
+    return true;
 }

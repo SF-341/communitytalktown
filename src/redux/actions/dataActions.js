@@ -1,5 +1,5 @@
 import { SET_POSTS, SET_POSTS_DATA, SET_COVID, LOADING_UI, CLEAR_ERRORS, SET_ERRORS } from '../types';
-import { firestore } from '../../config'
+import { firestore, storage } from '../../config'
 
 
 export const getPosts = () => (dispatch) => {
@@ -45,4 +45,21 @@ export const getCovid = () => (dispatch) => {
             console.log("Cannot get covid data");
         })
 }
+
+export const createPost = (newPost) => (dispatch) => {
+    const refPost = firestore.collection("Posts");
+    const post = newPost;
+    if (newPost.image !== null) {
+        const refImg = storage.ref('images/' + newPost.image.name)
+        refImg.put(newPost.image);
+        refImg.getDownloadURL().then(url => post.image = url);
+    }
+    refPost
+        .doc(post.id)
+        .set(post)
+        .catch((error) => { console.log(error); });
+}
+
+
+
 

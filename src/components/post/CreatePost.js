@@ -6,77 +6,20 @@ import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
 
 import firebaseConfig, { storage, firestore } from '../../config'
 
-
+// Redux stuff
+import { useDispatch, useSelector } from "react-redux";
+import { createPost } from "../../redux/actions/dataActions";
 
 
 const CreatePost = () => {
-    const Auth = firebaseConfig.auth();
-    const user = Auth.currentUser;
-
-
-    const refPost = firestore.collection("Posts");
-    const refUser = firestore.collection("User");
+    const state = useSelector(state => state.user);
+    const dispatch = useDispatch();
 
     const [title, setTitle] = useState("");
     const [details, setDetails] = useState("");
     const [image, setImage] = useState(null);
 
-    const addPost = () => {
-        const email = user.email;
-        refUser.onSnapshot(querySnapshot => {
-            const ListSnapshot = querySnapshot.docs;
-            ListSnapshot.forEach(doc => {
-                if (doc.data().email === email) {
-                    let username = doc.data().username;
-                    
-                    if (image != null) {
-                        let imgname = image.name;
-                        const newPost = {
-                            id: uuidv4(),
-                            title,
-                            details,
-                            email,
-                            username,
-                            imgname,
-                            createAt: new Date(),
-                            likecount: 0,
-                            commentcount: 0
-                        }
-                        uploadimage();
-                        refPost
-                            .doc(newPost.id)
-                            .set(newPost)
-                            .catch((error) => { console.log(error); });
-
-
-                    } else {
-                        let imgname = null;
-                        const newPost = {
-                            id: uuidv4(),
-                            title,
-                            details,
-                            email,
-                            username,
-                            imgname,
-                            createAt: new Date(),
-                            likecount: 0,
-                            commentcount: 0
-                        }
-                        refPost
-                            .doc(newPost.id)
-                            .set(newPost)
-                            .catch((error) => { console.log(error); });
-                    }
-
-                }
-            })
-        }
-        );
-    }
-
-    const uploadimage = () => {
-        storage.ref('images/' + image.name).put(image);
-    }
+    
 
     const handleChange = (e) => {
         if (e.target.name === "title") {
@@ -92,7 +35,18 @@ const CreatePost = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        addPost();
+        const newPost = {
+            id: uuidv4(),
+            title,
+            details,
+            email: state.email,
+            username: state.username,
+            image,
+            createAt: new Date(),
+            likecount: 0,
+            commentcount: 0
+        }
+        dispatch(createPost(newPost));
     }
 
     const useStyles = makeStyles({

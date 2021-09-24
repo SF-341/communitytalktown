@@ -10,13 +10,15 @@ import { TextField, Grid, Button, Card } from '@material-ui/core';
 // Redux stuff
 import { useSelector, useDispatch } from "react-redux";
 import { loginUser } from "../redux/actions/userActions";
-import { getCovid } from "../redux/actions/dataActions";
+import { getCovid, getPosts } from "../redux/actions/dataActions";
+
 
 const LogIn = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getCovid());
+    dispatch(getPosts());
   }, [])
   
   const handleSubmit = (e) => {

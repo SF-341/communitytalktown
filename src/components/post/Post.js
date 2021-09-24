@@ -83,7 +83,7 @@ const Post = ({ dataPost }) => {
         dispatch(UnLike(dataPost.id))
     }
 
-    const likeButton = state.loading ? <span>..</span> : likedPost() ?
+    const likeButton =  likedPost() ?
         (<FavoriteIcon color="secondary" onClick={handleUnLike} />)
         : (<FavoriteIcon onClick={handleLike} />)
 

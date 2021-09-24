@@ -24,7 +24,7 @@ const SignUp = () => {
 
 
     const [currentUser, setCurrentUser] = useState(null);
-    const [name, setName] = useState("");
+    const [firstname, setFirstName] = useState("");
     const [lastname, setLastname] = useState("");
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -38,13 +38,14 @@ const SignUp = () => {
     const addUser = () => {
         const newUser = {
             id: uuidv4(),
-            name, 
+            firstname, 
             lastname, 
             username, 
             email, 
             subdistrict, 
             district, 
-            province
+            province,
+            likes: [],
         }
         ref.doc(newUser.id).set(newUser).catch((error) => {alert(error.message);});
 
@@ -113,7 +114,7 @@ const SignUp = () => {
 
     const handleChange = (e) => {
         if (e.target.name === "name") {
-            setName(e.target.value)
+            setFirstName(e.target.value)
         } else if (e.target.name === "username") {
             setUsername(e.target.value)
         } else if (e.target.name === "email") {

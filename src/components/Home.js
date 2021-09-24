@@ -21,8 +21,9 @@ const Home = () => {
     useEffect(() => {
         if (currentUser){
             dispatch(refreshUserData());
+            dispatch(getPosts());
         }
-        dispatch(getPosts());
+        
     }, [])
 
     return (
