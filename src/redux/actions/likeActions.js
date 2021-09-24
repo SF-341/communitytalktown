@@ -1,78 +1,103 @@
-import { useSelector, useDispatch } from "React redux";
+// import { useSelector, useDispatch } from "React-redux";
 import { firestore } from '../../config'
-import { v4 as uuidv4 } from 'uuid'
+
+import { UNLIKE_POST, LIKE_POST, SET_USER_LOADDING } from '../types'
 
 
-export const unLike = (postId) => {
-    const userId = localStorage.getItem("IdToken")
-    const refLike = firestore.collection("like");
-}
+// export const unLike = (postId) => {
+//     const userId = localStorage.getItem("IdToken")
+//     const refLike = firestore.collection("like");
+// }
 
-export const Like = (postId) => {
-    const userId = localStorage.getItem("IdToken")
-    const refLike = firestore.collection("like");
+// export const Like = (postId) => (dispatch) => {
+//     const userId = localStorage.getItem("IdToken")
+//     const refLike = firestore.collection("like");
 
-}
-
-
+// }
 
 
-const addLike = (postId) => {
-    const userId = localStorage.getItem("IdToken")
-    const refLike = firestore.collection("like").where('userid', '==', userId).where("postid", '==', postId).limit(1);
-    const postData;
-    const refDoc = firestore.doc('Post/' + postId)
-    refDoc.get().then(doc => {
-        if(doc.exists){
-            postData = doc.data()
-            return refLike.get()
-        }else{
-            console.log("Nani can't find doc bro")
-        }
+export const Like = (postid) => (dispatch) => {
+    dispatch({ type: SET_USER_LOADDING})
+    let postData;
+    let userData;
 
-    }).then(data => {
-        if(data.empty){
-            return(firestore.collection("like")
-            .add({userid: userId,postid: postId}))
-            .then(() => {
-                postData.likecount++
-                return(refDoc.update({likecount: postData.likecount}))
-            }).then(() => {
-                return(postData.json())
-            })
-        }else{
-            console.log("liked it!")
-        }
-    }).catch(error => {console.log(error.message)})
+    const userid = localStorage.getItem("IdToken")
+    const refLike = firestore.collection("likes").where('userid', '==', userid).where("postid", '==', postid).limit(1);
+    const refDoc = firestore.doc('Posts/' + postid);
+    const refUser = firestore.doc('User/' + userid);
+
+    refUser.get().then(doc => {
+        userData = doc.data()
+        userData.likes.push({postid, userid})
+    })
     
-}
-const deleteLike = (postId) => {
-    const userId = localStorage.getItem("IdToken")
-    const refLike = firestore.collection("like").where('userid', '==', userId).where("postid", '==', postId).limit(1);
-    const postData;
-    const refDoc = firestore.doc('Post/' + postId)
     refDoc.get().then(doc => {
-        if(doc.exists){
+        if (doc.exists) {
             postData = doc.data()
             return refLike.get()
-        }else{
+        } else {
             console.log("Nani can't find doc bro")
         }
 
-    }).then(data => {
-        if(data.empty){
-            return(firestore.collection("like")
-            .add({userid: userId,postid: postId}))
-            .then(() => {
-                postData.likecount++
-                return(refDoc.update({likecount: postData.likecount}))
-            }).then(() => {
-                return(postData.json())
-            })
-        }else{
+    }).then(async data => {
+        if (data.empty) {
+            await (firestore.collection("likes")
+                .add({ userid: userid, postid: postid }));
+            postData.likecount++;
+            await (
+                refDoc.update({ likecount: postData.likecount }),
+                refUser.update({ likes: userData.likes})
+
+
+            );
+            dispatch({ type: LIKE_POST, payload: postData });
+        } else {
             console.log("liked it!")
         }
-    }).catch(error => {console.log(error.message)})
+    }).catch(error => { console.log(error.message) })
+}
+
+
+export const UnLike = (postid) => (dispatch) => {
+    dispatch({ type: SET_USER_LOADDING})
+    let userData;
+    let postData;
+
+    const userid = localStorage.getItem("IdToken")
+    const refLike = firestore.collection("likes").where('userid', '==', userid).where("postid", '==', postid).limit(1);
+    const refDoc = firestore.doc('Posts/' + postid)
+    const refUser = firestore.doc('User/' + userid);
+
+    refUser.get().then(doc => {
+        userData = doc.data()
+        let index = userData.likes.findIndex((post) => post.postid === postid);
+        userData.likes.splice(index, 1);
+    })
+
+    refDoc.get().then(doc => {
+        if (doc.exists) {
+            postData = doc.data()
+            return refLike.get()
+        } else {
+            console.log("Nani can't find doc bro")
+        }
+    })
+        .then(async (data) => {
+            if (data.empty) {
+                console.log("unlike it!")
+            } else {
+                await (
+                    firestore.doc('likes/' + data.docs[0].id).delete()
+                        .then(() => {
+                            postData.likecount--;
+                            return (
+                                refDoc.update({ likecount: postData.likecount }),
+                                refUser.update({ likes: userData.likes})
+                                );
+                        }));
+                dispatch({ type: UNLIKE_POST, payload: postData });
+            }
+        }).catch(error => { console.log(error.message) })
 }
 
 

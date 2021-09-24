@@ -25,12 +25,12 @@ const Home = () => {
         dispatch(getPosts());
     }, [])
 
-    console.log(state);
     return (
         <>
             <div className="container mt-4">
                 <CreatePost />
-                {!currentUser ? <Redirect to="/login" /> : 
+                {!currentUser ? <Redirect to="/login" /> :
+
                 <> {state.posts && state.posts.map((data) => (<Post key={data.id} dataPost={data} />))}</>}
             </div>
         </>

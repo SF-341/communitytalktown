@@ -38,7 +38,6 @@ export const getUserData = () => (dispatch) => {
     try {
         documentRef.get().then(documentSnapshot => {
             let data = documentSnapshot.data();
-            console.log(data);
             dispatch({
                 type: SET_USER,
                 payload: data

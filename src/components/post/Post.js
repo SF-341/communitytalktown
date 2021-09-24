@@ -21,6 +21,7 @@ import QuestionAnswerOutlinedIcon from '@material-ui/icons/QuestionAnswerOutline
 import Collapse from '@material-ui/core/Collapse';
 
 // Redux stuff
+import { Like, UnLike } from '../../redux/actions/likeActions'
 import { useSelector, useDispatch } from "react-redux";
 
 
@@ -51,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 console.log("id")
 const Post = ({ dataPost }) => {
+    const dispatch = useDispatch();
     const state = useSelector(state => state.user)
 
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
@@ -62,65 +64,28 @@ const Post = ({ dataPost }) => {
     const createAt = dataPost.createAt.toDate().toLocaleString('en-US', options);
     const Url = dataPost.imgname;
     const checkImg = false;
-    const like = dataPost.like;
-    const checkLike = false;
-    const checkDelete = state.authenticated && dataPost.email == state.email ;
+    const likecount = dataPost.likecount;
+    const checkDelete = state.authenticated && dataPost.email == state.email;
 
-    
-
-    // const [title, setTitle] = useState();
-    // const [details, setDetails] = useState();
-    // const [username, setUsername] = useState();
-
-    // const [dateTime, setDateTime] = useState();
-    // const [Url, setUrl] = useState("");
-    // const [checkImg, setCheckImg] = useState(false);
-    // const [like, setLike] = useState();
-    // const [checkLike, setCheckLike] = useState("");
-    // const [checkDelete, setCheckDelete] = useState();
-
-
-    // const storageRef = storage.ref();
-    // const documentRef = firestore.doc("Posts/" + id);
-    // async function fetchdata() {
-    //     await documentRef.get().then(documentSnapshot => {
-    //         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-    //         let data = documentSnapshot.data();
-    //         setTitle(data.title);
-    //         setDetails(data.details);
-    //         setUsername(data.username);
-
-    //         setDateTime(data.createAt.toDate().toLocaleString('en-US', options));
-    //         setLike(data.likecount);
-    //         setCheckDelete(user.email === data.email);
-
-    //         if (data.imgname != null) {
-    //             setCheckImg(true);
-    //             var imgRef = storageRef.child('images/' + data.imgname);
-    //             imgRef.getDownloadURL()
-    //                 .then((url) => {
-    //                     setUrl(url);
-    //                 }).catch((error) => {
-    //                     console.log(error);
-    //                 })
-    //         } else {
-    //             setCheckImg(false);
-    //         }
-
-    //     })
-    // }
-
-
-
-
-    // useEffect(() => {
-    //     fetchdata();
-    // })
-
-
-    const handleLike = (e) => {
-        
+    function likedPost() {
+        if (state.likes && state.likes.find((like) => dataPost.id === like.postid)) {
+            return true;
+        } else {
+            return false;
+        }
     }
+
+    const handleLike = () => {
+        dispatch(Like(dataPost.id))
+    }
+
+    const handleUnLike = () => {
+        dispatch(UnLike(dataPost.id))
+    }
+
+    const likeButton = state.loading ? <span>..</span> : likedPost() ?
+        (<FavoriteIcon color="secondary" onClick={handleUnLike} />)
+        : (<FavoriteIcon onClick={handleLike} />)
 
     const [expanded, setExpanded] = useState(false);
 
@@ -128,13 +93,13 @@ const Post = ({ dataPost }) => {
         setExpanded(!expanded);
     };
 
-
     function deletePost() {
         const documentRef = firestore.doc("Posts/" + dataPost.id);
         documentRef.delete();
     }
+    useEffect(() => {
 
-
+    }, [])
 
     const classes = useStyles();
     return (
@@ -160,9 +125,9 @@ const Post = ({ dataPost }) => {
             </CardContent>
             <CardActions disableSpacing>
                 <IconButton aria-label="add to favorites" >
-                    {checkLike ? <FavoriteIcon color="secondary" onclick={handleLike}/> : <FavoriteIcon />}
-                    &nbsp;&nbsp;{like}&nbsp;
+                    {likeButton}
                 </IconButton>
+                <span>{likecount}</span>
                 <IconButton aria-label="share">
                     <ShareIcon />
                 </IconButton>
@@ -187,7 +152,6 @@ const Post = ({ dataPost }) => {
                 <CardContent>
                 </CardContent>
             </Collapse>
-
         </Card>
     )
 }
