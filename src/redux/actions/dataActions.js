@@ -23,12 +23,10 @@ export const deletePost = (id) => (dispatch) => {
     documentRef.delete();
 }
 
-
 export const getPost = (docId) => (dispatch) => {
     const documentRef = firestore.doc("Posts/" + docId);
     documentRef.get().then(documentSnapshot => {
         const data = documentSnapshot.data();
-        console.log(data);
         dispatch({ type: SET_POSTS_DATA, payload: data });
     })
 }
@@ -48,18 +46,38 @@ export const getCovid = () => (dispatch) => {
 
 export const createPost = (newPost) => (dispatch) => {
     const refPost = firestore.collection("Posts");
-    const post = newPost;
+
+    let Url;
+
     if (newPost.image !== null) {
-        const refImg = storage.ref('images/' + newPost.image.name)
-        refImg.put(newPost.image);
-        refImg.getDownloadURL().then(url => post.image = url);
+        const refImg = storage.ref('images/' + newPost.image.name);
+        refImg.put(newPost.image)
+        // Url = newPost.image.name;
+        const storageRef = storage.ref().child('images/' + newPost.image.name);
+        storageRef.getDownloadURL().then(async (url) => {
+            Url = await url;
+            console.log(Url)
+        }).then(async () => {
+            const post = {
+                id: newPost.id,
+                title: newPost.title,
+                details: newPost.details,
+                email: newPost.email,
+                username: newPost.username,
+                image: Url,
+                createAt: newPost.createAt,
+                likecount: newPost.likecount,
+                commentcount: newPost.commentcount
+            }
+            await refPost
+                .doc(post.id)
+                .set(post)
+                .catch((error) => { console.log(error.message); });
+        })
+    } else {
+         refPost
+            .doc(newPost.id)
+            .set(newPost)
+            .catch((error) => { console.log(error); });
     }
-    refPost
-        .doc(post.id)
-        .set(post)
-        .catch((error) => { console.log(error); });
 }
-
-
-
-

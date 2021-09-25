@@ -11,19 +11,33 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
+//Redux stuff
+import { useSelector, useDispatch } from 'react-redux'
+import { register } from '../redux/actions/userActions';
 
 
+const useStyles = makeStyles((theme) => ({
+    root: {
+        '& > *': {
+            margin: theme.spacing(7),
+        },
+    },
+    formControl: {
+        minWidth: (window.innerWidth / 6),
+    },
+    selectEmpty: {
+        marginTop: theme.spacing(2),
+    },
+}));
 
 const SignUp = () => {
-
-    const ref = firebaseConfig.firestore().collection("User");
+    const dispatch = useDispatch();
+    const state = useSelector(state => state.user);
 
     const [dataProvince, setDataProvince] = useState();
     const [dataDistrict, setDataDistrict] = useState();
     const [dataSubDistrict, setDataSubDistrict] = useState();
 
-
-    const [currentUser, setCurrentUser] = useState(null);
     const [firstname, setFirstName] = useState("");
     const [lastname, setLastname] = useState("");
     const [username, setUsername] = useState("");
@@ -31,25 +45,8 @@ const SignUp = () => {
     const [province, setProvince] = useState("");
     const [district, setDistrict] = useState("");
     const [subdistrict, setSubdistrict] = useState("");
-
     const [isLoading, setIsLoading] = useState(true);
     const wrapper = React.createRef();
-
-    const addUser = () => {
-        const newUser = {
-            id: uuidv4(),
-            firstname, 
-            lastname, 
-            username, 
-            email, 
-            subdistrict, 
-            district, 
-            province,
-            likes: [],
-        }
-        ref.doc(newUser.id).set(newUser).catch((error) => {alert(error.message);});
-
-    }
 
     async function QueryProvinces() {
 
@@ -69,7 +66,6 @@ const SignUp = () => {
                 setDataProvince(temp);
 
             })
-
     }
 
     async function QueryDistrict(province) {
@@ -108,7 +104,6 @@ const SignUp = () => {
                 console.log(temp);
                 setDataSubDistrict(temp);
             })
-
     }
 
 
@@ -132,28 +127,31 @@ const SignUp = () => {
         }
     }
 
-
-
-
     const handleSubmit = (e) => {
         e.preventDefault();
 
         const { email, password, confirmPassword } = e.target.elements;
+        const newUser = {
+            id: uuidv4(),
+            firstname,
+            lastname,
+            username,
+            email,
+            subdistrict,
+            district,
+            province,
+            likes: [],
+        }
+        const user = {
+            email: email.value,
+            password: password.value,
+        }
 
         if (password.value !== confirmPassword.value) {
             alert("passwords are not the same");
         } else {
-            try {
-                firebaseConfig.auth().createUserWithEmailAndPassword(email.value, password.value).then(() => {
-                    setCurrentUser(true);
-                    addUser();
-                })
-
-            } catch (error) {
-                alert(error.message);
-            }
+            dispatch(register(newUser, user));
         }
-
     }
 
     useEffect(() => {
@@ -164,30 +162,14 @@ const SignUp = () => {
         }
     }, [])
 
-    const useStyles = makeStyles((theme) => ({
-        root: {
-            '& > *': {
-                margin: theme.spacing(7),
 
-            },
-        },
-        formControl: {
-            minWidth: (window.innerWidth/6),
-            
-            
-            
-        },
-        selectEmpty: {
-            marginTop: theme.spacing(2),
-        },
-    }));
 
     const classes = useStyles();
 
 
 
-    if (currentUser) {
-        return <Redirect to="/dashboard" />
+    if (state.authenticated) {
+        return <Redirect to="/home" />
     }
 
 

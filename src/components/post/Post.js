@@ -21,16 +21,22 @@ import Collapse from '@material-ui/core/Collapse';
 
 // Redux stuff
 import { Like, UnLike } from '../../redux/actions/likeActions'
+import { getUrl } from '../../redux/actions/dataActions'
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
     root: {
+        margin: 'auto',
         maxWidth: 700,
     },
     media: {
-        hight: 0,
-        paddingTop: '56.25%'
+        hight: 164,
+        paddingTop: '70%',
+        width: 'auto',
+        fit: 'crop',
+        auto: 'format'
     },
     expand: {
         transform: 'rotate(0deg)',
@@ -48,6 +54,10 @@ const useStyles = makeStyles((theme) => ({
     icon: {
         color: red[500],
     },
+    space: {
+        
+        padding: 10,
+    }
 }));
 console.log("id")
 const Post = ({ dataPost }) => {
@@ -61,7 +71,7 @@ const Post = ({ dataPost }) => {
     const username = dataPost.username;
 
     const createAt = dataPost.createAt.toDate().toLocaleString('en-US', options);
-    const Url = dataPost.imgname;
+    const imageSrc = dataPost.image;
     const checkImg = false;
     const likecount = dataPost.likecount;
     const checkDelete = state.authenticated && dataPost.email == state.email;
@@ -82,9 +92,13 @@ const Post = ({ dataPost }) => {
         dispatch(UnLike(dataPost.id))
     }
 
-    const likeButton =  likedPost() ?
-        (<FavoriteIcon color="secondary" onClick={handleUnLike} />)
-        : (<FavoriteIcon onClick={handleLike} />)
+
+
+    const likeButton = likedPost() ?
+        (<IconButton aria-label="add to favorites" onClick={handleUnLike} >
+            <FavoriteIcon color="secondary" /></IconButton>)
+        : (<IconButton aria-label="add to favorites" onClick={handleLike} >
+            <FavoriteIcon /></IconButton>)
 
     const [expanded, setExpanded] = useState(false);
 
@@ -96,62 +110,56 @@ const Post = ({ dataPost }) => {
         const documentRef = firestore.doc("Posts/" + dataPost.id);
         documentRef.delete();
     }
-    useEffect(() => {
-
-    }, [])
 
     const classes = useStyles();
     return (
-        <Card className={classes.root}>
-            <CardHeader
-                avatar={
-                    <Avatar aria-label="recipe" className={classes.avatar}>
+        <><div className={classes.space}>
+            <Card className={classes.root}>
+                <CardHeader
+                    avatar={<Avatar aria-label="recipe" className={classes.avatar}>
                         <h1>U</h1>
-                    </Avatar>
-                }
-                title={username}
-                subheader={createAt}
-            />
-            {checkImg ? <CardMedia className={classes.media} image={Url} /> : ""}
+                    </Avatar>}
+                    title={username}
+                    subheader={createAt} />
 
-            <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    <p>{title}</p>
-                </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    <p>{details}</p>
-                </Typography>
-            </CardContent>
-            <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites" >
-                    {likeButton}
-                </IconButton>
-                <span>{likecount}</span>
-                <IconButton aria-label="share">
-                    <ShareIcon />
-                </IconButton>
+                {imageSrc !== null ? <CardMedia className={classes.media} image={imageSrc} /> : ''}
 
-                {checkDelete ?
-                    <IconButton aria-label="DeleteIcon" onClick={deletePost}>
-                        <DeleteIcon fontSize="large" />
-                    </IconButton> : ''}
-
-                <IconButton
-                    className={clsx(classes.expand, {
-                        [classes.expandOpen]: expanded,
-                    })}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="comment"
-                >
-                    <QuestionAnswerOutlinedIcon />
-                </IconButton>
-            </CardActions>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        <p>{title}</p>
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        <p>{details}</p>
+                    </Typography>
                 </CardContent>
-            </Collapse>
-        </Card>
+                <CardActions disableSpacing>
+                    {likeButton}
+                    <span>{likecount}</span>
+                    <IconButton aria-label="share">
+                        <ShareIcon />
+                    </IconButton>
+
+                    {checkDelete ?
+                        <IconButton aria-label="DeleteIcon" onClick={deletePost}>
+                            <DeleteIcon fontSize="large" />
+                        </IconButton> : ''}
+                    <IconButton
+                        className={clsx(classes.expand, {
+                            [classes.expandOpen]: expanded,
+                        })}
+                        onClick={handleExpandClick}
+                        aria-expanded={expanded}
+                        aria-label="comment"
+                    >
+                        <QuestionAnswerOutlinedIcon />
+                    </IconButton>
+                </CardActions>
+                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <CardContent>
+                    </CardContent>
+                </Collapse>
+            </Card>
+        </div></>
     )
 }
 

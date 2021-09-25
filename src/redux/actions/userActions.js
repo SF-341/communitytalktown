@@ -3,33 +3,59 @@ import firebaseConfig, { firestore } from '../../config'
 
 
 export const loginUser = (userData) => (dispatch) => {
-
     dispatch({ type: LOADING_UI })
-    try {
-        firebaseConfig
-            .auth()
-            .signInWithEmailAndPassword(userData.email, userData.password)
-    } catch (error) {
-        console.log(error.message);
-    }
 
     const refUser = firestore.collection("User");
 
     try {
-        refUser.onSnapshot(querySnapshot => {
-            const ListSnapshot = querySnapshot.docs;
-            ListSnapshot.forEach(doc => {
-                if (doc.data().email === userData.email) {
-                    localStorage.setItem('IdToken', doc.id);
-                }
-            });
-            dispatch(getUserData());
-            dispatch({ type: CLEAR_ERRORS });
+        firebaseConfig
+            .auth()
+            .signInWithEmailAndPassword(userData.email, userData.password)
+    
+    } catch (error) {
+        dispatch({
+            type: SET_ERRORS,
+            payload: error.message
         })
+        console.log(error.message);
+    }
+    
+    refUser.onSnapshot(querySnapshot => {
+        const ListSnapshot = querySnapshot.docs;
+        ListSnapshot.forEach(doc => {
+            if (doc.data().email === userData.email) {
+                localStorage.setItem('IdToken', doc.id);
+            }
+        });
+        dispatch(getUserData());
+        dispatch({ type: CLEAR_ERRORS });
+    })
+}
+
+export const register = (newUser, user) => (dispatch) => {
+    dispatch({ type: LOADING_UI })
+    const refUser = firebaseConfig.firestore().collection("User");
+
+    try {
+        firebaseConfig.auth()
+            .createUserWithEmailAndPassword(user.email, user.password)
+
     } catch (error) {
         dispatch({ type: SET_ERRORS, payload: error.message })
         console.log(error.message);
     }
+
+    refUser.doc(newUser.id)
+        .set(newUser)
+        .then(() => localStorage
+            .setItem('IdToken', newUser.id))
+        .catch((error) => {
+            dispatch({ type: SET_ERRORS, payload: error.message })
+            console.log(error.message);
+        });
+
+    dispatch(getUserData());
+    dispatch({ type: CLEAR_ERRORS });
 }
 
 export const getUserData = () => (dispatch) => {

@@ -27,7 +27,12 @@ const LogIn = () => {
       email: email.value,
       password: password.value
     }
-    dispatch(loginUser(userData));
+    if (userData.email !== '' && userData.password !== '') {
+      dispatch(loginUser(userData));
+    }else{
+      alert('email or password invalid')
+    }
+    
     
     console.log(userData);
     
@@ -56,6 +61,7 @@ const LogIn = () => {
   const classes = useStyles();
 
   const { currentUser } = useContext(AuthContext);
+ 
   if (currentUser) {
     return <Redirect to="/" />;
   }

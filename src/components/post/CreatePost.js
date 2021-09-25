@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { Typography, Button, Container, makeStyles, TextField } from '@material-ui/core'
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
+import Card from '@material-ui/core/Card';
 
 
 // Redux stuff
@@ -17,7 +18,7 @@ const CreatePost = () => {
     const [details, setDetails] = useState("");
     const [image, setImage] = useState(null);
 
-    
+
     const handleChange = (e) => {
         if (e.target.name === "title") {
             setTitle(e.target.value)
@@ -47,67 +48,85 @@ const CreatePost = () => {
     }
 
     const useStyles = makeStyles({
-
-        field: {
-
+        root: {
+            margin: 'auto',
             maxWidth: 700,
-            marginTop: 20,
-            marginBottom: 20,
-            display: 'block'
+            paddingTop: 10,
+            paddingBottom: 5,
+        },
+        field: {
+            display: 'block',
+            padding: 10,
+        },
+        btn: {
+
         }
+
     });
+
     const classes = useStyles();
 
     return (
-
-        <Container>
-            <Typography
-                variant="h6"
-                color="textSecondary"
-                component="h2"
-                gutterBottom
-            >
-                Create a New Post
-            </Typography>
-
-            <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-                <TextField
-                    onChange={handleChange}
-                    name="title"
-                    className={classes.field}
-                    label="Post Title"
-                    variant="outlined"
-                    color="secondary"
-                    fullWidth
-                    required
-                />
-
-                <TextField
-                    onChange={handleChange}
-                    name="details"
-                    className={classes.field}
-                    label="Details"
-                    variant="outlined"
-                    color="secondary"
-                    multiline
-                    rows={4}
-                    fullWidth
-                    required
-                />
-
-                <input type="file" onChange={handleChange} name="image" />
-
-                <Button
-                    type="submit"
-                    color="secondary"
-                    variant="contained"
-                    position="absolute"
-                    endIcon={<KeyboardArrowRightIcon />}
+        <Card className={classes.root}>
+            <Container className={classes.root} >
+                <Typography
+                    variant="h6"
+                    color="textSecondary"
+                    component="h2"
+                    gutterBottom
                 >
-                    Post
-                </Button>
-            </form>
-        </Container>
+                    Create a New Post
+                </Typography>
+
+                <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+                    <TextField
+                        onChange={handleChange}
+                        name="title"
+                        className={classes.field}
+                        label="Post Title"
+                        variant="outlined"
+                        color="secondary"
+                        fullWidth
+                        required
+                    />
+
+                    <TextField
+                        onChange={handleChange}
+                        name="details"
+                        className={classes.field}
+                        label="Details"
+                        variant="outlined"
+                        color="secondary"
+                        multiline
+                        rows={4}
+                        fullWidth
+                        required
+                    />
+
+
+                    <div justifyContent='center'>
+                        &nbsp;&nbsp;
+                        <input type="file" onChange={handleChange} name="image" />
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <Button className={classes.btn}
+                            type="submit"
+                            color="secondary"
+                            variant="contained"
+                            position="absolute"
+
+                            padding='auto'
+                            endIcon={<KeyboardArrowRightIcon />}
+                        >
+                            Post
+                        </Button>
+                    </div>
+
+                </form>
+            </Container>
+        </Card>
+
     )
 }
 
