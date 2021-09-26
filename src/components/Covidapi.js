@@ -67,10 +67,10 @@ const Covidapi = () => {
   console.log(items);
 
   useEffect(() => {
-    if(isEmpty(state.covid)){
+    if (isEmpty(state.covid)) {
       dispatch(getCovid())
     }
-    
+
   }, [])
 
 
@@ -79,76 +79,54 @@ const Covidapi = () => {
   return (
     <div>
       <Container>
-        <div container className={classes.root}>
+        <div className={classes.root}>
           <Grid container spacing={3}>
             <Grid item xs={6} sm={6}>
               <Paper className={classes.paper}>
-                <Typography variant="h5" color="inherit">
-                  <Box className={classes.boxPink} bgcolor="primary.main" color="primary.contrastText">
-                    New case
-                  </Box>
-                </Typography>
-                <Typography variant="h6" color="inherit">
-                  {items && items ? items.new_case : "0"}
-                </Typography>
-                <Typography variant="h8" color="inherit">
-                  Total case
-                </Typography>
-                <Typography variant="h6" color="inherit">
-                  {items && items ? items.total_case : "0"}
-                </Typography></Paper>
+
+                <Box className={classes.boxPink} bgcolor="primary.main" color="primary.contrastText">
+                  New case
+                </Box>
+                {items && items ? items.new_case : "0"}
+                Total case
+                {items && items ? items.total_case : "0"}
+
+              </Paper>
             </Grid>
             <Grid item xs={6} sm={6}>
               <Paper className={classes.paper}>
 
                 <Box className={classes.boxBlue} bgcolor="primary.main" color="primary.contrastText">
-                  <Typography variant="h5" color="inherit">New case excludeabroad</Typography>
-
+                  New case excludeabroad
                 </Box>
+                {items && items ? items.new_case_excludeabroad : "0"}
+                Total case excludeabroad
+                {items && items ? items.total_case_excludeabroad : "0"}
 
-                <Typography variant="h6" color="inherit">
-                  {items && items ? items.new_case_excludeabroad : "0"}
-                </Typography>
-                <Typography variant="h8" color="inherit">
-                  Total case excludeabroad
-                </Typography>
-                <Typography variant="h6" color="inherit">
-                  {items && items ? items.total_case_excludeabroad : "0"}
-                </Typography></Paper>
+              </Paper>
             </Grid>
             <Grid item xs={6} sm={6}>
               <Paper className={classes.paper}>
-                <Typography variant="h5" color="inherit">
-                  <Box className={classes.boxRed} bgcolor="primary.main" color="primary.contrastText">
-                    New death
-                  </Box>
-                </Typography>
-                <Typography variant="h6" color="inherit">
-                  {items && items ? items.new_death : "0"}
-                </Typography>
-                <Typography variant="h8" color="inherit">
-                  Total death
-                </Typography>
-                <Typography variant="h6" color="inherit">
-                  {items && items ? items.total_death : "0"}
-                </Typography></Paper>
+
+                <Box className={classes.boxRed} bgcolor="primary.main" color="primary.contrastText">
+                  New death
+                </Box>
+                {items && items ? items.new_death : "0"}
+                Total death
+                {items && items ? items.total_death : "0"}
+              </Paper>
             </Grid>
+
             <Grid item xs={6} sm={6}>
               <Paper className={classes.paper}>
-                <Typography variant="h5" color="inherit">
-                  <Box className={classes.boxGreen} bgcolor="primary.main" color="primary.contrastText">
-                    New recovered
-                  </Box>
-                </Typography>
-                <Typography variant="h6" color="inherit">
-                  {items && items ? items.new_recovered : "0"}
-                </Typography>
-                <Typography variant="h8" color="inherit">
-                  Total recovered
-                </Typography>
-                <Typography variant="h6" color="inherit">
-                  {items && items ? items.total_recovered : "0"}
-                </Typography>
+
+                <Box className={classes.boxGreen} bgcolor="primary.main" color="primary.contrastText">
+                  New recovered
+                </Box>
+                {items && items ? items.new_recovered : "0"}
+                Total recovered
+                {items && items ? items.total_recovered : "0"}
+
               </Paper>
             </Grid>
           </Grid>

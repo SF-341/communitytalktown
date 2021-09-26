@@ -194,7 +194,7 @@ const SignUp = () => {
 
                             </Select>
                         </FormControl></Grid>
-                        <Grid item xs><FormControl >
+                        <Grid item xs><FormControl className={classes.formControl}>
                             <InputLabel id=""  >district</InputLabel>
                             <Select labelId="district" id="district" name="district" value={district} onChange={handleChange}>
 

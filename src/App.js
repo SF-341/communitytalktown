@@ -32,7 +32,7 @@ function App() {
             <Route exact path="/covidapi" component={Covidapi} />
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/resetpass" component={ResetPass} />
-
+            
           </Switch>
         </Router>
       </Provider>

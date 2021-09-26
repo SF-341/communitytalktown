@@ -46,38 +46,51 @@ export const getCovid = () => (dispatch) => {
 
 export const createPost = (newPost) => (dispatch) => {
     const refPost = firestore.collection("Posts");
-
     let Url;
-
-    if (newPost.image !== null) {
-        const refImg = storage.ref('images/' + newPost.image.name);
-        refImg.put(newPost.image)
-        // Url = newPost.image.name;
-        const storageRef = storage.ref().child('images/' + newPost.image.name);
-        storageRef.getDownloadURL().then(async (url) => {
-            Url = await url;
-            console.log(Url)
-        }).then(async () => {
-            const post = {
-                id: newPost.id,
-                title: newPost.title,
-                details: newPost.details,
-                email: newPost.email,
-                username: newPost.username,
-                image: Url,
-                createAt: newPost.createAt,
-                likecount: newPost.likecount,
-                commentcount: newPost.commentcount
-            }
-            await refPost
-                .doc(post.id)
-                .set(post)
-                .catch((error) => { console.log(error.message); });
-        })
+    if (newPost.title.length <= 0 || newPost.details <= 0) {
+        dispatch({ type: SET_ERRORS, payload: "title or details are required" })
     } else {
-         refPost
-            .doc(newPost.id)
-            .set(newPost)
-            .catch((error) => { console.log(error); });
+        if (newPost.image !== null) {
+            const refImg = storage.ref('images/' + newPost.image.name);
+            refImg.put(newPost.image)
+            // Url = newPost.image.name;
+            const storageRef = storage.ref().child('images/' + newPost.image.name);
+            storageRef.getDownloadURL().then(async (url) => {
+                Url = await url;
+                console.log(Url)
+            }).then(async () => {
+                const post = {
+                    id: newPost.id,
+                    title: newPost.title,
+                    details: newPost.details,
+                    email: newPost.email,
+                    username: newPost.username,
+                    image: Url,
+                    createAt: newPost.createAt,
+                    likecount: newPost.likecount,
+                    commentcount: newPost.commentcount
+                }
+                await refPost
+                    .doc(post.id)
+                    .set(post)
+                    .then(() => { dispatch({ type: CLEAR_ERRORS }) })
+                    .catch((error) => {
+                        dispatch({ type: SET_ERRORS, payload: error.message })
+                        console.log(error.message);
+                    });
+            })
+        } else {
+            refPost
+                .doc(newPost.id)
+                .set(newPost)
+                .then(() => { dispatch({ type: CLEAR_ERRORS }) })
+                .catch((error) => {
+                    dispatch({ type: SET_ERRORS, payload: error.message })
+                    console.log(error);
+                });
+        }
+
     }
+
+
 }

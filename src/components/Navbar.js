@@ -155,7 +155,7 @@ const Navbar = () => {
           <div className={classes.root}>
             {state.authenticated ? (
               <Link to="/profile" style={{ textDecoration: 'none' }}>
-                <Avatar className={classes.purple}>{userName[0]}</Avatar></Link> ) : ''}
+                <Avatar className={classes.purple}>{userName ? userName[0] : ''}</Avatar></Link> ) : ''}
           </div>
         </div>
       </nav>

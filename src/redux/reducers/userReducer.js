@@ -52,9 +52,6 @@ export default function (state = initialState, action) {
         case UNLIKE_POST:
 
             let updateLikes = state.likes.filter(like => like.postid !== action.payload.id)
-            
-            // let index = state.likes.findIndex((post) => post.postid === action.payload.id);
-            // let updateLikes = [...state.likes.splice(index)];
 
             return {
                 ...state,

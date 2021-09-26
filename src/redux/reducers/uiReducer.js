@@ -2,22 +2,44 @@ import { SET_ERRORS, CLEAR_ERRORS, LOADING_UI } from '../types'
 
 const initialState = {
     loading: false,
-    error: null
+    emailerror: null,
+    passworderror: null,
+    error: null,
+
 };
 
 export default function (state = initialState, action) {
     switch (action.type) {
         case SET_ERRORS:
-            return {
-                ...state,
-                error: action.payload,
-                loading: false
+
+            let error = action.payload;
+            if (action.payload.search("no user") !== -1) {
+                error = 'user or password invalid';
+                return {
+                    initialState,
+                    emailerror: error,
+                    loading: false
+                }
+            } else if (action.payload.search("password is invalid") !== -1) {
+
+                error = 'password invalid';
+                return {
+                    initialState,
+                    passworderror: error,
+                    loading: false
+                }
+            } else {
+                return {
+                    ...state,
+                    error: error,
+                    loading: false
+                }
             }
+
+
         case CLEAR_ERRORS:
             return {
-                ...state,
-                loading: false,
-                error: null
+                initialState
             }
         case LOADING_UI:
             return {

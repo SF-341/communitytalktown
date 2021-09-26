@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { Typography, Button, Container, makeStyles, TextField } from '@material-ui/core'
+import { Typography, Button, Container, makeStyles, TextField, FormHelperText } from '@material-ui/core'
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
 import Card from '@material-ui/core/Card';
 
@@ -12,7 +12,9 @@ import { createPost } from "../../redux/actions/dataActions";
 
 const CreatePost = () => {
     const state = useSelector(state => state.user);
+    const UI = useSelector(state => state.UI)
     const dispatch = useDispatch();
+
 
     const [title, setTitle] = useState("");
     const [details, setDetails] = useState("");
@@ -80,6 +82,7 @@ const CreatePost = () => {
 
                 <form noValidate autoComplete="off" onSubmit={handleSubmit}>
                     <TextField
+                        error={!UI.loading && UI.error != null}
                         onChange={handleChange}
                         name="title"
                         className={classes.field}
@@ -91,6 +94,7 @@ const CreatePost = () => {
                     />
 
                     <TextField
+                        error={!UI.loading && UI.error != null}
                         onChange={handleChange}
                         name="details"
                         className={classes.field}
@@ -102,7 +106,7 @@ const CreatePost = () => {
                         fullWidth
                         required
                     />
-
+                    {!UI.loading && UI.error != null ? <FormHelperText error id="component-error-text">{UI.error}</FormHelperText> : ''}
 
                     <div justifyContent='center'>
                         &nbsp;&nbsp;

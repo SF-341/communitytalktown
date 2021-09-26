@@ -8,10 +8,7 @@ const DashBoard = () => {
 
     return (
         <div>
-
-            <div className="container mt-5">
-                <Covidapi />
-            </div>
+            <Covidapi />
         </div>
     )
 }
