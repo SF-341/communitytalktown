@@ -3,6 +3,7 @@ import { firestore, storage } from '../../config'
 
 
 export const getPosts = () => (dispatch) => {
+    dispatch({ type: LOADING_UI });
     const postsRef = firestore.collection("Posts").orderBy("createAt", "desc");
     postsRef.onSnapshot(querySnapshot => {
         const List = [];
@@ -14,20 +15,26 @@ export const getPosts = () => (dispatch) => {
             );
         });
         dispatch({ type: SET_POSTS, payload: List })
+        dispatch({ type: CLEAR_ERRORS });
     }
     );
 }
 
 export const deletePost = (id) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
     const documentRef = firestore.doc("Posts/" + id);
     documentRef.delete();
+    dispatch({ type: CLEAR_ERRORS });
 }
 
 export const getPost = (docId) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+
     const documentRef = firestore.doc("Posts/" + docId);
     documentRef.get().then(documentSnapshot => {
         const data = documentSnapshot.data();
         dispatch({ type: SET_POSTS_DATA, payload: data });
+        dispatch({ type: CLEAR_ERRORS });
     })
 }
 
@@ -44,7 +51,8 @@ export const getCovid = () => (dispatch) => {
         })
 }
 
-export const createPost = (newPost) => (dispatch) => {
+export const createPost = (newPost) => async (dispatch) => {
+    dispatch({ type: LOADING_UI });
     const refPost = firestore.collection("Posts");
     let Url;
     if (newPost.title.length <= 0 || newPost.details <= 0) {
@@ -52,33 +60,33 @@ export const createPost = (newPost) => (dispatch) => {
     } else {
         if (newPost.image !== null) {
             const refImg = storage.ref('images/' + newPost.image.name);
-            refImg.put(newPost.image)
+            await refImg.put(newPost.image)
             // Url = newPost.image.name;
             const storageRef = storage.ref().child('images/' + newPost.image.name);
-            storageRef.getDownloadURL().then(async (url) => {
+            await storageRef.getDownloadURL().then(async (url) => {
                 Url = await url;
                 console.log(Url)
-            }).then(async () => {
-                const post = {
-                    id: newPost.id,
-                    title: newPost.title,
-                    details: newPost.details,
-                    email: newPost.email,
-                    username: newPost.username,
-                    image: Url,
-                    createAt: newPost.createAt,
-                    likecount: newPost.likecount,
-                    commentcount: newPost.commentcount
-                }
-                await refPost
-                    .doc(post.id)
-                    .set(post)
-                    .then(() => { dispatch({ type: CLEAR_ERRORS }) })
-                    .catch((error) => {
-                        dispatch({ type: SET_ERRORS, payload: error.message })
-                        console.log(error.message);
-                    });
-            })
+            });
+            const post = {
+                id: newPost.id,
+                title: newPost.title,
+                details: newPost.details,
+                email: newPost.email,
+                username: newPost.username,
+                image: Url,
+                createAt: newPost.createAt,
+                likecount: newPost.likecount,
+                commentcount: newPost.commentcount
+            }
+            await refPost
+                .doc(post.id)
+                .set(post)
+                .then(() => { dispatch({ type: CLEAR_ERRORS }) })
+                .catch((error) => {
+                    dispatch({ type: SET_ERRORS, payload: error.message })
+                    console.log(error.message);
+                });
+
         } else {
             refPost
                 .doc(newPost.id)

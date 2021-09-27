@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, Grid, Button } from '@material-ui/core';
+import { TextField, Grid, Button, FormHelperText } from '@material-ui/core';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -14,6 +14,7 @@ import Select from '@material-ui/core/Select';
 //Redux stuff
 import { useSelector, useDispatch } from 'react-redux'
 import { register } from '../redux/actions/userActions';
+import { getProvinces, getDistrict, getSubDistrict } from '../redux/actions/addressAction'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,78 +34,16 @@ const useStyles = makeStyles((theme) => ({
 const SignUp = () => {
     const dispatch = useDispatch();
     const state = useSelector(state => state.user);
-
-    const [dataProvince, setDataProvince] = useState();
-    const [dataDistrict, setDataDistrict] = useState();
-    const [dataSubDistrict, setDataSubDistrict] = useState();
+    const address = useSelector(state => state.address);
+    const UI = useSelector(state => state.UI);
 
     const [firstname, setFirstName] = useState("");
     const [lastname, setLastname] = useState("");
     const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
     const [province, setProvince] = useState("");
     const [district, setDistrict] = useState("");
     const [subdistrict, setSubdistrict] = useState("");
-    const [isLoading, setIsLoading] = useState(true);
     const wrapper = React.createRef();
-
-    async function QueryProvinces() {
-
-        await fetch("https://thaiaddressapi-thaikub.herokuapp.com/v1/thailand/provinces", {
-            method: "GET",
-            body: JSON.stringify(),
-        }).then((response) => response.json())
-            .then(result => {
-                const temp = [];
-                result.data.forEach(function (item, index) {
-                    temp.push({
-                        key: index,
-                        province: item.province,
-                    })
-                });
-                console.log(temp);
-                setDataProvince(temp);
-
-            })
-    }
-
-    async function QueryDistrict(province) {
-
-        await fetch("https://thaiaddressapi-thaikub.herokuapp.com/v1/thailand/provinces/" + province + "/district", {
-            method: "GET",
-            body: JSON.stringify(),
-        }).then((response) => response.json())
-            .then(result => {
-                const temp = [];
-                result.data.forEach(function (item, index) {
-                    temp.push({
-                        key: index,
-                        district: item,
-                    })
-                });
-                console.log(temp);
-                setDataDistrict(temp);
-            })
-    }
-
-    async function QuerySubDistrict(district) {
-
-        await fetch("https://thaiaddressapi-thaikub.herokuapp.com/v1/thailand/provinces/" + province + "/district/" + district, {
-            method: "GET",
-            body: JSON.stringify(),
-        }).then((response) => response.json())
-            .then(result => {
-                const temp = [];
-                result.data.forEach(function (item, index) {
-                    temp.push({
-                        key: index,
-                        subdistrict: item,
-                    })
-                });
-                console.log(temp);
-                setDataSubDistrict(temp);
-            })
-    }
 
 
     const handleChange = (e) => {
@@ -112,18 +51,16 @@ const SignUp = () => {
             setFirstName(e.target.value)
         } else if (e.target.name === "username") {
             setUsername(e.target.value)
-        } else if (e.target.name === "email") {
-            setEmail(e.target.value)
         } else if (e.target.name === "lastname") {
             setLastname(e.target.value)
         } else if (e.target.name === "subdistrict") {
             setSubdistrict(e.target.value)
         } else if (e.target.name === "district") {
             setDistrict(e.target.value)
-            QuerySubDistrict(e.target.value);
+            dispatch(getSubDistrict(province, e.target.value));
         } else if (e.target.name === "province") {
             setProvince(e.target.value)
-            QueryDistrict(e.target.value);
+            dispatch(getDistrict(e.target.value));
         }
     }
 
@@ -136,7 +73,7 @@ const SignUp = () => {
             firstname,
             lastname,
             username,
-            email,
+            email: email.value,
             subdistrict,
             district,
             province,
@@ -155,21 +92,19 @@ const SignUp = () => {
     }
 
     useEffect(() => {
-        if (isLoading) {
-            QueryProvinces()
-            console.log(dataProvince);
-            setIsLoading(false);
+        console.log(address.provinces);
+        if (address.provinces === null) {
+            dispatch(getProvinces());
         }
+
     }, [])
 
 
 
     const classes = useStyles();
 
-
-
     if (state.authenticated) {
-        return <Redirect to="/home" />
+        return <Redirect to="/" />
     }
 
 
@@ -187,28 +122,28 @@ const SignUp = () => {
                     <Grid container spacing={3}>
                         <Grid item xs><FormControl className={classes.formControl} >
                             <InputLabel id="province"  >province</InputLabel>
-                            <Select labelId="province" id="province" name="province" value={province} onChange={handleChange}>
+                            <Select labelId="province" id="province" name="province" value={province} onChange={handleChange} disabled={address.loading}>
 
                                 <MenuItem value=""><em>None</em></MenuItem>
-                                {dataProvince ? dataProvince.map((data) => (<MenuItem key={data.key} value={data.province}>{data.province}</MenuItem>)) : ""}
+                                {address.provinces ? address.provinces.map((data) => (<MenuItem key={data.key} value={data.province}>{data.province}</MenuItem>)) : ""}
 
                             </Select>
                         </FormControl></Grid>
                         <Grid item xs><FormControl className={classes.formControl}>
                             <InputLabel id=""  >district</InputLabel>
-                            <Select labelId="district" id="district" name="district" value={district} onChange={handleChange}>
+                            <Select labelId="district" id="district" name="district" value={district} onChange={handleChange} disabled={address.loading}>
 
                                 <MenuItem value=""><em>None</em></MenuItem>
-                                {dataDistrict ? dataDistrict.map((item) => (<MenuItem key={item.key} value={item.district}>{item.district}</MenuItem>)) : ""}
+                                {address.district ? address.district.map((item) => (<MenuItem key={item.key} value={item.district}>{item.district}</MenuItem>)) : ""}
 
                             </Select>
                         </FormControl></Grid>
                         <Grid item xs><FormControl className={classes.formControl}>
                             <InputLabel id=""  >subdistrict</InputLabel>
-                            <Select labelId="subdistrict" id="subdistrict" name="subdistrict" value={subdistrict} onChange={handleChange}>
+                            <Select labelId="subdistrict" id="subdistrict" name="subdistrict" value={subdistrict} onChange={handleChange} disabled={address.loading}>
 
                                 <MenuItem value=""><em>None</em></MenuItem>
-                                {dataSubDistrict ? dataSubDistrict.map((item) => (<MenuItem key={item.key} value={item.subdistrict}>{item.subdistrict}</MenuItem>)) : ""}
+                                {address.subdistrict ? address.subdistrict.map((item) => (<MenuItem key={item.key} value={item.subdistrict}>{item.subdistrict}</MenuItem>)) : ""}
 
                             </Select>
                         </FormControl></Grid>
@@ -217,8 +152,10 @@ const SignUp = () => {
 
                     <Grid container spacing={3}>
                         <Grid item xs><TextField type="email" label="Email address" name="email" className="form-control" onChange={handleChange} required /></Grid>
-                        <Grid item xs><TextField type="password" label="Password" name="password" className="form-control" onChange={handleChange} required /></Grid>
-                        <Grid item xs><TextField type="password" label="Confirm Password" name="confirmPassword" className="form-control" onChange={handleChange} required /></Grid>
+                        <Grid item xs><TextField error={!UI.loading && UI.error != null} type="password" label="Password" name="password" className="form-control" onChange={handleChange} required />
+                            {!UI.loading && UI.error != null ? <FormHelperText error id="component-error-text">{UI.error}</FormHelperText> : ''}
+                        </Grid>
+                        <Grid item xs><TextField error={!UI.loading && UI.error != null} type="password" label="Confirm Password" name="confirmPassword" className="form-control" onChange={handleChange} required /></Grid>
                     </Grid>
 
 

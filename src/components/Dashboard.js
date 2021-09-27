@@ -7,9 +7,9 @@ const DashBoard = () => {
     // }
 
     return (
-        <div>
+        <>
             <Covidapi />
-        </div>
+        </>
     )
 }
 

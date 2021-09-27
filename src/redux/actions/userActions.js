@@ -35,31 +35,33 @@ export const loginUser = (userData) => (dispatch) => {
 
 export const register = (newUser, user) => (dispatch) => {
     dispatch({ type: LOADING_UI })
+
     const refUser = firebaseConfig.firestore().collection("User");
 
-    try {
-        firebaseConfig.auth()
-            .createUserWithEmailAndPassword(user.email, user.password)
 
-    } catch (error) {
-        dispatch({ type: SET_ERRORS, payload: error.message })
-        console.log(error.message);
-    }
-
-    refUser.doc(newUser.id)
-        .set(newUser)
-        .then(() => localStorage
-            .setItem('IdToken', newUser.id))
+    firebaseConfig.auth()
+        .createUserWithEmailAndPassword(user.email, user.password)
+        .then(() => {
+            localStorage.setItem('IdToken', newUser.id);
+            refUser.doc(newUser.id)
+                .set(newUser)
+        }).then(() => {
+            dispatch(getUserData());
+            dispatch({type: CLEAR_ERRORS});
+        })
         .catch((error) => {
-            dispatch({ type: SET_ERRORS, payload: error.message })
+            dispatch({
+                type: SET_ERRORS,
+                payload: error.message
+            })
             console.log(error.message);
-        });
-
-    dispatch(getUserData());
-    dispatch({ type: CLEAR_ERRORS });
+        })
 }
 
+
 export const getUserData = () => (dispatch) => {
+    dispatch({ type: LOADING_UI })
+
     const IdToken = localStorage.getItem('IdToken');
     const documentRef = firestore.doc("User/" + IdToken);
 
@@ -69,6 +71,9 @@ export const getUserData = () => (dispatch) => {
             type: SET_USER,
             payload: data
         })
+        dispatch({
+            type: CLEAR_ERRORS
+        });
     }).catch((error) => {
         dispatch({ type: SET_ERRORS, payload: error.message });
         console.log(error.message);

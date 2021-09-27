@@ -21,3 +21,10 @@ export const SET_REFRESH_USER = 'SET_REFRESH_USER'
 export const SET_COVID = 'SET_COVID'
 export const UNLIKE_POST = 'UNLIKE_POST'
 export const LIKE_POST = 'LIKE_POST'
+
+// Address reducer types
+export const SET_ADDRESS_LOADING = 'SET_ADDRESS_LOADING'
+export const SET_PROVINCES = 'SET_PROVINCES'
+export const SET_DISTRICT = 'SET_DISTRICT'
+export const SET_SUBDISTRICT = 'SET_SUBDISTRICT'
+export const SET_CLEAR_ADDRESS = 'SET_CLEAR_ADDRESS'

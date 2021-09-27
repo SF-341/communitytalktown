@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { Typography, Button, Container, makeStyles, TextField, FormHelperText } from '@material-ui/core'
+
+import { Typography, Button, Container, makeStyles, TextField, FormHelperText, styled, Grid } from '@material-ui/core'
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
 import Card from '@material-ui/core/Card';
 
@@ -47,7 +48,12 @@ const CreatePost = () => {
             commentcount: 0
         }
         dispatch(createPost(newPost));
+        
+        
     }
+    const Input = styled('input')({
+        display: 'none',
+    });
 
     const useStyles = makeStyles({
         root: {
@@ -60,11 +66,11 @@ const CreatePost = () => {
             display: 'block',
             padding: 10,
         },
-        btn: {
 
-        }
 
     });
+
+
 
     const classes = useStyles();
 
@@ -108,24 +114,38 @@ const CreatePost = () => {
                     />
                     {!UI.loading && UI.error != null ? <FormHelperText error id="component-error-text">{UI.error}</FormHelperText> : ''}
 
-                    <div justifyContent='center'>
-                        &nbsp;&nbsp;
-                        <input type="file" onChange={handleChange} name="image" />
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <Button className={classes.btn}
-                            type="submit"
-                            color="secondary"
-                            variant="contained"
-                            position="absolute"
+                    <Grid container >
+                        <Grid item xs={6} sm={6} style={{ paddingLeft: '10px' }}>
+                            <label htmlFor="contained-button-file">
+                                <Input accept="image/*" id="contained-button-file" type="file" onChange={handleChange} name="image" />
+                                <Button
+                                    variant="outlined"
+                                    color="secondary"
+                                    component="span"
 
-                            padding='auto'
-                            endIcon={<KeyboardArrowRightIcon />}
-                        >
-                            Post
-                        </Button>
-                    </div>
+                                >
+                                    Upload
+                                </Button>
+                                &nbsp;&nbsp;&nbsp;{image && image.type}
+                            </label>
+                        </Grid>
+                        <Grid item xs={6} sm={6} style={{ textAlign: 'end', paddingRight: '10px' }}>
+                            <label htmlFor="contained-button-file" >
+                                <Button
+                                    type="submit"
+                                    color="secondary"
+                                    variant="contained"
+                                    aria-label="right"
+                                    padding='auto'
+                                    endIcon={<KeyboardArrowRightIcon />}
+
+                                >
+                                    Post
+                                </Button>
+                            </label>
+                        </Grid>
+                    </Grid>
+
 
                 </form>
             </Container>

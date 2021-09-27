@@ -10,32 +10,35 @@ import Post from './post/Post'
 import { useSelector, useDispatch } from "react-redux";
 import { getPosts } from "../redux/actions/dataActions";
 import { refreshUserData } from "../redux/actions/userActions";
+import Loading from './UI/Loading'
 import { isEmpty } from 'lodash'
 
 
 const Home = () => {
     const dispatch = useDispatch();
-    const state = useSelector(state => state.data);
+    const data = useSelector(state => state.data);
+    const UI = useSelector(state => state.UI);
 
     const { currentUser } = useContext(AuthContext);
 
     useEffect(() => {
         if (currentUser) {
             dispatch(refreshUserData());
-            if(isEmpty(state.post)){
+            if (isEmpty(data.post)) {
                 dispatch(getPosts());
             }
         }
-
     }, [])
 
     return (
         <>
             <div className="container mt-4" >
                 <CreatePost />
-                {!currentUser ? <Redirect to="/login" /> :
-
-                    <> {state.posts && state.posts.map((data) => (<Post  key={data.id} dataPost={data} />))}</>}
+                
+                {!currentUser ? <Redirect to="/login" /> : 
+                (UI.loading ? <Loading/> : 
+                <> {data.posts && data.posts.map((data) => (<Post key={data.id} dataPost={data} />))}</>)
+                }
             </div>
         </>
     )

@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     },
     space: {
         
-        padding: 10,
+        paddingTop: 10,
     }
 }));
 console.log("id")

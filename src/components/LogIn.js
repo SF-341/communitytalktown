@@ -75,7 +75,7 @@ const LogIn = () => {
 
       <Grid container spacing={1}>
 
-        <Grid container justifyContent="center" xs={12} md={6} spacing={0}>
+        <Grid container justifyContent="center" xs={12} md={6} spacing={2}>
           <Card elevation={3} className={classes.card}>
 
             <form onSubmit={handleSubmit} className={classes.root} noValidate autoComplete="off" align="center">
@@ -89,7 +89,7 @@ const LogIn = () => {
                 {!UI.loading && UI.passworderror != null ? <FormHelperText error id="component-error-text">{UI.passworderror}</FormHelperText> : ''}
                 {!UI.loading && UI.error != null ? <FormHelperText error id="component-error-text">{UI.error}</FormHelperText> : ''}
               </Grid>
-              
+
               <Grid item >
                 <Button type="submit" size="large" variant="outlined">Submit</Button>
               </Grid>
