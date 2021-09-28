@@ -62,7 +62,7 @@ export default function SelectPosts() {
                     <label htmlFor="contained-button-file" >
                         <Button
                             type="button"
-                            onClick={() => { dispatch(allposts()); }}
+                            onClick={() => { dispatch(locationposts()); }}
                             color="secondary"
                             variant="contained"
                             aria-label="right"
