@@ -18,6 +18,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import clsx from 'clsx';
 import QuestionAnswerOutlinedIcon from '@material-ui/icons/QuestionAnswerOutlined';
 import Collapse from '@material-ui/core/Collapse';
+import Backdrop from '@material-ui/core/Backdrop';
+
 
 // Redux stuff
 import { Like, UnLike } from '../../redux/actions/likeActions'
@@ -55,11 +57,18 @@ const useStyles = makeStyles((theme) => ({
         color: red[500],
     },
     space: {
-        
+
         paddingTop: 10,
+    },
+    Backdrop: {
+        color: '#fff',
+        zIndex: theme.zIndex.drawer + 1
+    },
+    imgBackdrop:{
+        height: "80%"
     }
 }));
-console.log("id")
+
 const Post = ({ dataPost }) => {
     const dispatch = useDispatch();
     const state = useSelector(state => state.user)
@@ -72,9 +81,17 @@ const Post = ({ dataPost }) => {
 
     const createAt = dataPost.createAt.toDate().toLocaleString('en-US', options);
     const imageSrc = dataPost.image;
-    const checkImg = false;
     const likecount = dataPost.likecount;
     const checkDelete = state.authenticated && dataPost.email == state.email;
+
+
+    const [open, setOpen] = useState(false);
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const handleToggle = () => {
+        setOpen(!open);
+    };
 
     function likedPost() {
         if (state.likes && state.likes.find((like) => dataPost.id === like.postid)) {
@@ -92,7 +109,7 @@ const Post = ({ dataPost }) => {
         dispatch(UnLike(dataPost.id))
     }
 
-
+    
 
     const likeButton = likedPost() ?
         (<IconButton aria-label="add to favorites" onClick={handleUnLike} >
@@ -122,7 +139,23 @@ const Post = ({ dataPost }) => {
                     title={username}
                     subheader={createAt} />
 
-                {imageSrc !== null ? <CardMedia className={classes.media} image={imageSrc} /> : ''}
+                {imageSrc !== null ? (<>
+                    <form onClick={handleToggle}>
+                        <CardMedia className={classes.media} image={imageSrc} />
+                    </form>
+
+                    <Backdrop
+                        className={classes.Backdrop}
+                        open={open}
+                        onClick={handleClose}
+                    >
+                        <img 
+                        className={classes.imgBackdrop}
+                        src={imageSrc} />
+                    </Backdrop></>
+
+                )
+                    : ''}
 
                 <CardContent>
                     <Typography variant="body2" color="textSecondary" component="p">
