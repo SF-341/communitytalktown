@@ -74,7 +74,7 @@ export default function SelectPosts() {
                     </label>
                 </Grid>
 
-                <Grid item xs={3} style={{ textAlign: 'end', paddingRight: '10px' }}>
+                <Grid item xs={3} style={{ textAlign: 'end', paddingLeft: '15px' }}>
                     <FormControl className={classes.formControl} >
                         <InputLabel id="province"  >province</InputLabel>
                         <Select labelId="province" id="province" name="province" value={province} onChange={(e) => { setProvince(e.target.value) }} disabled={address.loading}>
@@ -85,7 +85,7 @@ export default function SelectPosts() {
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid item xs={3} style={{ paddingTop: '15px' }}>
+                <Grid item xs={3} style={{ paddingTop: '15px', textAlign: 'center' }}>
                     <label htmlFor="contained-button-file" >
                         <Button
                             type="button"
