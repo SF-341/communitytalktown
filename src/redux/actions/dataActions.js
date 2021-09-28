@@ -1,4 +1,4 @@
-import { SET_POSTS, SET_POSTS_DATA, SET_COVID, LOADING_UI, CLEAR_ERRORS, SET_ERRORS } from '../types';
+import { SET_POSTS, SET_POSTS_DATA, SET_COVID, LOADING_UI, CLEAR_ERRORS, SET_ERRORS, SET_USER_SELECT, SET_USER_ALLPOSTS, SET_USER_LOCATION } from '../types';
 import { firestore, storage } from '../../config'
 
 
@@ -76,7 +76,8 @@ export const createPost = (newPost) => async (dispatch) => {
                 image: Url,
                 createAt: newPost.createAt,
                 likecount: newPost.likecount,
-                commentcount: newPost.commentcount
+                commentcount: newPost.commentcount,
+                location: newPost.location,
             }
             await refPost
                 .doc(post.id)
@@ -101,4 +102,22 @@ export const createPost = (newPost) => async (dispatch) => {
     }
 
 
+}
+
+export const allposts = () => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+    dispatch({ type:SET_USER_ALLPOSTS})
+    dispatch({ type: CLEAR_ERRORS });
+}
+
+export const selectposts = (province) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+    dispatch({ type:SET_USER_SELECT, payload:province})
+    dispatch({ type: CLEAR_ERRORS });
+}
+
+export const locationposts = () => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+    dispatch({ type:SET_USER_LOCATION})
+    dispatch({ type: CLEAR_ERRORS });
 }

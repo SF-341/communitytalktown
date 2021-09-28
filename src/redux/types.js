@@ -21,6 +21,9 @@ export const SET_REFRESH_USER = 'SET_REFRESH_USER'
 export const SET_COVID = 'SET_COVID'
 export const UNLIKE_POST = 'UNLIKE_POST'
 export const LIKE_POST = 'LIKE_POST'
+export const SET_USER_ALLPOSTS = 'SET_USER_ALLPOSTS'
+export const SET_USER_LOCATION = 'SET_USER_LOCATION'
+export const SET_USER_SELECT = 'SET_USER_SELECT'
 
 // Address reducer types
 export const SET_ADDRESS_LOADING = 'SET_ADDRESS_LOADING'

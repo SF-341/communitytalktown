@@ -45,7 +45,8 @@ const CreatePost = () => {
             image,
             createAt: new Date(),
             likecount: 0,
-            commentcount: 0
+            commentcount: 0,
+            location: state.province,
         }
         dispatch(createPost(newPost));
         

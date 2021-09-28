@@ -1,10 +1,11 @@
-import {SET_ADDRESS_LOADING, SET_PROVINCES, SET_DISTRICT, SET_SUBDISTRICT, SET_CLEAR_ADDRESS} from "../types"
+import {SET_ADDRESS_LOADING, SET_PROVINCES, SET_DISTRICT, SET_SUBDISTRICT, SET_CLEAR_ADDRESS, SET_USER_SELECT} from "../types"
 
 const initialState = {
     loading: false,
     provinces: null,
     district: null,
     subdistrict: null,
+    userselect: null,
 }
 
 export default function(state = initialState, action) {
@@ -35,6 +36,12 @@ export default function(state = initialState, action) {
         case SET_CLEAR_ADDRESS:
             return{
                 initialState
+            }
+        case SET_USER_SELECT:
+            return{
+                ...state,
+                loading: false,
+                userselect: action.payload,
             }
         default:
             return state;

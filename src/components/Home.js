@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
 import { AuthContext } from './Auth'
 import CreatePost from './post/CreatePost'
+import SelectPosts from './post/SelectPosts'
 // import RenderPost from './RenderPost'
 
 import Post from './post/Post'
@@ -16,11 +17,18 @@ import { isEmpty } from 'lodash'
 
 const Home = () => {
     const dispatch = useDispatch();
+    const user = useSelector(state => state.user);
     const data = useSelector(state => state.data);
     const UI = useSelector(state => state.UI);
+    const address = useSelector(state => state.address);
 
     const { currentUser } = useContext(AuthContext);
 
+    const getPostsLocation = data.posts.filter(post => post.location === user.province)
+
+    const getPostsUserSelect = data.posts.filter(post => post.location === address.userselect)
+
+    
     useEffect(() => {
         if (currentUser) {
             dispatch(refreshUserData());
@@ -34,10 +42,12 @@ const Home = () => {
         <>
             <div className="container mt-4" >
                 <CreatePost />
-                
-                {!currentUser ? <Redirect to="/login" /> : 
-                (UI.loading ? <Loading/> : 
-                <> {data.posts && data.posts.map((data) => (<Post key={data.id} dataPost={data} />))}</>)
+                <SelectPosts />
+                {!currentUser ? <Redirect to="/login" /> :
+                    (UI.loading ? <Loading /> :<>
+                        <> {data.showallposts && data.posts.map((data) => (<Post key={data.id} dataPost={data} />))}</>
+                        <> {data.showselectposts && getPostsUserSelect.map((data) => (<Post key={data.id} dataPost={data} />))}</>
+                        <> {data.showlocationsposts && getPostsLocation.map((data) => (<Post key={data.id} dataPost={data} />))}</></>)
                 }
             </div>
         </>
