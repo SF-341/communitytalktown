@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
-import { Typography, Button, Container, makeStyles, TextField, FormHelperText, styled, Grid } from '@material-ui/core'
+import { Typography, Button, Container, makeStyles, TextField, FormHelperText, styled, Grid, Paper, IconButton, InputBase, Divider, } from '@material-ui/core'
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
 import Card from '@material-ui/core/Card';
+import CameraAltOutlined from '@material-ui/icons/CameraAltOutlined';
+import MenuIcon from '@material-ui/core/Menu';
+import SendRounded from '@material-ui/icons/SendRounded';
+
 
 
 // Redux stuff
@@ -44,7 +48,7 @@ export default function CreateComment({ postId }) {
     }
 
 
-    
+
 
     const Input = styled('input')({
         display: 'none',
@@ -63,12 +67,22 @@ export default function CreateComment({ postId }) {
         btn: {
             paddingTop: 20,
             textAlign: 'end',
+        },
+        paper: {
+            p: '2px 4px',
+            display: 'flex',
+            alignItems: 'center',
+            width: 400,
+            paddingTop: 10,
+
         }
     });
 
     const classes = useStyles();
 
-    return (
+
+
+    return (<>
         <Card className={classes.root}>
             <Container className={classes.root} >
 
@@ -77,7 +91,7 @@ export default function CreateComment({ postId }) {
 
 
                     <Grid container >
-                        <Grid item xs = {7} sm={7} >
+                        <Grid item xs={7} sm={7} >
                             <TextField
                                 error={!UI.loading && UI.error != null}
                                 onChange={handleChange}
@@ -92,7 +106,7 @@ export default function CreateComment({ postId }) {
                             />
                             {!UI.loading && UI.error != null ? <FormHelperText error id="component-error-text">{UI.error}</FormHelperText> : ''}
                         </Grid>
-                        <Grid item xs = {5} sm = {5} className={classes.btn}>
+                        <Grid item xs={5} sm={5} className={classes.btn}>
                             <label htmlFor="contained-button-file">
                                 <Input accept="image/*" id="contained-button-file" type="file" onChange={handleChange} name="image" />
                                 <Button
@@ -125,10 +139,35 @@ export default function CreateComment({ postId }) {
 
 
                     </Grid>
+
+
                 </form>
-                
+
             </Container>
         </Card>
+        <Paper
+
+            className={classes.papper}
+        >
+
+            <InputBase
+                style={{ ml: 1, flex: 1, width: 350, paddingLeft: 10 }} x
+                placeholder="Comment"
+
+            />
+            <label htmlFor="contained-button-file">
+                
+                <IconButton type="submit" style={{ p: '10px' }} aria-label="image">
+                <Input accept="image/*" id="contained-button-file" type="file" onChange={handleChange} name="image"  endIcon={CameraAltOutlined}/>
+                    <CameraAltOutlined style={{ textAlign: 'right' }} />
+                </IconButton>
+            </label>
+            <IconButton type="submit" style={{ p: '10px' }} aria-label="search">
+                <SendRounded style={{ textAlign: 'right' }} />
+            </IconButton>
+
+
+        </Paper></>
 
     )
 }
