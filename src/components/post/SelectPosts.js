@@ -63,13 +63,13 @@ export default function SelectPosts() {
                         <Button
                             type="button"
                             onClick={() => { dispatch(locationposts()); }}
-                            color="secondary"
+                            color="Primary"
                             variant="contained"
                             aria-label="right"
                             padding='auto'
 
                         >
-                            ME LOCATION
+                            MY LOCATION
                         </Button>
                     </label>
                 </Grid>

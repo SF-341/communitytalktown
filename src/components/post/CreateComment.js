@@ -83,7 +83,7 @@ export default function CreateComment({ postId }) {
                                 onChange={handleChange}
                                 name="discribtion"
                                 className={classes.field}
-                                label="discribtion"
+                                label="discription"
                                 variant="outlined"
                                 color="secondary"
                                 multiline
@@ -111,7 +111,7 @@ export default function CreateComment({ postId }) {
                             <label htmlFor="contained-button-file" >
                                 <Button
                                     type="submit"
-                                    color="secondary"
+                                    color="primary"
                                     variant="contained"
                                     aria-label="right"
                                     padding='auto'
