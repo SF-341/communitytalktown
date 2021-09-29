@@ -50,7 +50,6 @@ const CreatePost = () => {
         }
         dispatch(createPost(newPost));
         
-        
     }
     const Input = styled('input')({
         display: 'none',

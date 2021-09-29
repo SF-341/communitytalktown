@@ -1,7 +1,8 @@
-import { SET_ERRORS, CLEAR_ERRORS, LOADING_UI } from '../types'
+import { SET_ERRORS, CLEAR_ERRORS, LOADING_UI, LOADING_COMMENT } from '../types'
 
 const initialState = {
     loading: false,
+    loadingComments: false,
     emailerror: null,
     passworderror: null,
     error: null,
@@ -45,6 +46,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 loading: true,
+            }
+        case LOADING_COMMENT:
+            return {
+                ...state,
+                loadingComment: true,
             }
         default:
             return state;

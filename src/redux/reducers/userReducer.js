@@ -1,9 +1,10 @@
-import { SET_USER, SET_USER_REFRESH, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_AUTHENTICATION, SET_UNAUTHENTICATION, UNLIKE_POST, LIKE_POST, SET_USER_LOADDING, SET_USER_UPDATE } from '../types';
+import { NEW_COMMENT, DELETE_COMMENT,SET_USER, SET_USER_REFRESH, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_AUTHENTICATION, SET_UNAUTHENTICATION, UNLIKE_POST, LIKE_POST, SET_USER_LOADDING, SET_USER_UPDATE } from '../types';
 
 const initialState = {
     authenticated: false,
     loading: false,
     likes: [],
+    comments: [],
 
 };
 
@@ -62,6 +63,27 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 ...action.payload
+            }
+
+        case NEW_COMMENT:
+            return {
+                ...state,
+                loading: false,
+                comments: [
+                    ...state.comments,
+                    {
+                        commentid: action.payload.commentid,
+                        postid: action.payload.id,
+                    }
+                ]
+            }
+        case DELETE_COMMENT:
+            let updateComments = state.comments.filter((comment) => comment.commentid !== action.payload.commentid)
+            console.log('upid '+updateComments, "ccid "+action.payload.commentid)
+            return {
+                ...state,
+                loading: false,
+                comments: updateComments,
             }
         default:
             return state;

@@ -23,9 +23,12 @@ import Backdrop from '@material-ui/core/Backdrop';
 
 // Redux stuff
 import { Like, UnLike } from '../../redux/actions/likeActions'
-import { getUrl } from '../../redux/actions/dataActions'
+import { getComment } from '../../redux/actions/dataActions'
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from 'react-router-dom';
+
+import CreateComment from './CreateComment'
+import RenderComment from './RenderComment'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -128,6 +131,10 @@ const Post = ({ dataPost }) => {
         documentRef.delete();
     }
 
+    useEffect(() => {
+        dispatch(getComment(dataPost.id));
+    }, [])
+
     const classes = useStyles();
     return (
         <><div className={classes.space}>
@@ -189,6 +196,10 @@ const Post = ({ dataPost }) => {
                 </CardActions>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
+                        <CreateComment postId={dataPost.id} />
+                    </CardContent>
+                    <CardContent>
+                        <RenderComment postId={dataPost.id} />
                     </CardContent>
                 </Collapse>
             </Card>

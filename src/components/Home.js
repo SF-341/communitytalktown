@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
 import { AuthContext } from './Auth'
 import CreatePost from './post/CreatePost'
+import CreateComment from './post/CreateComment'
 import SelectPosts from './post/SelectPosts'
 // import RenderPost from './RenderPost'
 

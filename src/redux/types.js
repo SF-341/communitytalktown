@@ -12,6 +12,7 @@ export const SET_USER_REFRESH = 'SET_USER_REFRESH'
 export const SET_ERRORS = 'SET_ERRORS'
 export const LOADING_UI = 'LOADING_UI'
 export const CLEAR_ERRORS = 'CLEAR_ERRORS'
+export const LOADING_COMMENT = 'LOADING_COMMENT'
 
 // Data reducer types
 export const LOADING_DATA = 'LOADING_DATA'
@@ -24,6 +25,9 @@ export const LIKE_POST = 'LIKE_POST'
 export const SET_USER_ALLPOSTS = 'SET_USER_ALLPOSTS'
 export const SET_USER_LOCATION = 'SET_USER_LOCATION'
 export const SET_USER_SELECT = 'SET_USER_SELECT'
+export const NEW_COMMENT = 'NEW_COMMENT'
+export const DELETE_COMMENT = 'DELETE_COMMENT'
+export const SET_COMMENT = 'SET_COMMENT'
 
 // Address reducer types
 export const SET_ADDRESS_LOADING = 'SET_ADDRESS_LOADING'
