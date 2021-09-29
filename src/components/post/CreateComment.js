@@ -83,91 +83,38 @@ export default function CreateComment({ postId }) {
 
 
     return (<>
-        <Card className={classes.root}>
-            <Container className={classes.root} >
+        
+            <Paper
 
-                <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+            className={classes.paper}
 
-
-
-                    <Grid container >
-                        <Grid item xs={7} sm={7} >
-                            <TextField
-                                error={!UI.loading && UI.error != null}
-                                onChange={handleChange}
-                                name="discribtion"
-                                className={classes.field}
-                                label="discription"
-                                variant="outlined"
-                                color="secondary"
-                                multiline
-                                fullWidth
-                                required
-                            />
-                            {!UI.loading && UI.error != null ? <FormHelperText error id="component-error-text">{UI.error}</FormHelperText> : ''}
-                        </Grid>
-                        <Grid item xs={5} sm={5} className={classes.btn}>
-                            <label htmlFor="contained-button-file">
-                                <Input accept="image/*" id="contained-button-file" type="file" onChange={handleChange} name="image" />
-                                <Button
-
-                                    variant="outlined"
-                                    color="secondary"
-                                    component="span"
-
-                                >
-                                    Upload
-                                </Button>
-                                &nbsp;&nbsp;&nbsp;{image && image.type}
-                            </label>
-
-
-                            <label htmlFor="contained-button-file" >
-                                <Button
-                                    type="submit"
-                                    color="primary"
-                                    variant="contained"
-                                    aria-label="right"
-                                    padding='auto'
-
-
-                                >
-                                    COMMENT
-                                </Button>
-                            </label>
-                        </Grid>
-
-
-                    </Grid>
-
-
-                </form>
-
-            </Container>
-        </Card>
-        <Paper
-
-            className={classes.papper}
-        >
+            >
 
             <InputBase
+                onChange={handleChange} name="discribtion"
                 style={{ ml: 1, flex: 1, width: 350, paddingLeft: 10 }} x
                 placeholder="Comment"
 
             />
-            <label htmlFor="contained-button-file">
-                
-                <IconButton type="submit" style={{ p: '10px' }} aria-label="image">
-                <Input accept="image/*" id="contained-button-file" type="file" onChange={handleChange} name="image"  endIcon={CameraAltOutlined}/>
-                    <CameraAltOutlined style={{ textAlign: 'right' }} />
+            <label htmlFor="icon-button-file">
+                <Input accept="image/*" id="icon-button-file" type="file" />
+                <IconButton color="primary" aria-label="upload picture" component="span" onChange={handleChange} name="image">
+                    <CameraAltOutlined />
                 </IconButton>
             </label>
-            <IconButton type="submit" style={{ p: '10px' }} aria-label="search">
-                <SendRounded style={{ textAlign: 'right' }} />
-            </IconButton>
 
+            <label htmlFor="icon-button">
+                <IconButton color="primary" type="submit" aria-label="upload picture" component="span" onClick={handleSubmit} >
+                    <SendRounded />
+                </IconButton>
+            </label>
 
-        </Paper></>
+            
 
+            </Paper>
+
+        
+        
+        </>
     )
 }
