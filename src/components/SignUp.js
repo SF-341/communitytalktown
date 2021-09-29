@@ -78,6 +78,9 @@ const SignUp = () => {
             district,
             province,
             likes: [],
+            comments: [],
+            createAt: new Date(),
+            image: null,
         }
         const user = {
             email: email.value,

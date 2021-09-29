@@ -28,18 +28,18 @@ export default function CreateComment({ postId }) {
         } else if (e.target.name === "image") {
             console.log(e.target.files[0]);
             setImage(e.target.files[0])
-
         }
     }
 
     function handleSubmit(e) {
+        console.log(image)
         e.preventDefault();
         const newComment = {
             id: uuidv4(),
             userid: user.id,
             postid: postId,
             discribtion,
-            // userimage: user.image,
+            userimage: user.image,
             username: user.username,
             createAt: new Date(),
             image
@@ -54,28 +54,19 @@ export default function CreateComment({ postId }) {
         display: 'none',
     });
     const useStyles = makeStyles({
-        root: {
-            margin: 'auto',
-            maxWidth: 700,
-            paddingTop: 10,
-            paddingBottom: 5,
-        },
-        field: {
-            display: 'block',
-            padding: 10,
-        },
-        btn: {
-            paddingTop: 20,
-            textAlign: 'end',
-        },
+
         paper: {
             p: '2px 4px',
             display: 'flex',
-            alignItems: 'center',
-            width: 400,
-            paddingTop: 10,
+            maxWidth: 700,
+            paddingLeft: 20,
 
-        }
+        },
+        fieldcomment: {
+            width: 500,
+            paddingTop: 10,
+        },
+
     });
 
     const classes = useStyles();
@@ -83,38 +74,36 @@ export default function CreateComment({ postId }) {
 
 
     return (<>
-        
-            <Paper
 
-            className={classes.paper}
+        <Paper className={classes.paper} >
+            <Grid item xs={10} sm={10}>
+                <InputBase
+                    onChange={handleChange} name="discribtion"
+                    className={classes.fieldcomment}
+                    placeholder="Comment"
 
-            >
+                />
+            </Grid>
+            <Grid item xs={2} sm={2}>
 
-            <InputBase
-                onChange={handleChange} name="discribtion"
-                style={{ ml: 1, flex: 1, width: 350, paddingLeft: 10 }} x
-                placeholder="Comment"
+                <label htmlFor="icon-button-file">
+                    <Input accept="image/*" id="icon-button-file" type="file" onChange={handleChange} name="image"/>
+                    <IconButton  color="primary" aria-label="upload picture" component="span" >
+                        <CameraAltOutlined />
+                    </IconButton>
+                </label>
 
-            />
-            <label htmlFor="icon-button-file">
-                <Input accept="image/*" id="icon-button-file" type="file" />
-                <IconButton color="primary" aria-label="upload picture" component="span" onChange={handleChange} name="image">
-                    <CameraAltOutlined />
-                </IconButton>
-            </label>
+                <label htmlFor="icon-button">
+                    <IconButton  color="primary" type="submit" aria-label="upload picture" component="span" onClick={handleSubmit} >
+                        <SendRounded />
+                    </IconButton>
+                </label>
+            </Grid>
 
-            <label htmlFor="icon-button">
-                <IconButton color="primary" type="submit" aria-label="upload picture" component="span" onClick={handleSubmit} >
-                    <SendRounded />
-                </IconButton>
-            </label>
+        </Paper>
 
-            
 
-            </Paper>
 
-        
-        
-        </>
+    </>
     )
 }

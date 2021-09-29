@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 // material-ui
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
+import { CardHeader, Grid, Menu, MenuItem } from '@material-ui/core/';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
@@ -18,6 +18,8 @@ import clsx from 'clsx';
 import QuestionAnswerOutlinedIcon from '@material-ui/icons/QuestionAnswerOutlined';
 import Collapse from '@material-ui/core/Collapse';
 import Backdrop from '@material-ui/core/Backdrop';
+import MoreVert from '@material-ui/icons/MoreVert';
+
 
 // Redux stuff
 import { useDispatch, useSelector } from 'react-redux'
@@ -27,13 +29,15 @@ const useStyles = makeStyles((theme) => ({
     root: {
         margin: 'auto',
         maxWidth: 700,
+
     },
     media: {
-        hight: 164,
-        paddingTop: '70%',
-        width: 'auto',
-        fit: 'crop',
-        auto: 'format'
+        height: 20,
+        paddingTop: '30%',
+        width: 300,
+        auto: 'format',
+        paddingLeft: '10px'
+
     },
     expand: {
         transform: 'rotate(0deg)',
@@ -53,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     },
     space: {
 
-        paddingTop: 10,
+        paddingTop: 5,
     },
     Backdrop: {
         color: '#fff',
@@ -61,10 +65,19 @@ const useStyles = makeStyles((theme) => ({
     },
     imgBackdrop: {
         height: "80%"
+    },
+    iconDelete: {
+        textAlign: 'right'
+    },
+    comment: {
+        flex: 1,
+    },
+    img:{
+        paddingLeft: "20%"
     }
 }));
 
-const Comment = ({dataComment}) => {
+const Comment = ({ dataComment }) => {
 
     const dispatch = useDispatch();
     const user = useSelector(state => state.user);
@@ -73,7 +86,7 @@ const Comment = ({dataComment}) => {
     const discribtion = dataComment.discribtion;
     const createAt = dataComment.createAt;
     const commentusername = dataComment.username;
-    const checkDelete = dataComment.userid && user.id;
+    const checkDelete = dataComment.userid === user.id;
 
 
     const [open, setOpen] = useState(false);
@@ -84,6 +97,15 @@ const Comment = ({dataComment}) => {
         setOpen(!open);
     };
 
+    const [anchorEl, setAnchorEl] = useState(null);
+    const openn = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClosed = () => {
+        setAnchorEl(null);
+    };
 
     function delComment() {
 
@@ -101,41 +123,55 @@ const Comment = ({dataComment}) => {
         <><div className={classes.space}>
             <Card className={classes.root}>
                 <CardHeader
-                    avatar={<Avatar aria-label="recipe" className={classes.avatar}>
-                        <h1>U</h1>
+                    avatar={<Avatar aria-label="recipe" className={classes.avatar} src={dataComment.userimage !== null ? dataComment.userimage : ''}>
+                        {dataComment.userimage === null ? 'U' : ''}
                     </Avatar>}
+
+                    action={
+                        checkDelete ?
+                            (<><IconButton aria-label="DeleteIcon"
+                                aria-haspopup="true"
+                                aria-expanded={openn ? 'true' : undefined}
+                                onClick={handleClick}>
+                                <MoreVert fontSize="small" />
+                            </IconButton>
+                                <Menu
+                                    id="demo-positioned-menu"
+                                    aria-labelledby="demo-positioned-button"
+                                    anchorEl={anchorEl}
+                                    open={openn}
+                                    onClose={handleClosed}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'left',
+                                    }}
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'left',
+                                    }}
+                                >
+                                    <MenuItem onClick={delComment}>Delete Comment</MenuItem>
+
+                                </Menu></>)
+                            : ''
+                    }
                     title={commentusername}
+                    subheader={discribtion}
                 />
+                <Grid item xs className={classes.img}>
+                    {imageSrc !== null ? (<>
+                        <form onClick={handleToggle}>
+                            <CardMedia className={classes.media} image={imageSrc} />
+                        </form>
 
-                {imageSrc !== null ? (<>
-                    <form onClick={handleToggle}>
-                        <CardMedia className={classes.media} image={imageSrc} />
-                    </form>
+                        <Backdrop className={classes.Backdrop} open={open} onClick={handleClose}>
+                            <img className={classes.imgBackdrop} src={imageSrc} />
+                        </Backdrop></>
+                    )
+                        : ''}
+                </Grid>
 
-                    <Backdrop
-                        className={classes.Backdrop}
-                        open={open}
-                        onClick={handleClose}
-                    >
-                        <img
-                            className={classes.imgBackdrop}
-                            src={imageSrc} />
-                    </Backdrop></>
 
-                )
-                    : ''}
-
-                <CardContent>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        <p>{discribtion}</p>
-                    </Typography>
-                </CardContent>
-                <CardActions disableSpacing>
-                    {checkDelete ?
-                        <IconButton aria-label="DeleteIcon" onClick={delComment}>
-                            <DeleteIcon fontSize="large" />
-                        </IconButton> : ''}
-                </CardActions>
             </Card>
         </div></>
     )

@@ -99,11 +99,9 @@ export const createComment = (newComment) => async (dispatch) => {
         if (newComment.image !== null) {
             const refImg = storage.ref('comments/' + newComment.image.name);
             await refImg.put(newComment.image)
-
             const storageRef = storage.ref().child('comments/' + newComment.image.name);
             await storageRef.getDownloadURL().then(async (url) => {
                 Url = await url;
-                console.log(Url)
             });
             newComment.image = Url;
         }
@@ -130,7 +128,7 @@ export const createComment = (newComment) => async (dispatch) => {
                     .doc(newComment.id)
                     .set(newComment);
                 postData.commentcount++;
-                dispatch({ type: NEW_COMMENT, payload: { postdata: postData, newcomment: newComment} });
+                dispatch({ type: NEW_COMMENT, payload: { postdata: postData, newcomment: newComment } });
                 await (
                     refDoc.update({ commentcount: postData.commentcount }),
                     refUser.update({ comments: userData.comments })
