@@ -138,7 +138,7 @@ export const updateUserImage = (img) => (dispatch) => {
     const refImg = storage.ref('imagesProfile/' + img.name);
     refImg.put(img)
     // Url = newPost.image.name;
-    const storageRef = storage.ref().child('images/' + img.name);
+    const storageRef = storage.ref().child('imagesProfile/' + img.name);
     storageRef.getDownloadURL().then(async (url) => {
         Url = await url;
 
