@@ -131,6 +131,7 @@ export const updateUser = (data) => (dispatch) => {
 }
 
 export const updateUserImage = (img) => (dispatch) => {
+    console.log(img);
     const userid = localStorage.IdToken;
     const ref = firestore.doc("User/" + userid);
     let Url;
@@ -140,17 +141,12 @@ export const updateUserImage = (img) => (dispatch) => {
     // Url = newPost.image.name;
     const storageRef = storage.ref().child('imagesProfile/' + img.name);
     storageRef.getDownloadURL().then(async (url) => {
-        Url = await url;
+        console.log(url)
+        ref.update({ image: url })
+            .then(function () {
+                dispatch({ type: SET_USER_UPDATE_PROFILE, payload: { url: url } });
+            })
 
     });
 
-    try {
-        ref.update({ image: Url })
-            .then(function () {
-                dispatch({ type: SET_USER_UPDATE_PROFILE, payload: { url: Url } });
-            })
-    } catch (error) {
-        console.log(error.message);
-    }
-    return true;
 }

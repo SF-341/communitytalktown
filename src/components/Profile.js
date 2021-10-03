@@ -1,11 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, Grid, Button } from '@material-ui/core';
+import { TextField, Grid, Button, IconButton, styled } from '@material-ui/core';
+import CameraAltOutlined from '@material-ui/icons/CameraAltOutlined';
 
 // Redux stuff
 import { useSelector, useDispatch } from 'react-redux'
-import { updateUser } from '../redux/actions/userActions'
+import { updateUser, updateUserImage } from '../redux/actions/userActions'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,6 +29,7 @@ const Profile = () => {
   const [province, setProvince] = useState(state.province);
   const [submit, setSubmit] = useState(true);
   const [text, setText] = useState(true);
+  const [image, setImage] = useState(state.image);
 
   const handleChange = (e) => {
     if (e.target.name === "firstname") {
@@ -42,8 +44,18 @@ const Profile = () => {
       setDistrict(e.target.value)
     } else if (e.target.name === "province") {
       setProvince(e.target.value)
+    } else if (e.target.name === "image") {
+      console.log(e.target.files[0]);
+      setImage(e.target.files[0])
     }
+
+
+
   }
+
+  const Input = styled('input')({
+    display: 'none',
+  });
 
   const edit = () => {
     setSubmit(false);
@@ -62,6 +74,11 @@ const Profile = () => {
       setSubmit(true);
       setText(true);
     }
+  }
+
+  const updateImage = (e) => {
+    e.preventDefault();
+    dispatch(updateUserImage(image))
   }
 
   const classes = useStyles();
@@ -85,8 +102,33 @@ const Profile = () => {
             <Grid item ><Button size="large" variant="outlined" onClick={edit}>Edit</Button></Grid>
             <Grid item ><Button type="submit" size="large" variant="outlined" disabled={submit}>Submit</Button></Grid>
           </Grid>
-
         </form></>
+
+      <>
+        <div className="clearfix">
+          <div className="col-md-4 animated fadeIn">
+            <div className="card">
+              <div className="card-body">
+                <div className="avatar">
+                  <img
+                    src={image}
+                    className="card-img-top"
+                    alt=""
+                  />
+                </div>
+                <p>wonyus</p>
+                <label htmlFor="icon-button-file">
+                  <Input accept="image/*" id="icon-button-file" type="file" onChange={handleChange} name="image" />
+                  <IconButton color="primary" aria-label="upload picture" component="span" >
+                    <CameraAltOutlined />
+                  </IconButton>
+                </label>
+                <Button onClick={updateImage} type="button" color="primary" aria-label="updateImg">Submit</Button>
+
+              </div>
+            </div>
+          </div>
+        </div></>
 
     </div>
   );
