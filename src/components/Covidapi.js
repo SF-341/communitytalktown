@@ -1,11 +1,11 @@
-import React, { useState, useContext, useEffect } from "react";
-
+import React, { useState, useContext, useEffect,PureComponent } from "react";
 import { makeStyles, withStyle } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { Container } from '@material-ui/core/'
+import { BarChart, RadialBarChart, RadialBar, ComposedChart, Line, Area, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,Scatter } from 'recharts';
 
 // Redux stuff
 import { useSelector, useDispatch } from "react-redux";
@@ -65,10 +65,141 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+const style = {
+  top: '50%',
+  right: 0,
+  transform: 'translate(0, -50%)',
+  lineHeight: '24px',
+};
+
 const Covidapi = () => {
   const dispatch = useDispatch();
   const state = useSelector(state => state.data)
-
+  const data1 = [
+    {
+      name: 'Page A',
+      New_Death: 4000,
+      New_Case: 2400,
+    },
+    {
+      name: 'Page B',
+      New_Death: 3000,
+      New_Case: 1398,
+    },
+    {
+      name: 'Page C',
+      New_Death: 2000,
+      New_Case: 9800,
+    },
+    {
+      name: 'Page D',
+      New_Death: 2780,
+      New_Case: 3908,
+    },
+    {
+      name: 'Page E',
+      New_Death: 1890,
+      New_Case: 4800,
+    },
+    {
+      name: 'Page F',
+      New_Death: 2390,
+      New_Case: 3800,
+    },
+    {
+      name: 'Page G',
+      New_Death: 3490,
+      New_Case: 4300,
+    },
+  ];
+  const data2 = [
+    {
+      name: '18-24',
+      uv: 31.47,
+      pv: 2400,
+      fill: '#8884d8',
+    },
+    {
+      name: '25-29',
+      uv: 26.69,
+      pv: 4567,
+      fill: '#83a6ed',
+    },
+    {
+      name: '30-34',
+      uv: 15.69,
+      pv: 1398,
+      fill: '#8dd1e1',
+    },
+    {
+      name: '35-39',
+      uv: 8.22,
+      pv: 9800,
+      fill: '#82ca9d',
+    },
+    {
+      name: '40-49',
+      uv: 8.63,
+      pv: 3908,
+      fill: '#a4de6c',
+    },
+    {
+      name: '50+',
+      uv: 2.63,
+      pv: 4800,
+      fill: '#d0ed57',
+    },
+    {
+      name: 'unknow',
+      uv: 6.67,
+      pv: 4800,
+      fill: '#ffc658',
+    },
+  ];
+  const data3 = [
+    {
+      name: 'Page A',
+      uv: 590,
+      pv: 800,
+      amt: 1400,
+      cnt: 490,
+    },
+    {
+      name: 'Page B',
+      uv: 868,
+      pv: 967,
+      amt: 1506,
+      cnt: 590,
+    },
+    {
+      name: 'Page C',
+      uv: 1397,
+      pv: 1098,
+      amt: 989,
+      cnt: 350,
+    },
+    {
+      name: 'Page D',
+      uv: 1480,
+      pv: 1200,
+      amt: 1228,
+      cnt: 480,
+    },
+    {
+      name: 'Page E',
+      uv: 1520,
+      pv: 1108,
+      amt: 1100,
+      cnt: 460,
+    },
+    {
+      name: 'Page F',
+      uv: 1400,
+      pv: 680,
+      amt: 1700,
+      cnt: 380,
+    },
+  ];
   const items = state.covid[0];
   console.log(items);
 
@@ -81,6 +212,7 @@ const Covidapi = () => {
 
 
   const classes = useStyles();
+
 
   return (
     <><div>
@@ -140,8 +272,75 @@ const Covidapi = () => {
                 <h6>{items && items ? items.total_recovered : "0"}</h6>
               </Paper>
             </Grid>
-
-          </Grid>
+            <Grid item xs={12} sm={6}>
+            <Paper className={classes.paper}>
+            <ResponsiveContainer width="100%" height={300}>
+            <BarChart
+              width={500}
+              height={300}
+              data={data1}
+              margin={{
+                top: 5,
+                right: 30,
+                left: 20,
+                bottom: 5,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="New_Death" fill="#8884d8" />
+              <Bar dataKey="New_Case" fill="#82ca9d" />
+            </BarChart>
+          </ResponsiveContainer>
+            </Paper>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+            <Paper className={classes.paper}>
+            <ResponsiveContainer width="100%" height={300}>
+            <RadialBarChart cx="50%" cy="50%" innerRadius="10%" outerRadius="80%" barSize={10} data={data2}>
+              <RadialBar
+                minAngle={15}
+                label={{ position: 'insideStart', fill: '#fff' }}
+                background
+                clockWise
+                dataKey="uv"
+              />
+              <Legend iconSize={10} layout="vertical" verticalAlign="middle" wrapperStyle={style} />
+            </RadialBarChart>
+          </ResponsiveContainer>
+            </Paper>
+            </Grid>
+            <Grid item xs={12} sm={12}>
+            <Paper className={classes.paper}>
+            <ResponsiveContainer width={1225} height={500}>
+            <ComposedChart
+              width={1000}
+              height={500}
+              data={data3}
+              margin={{
+                top: 20,
+                right: 20,
+                bottom: 20,
+                left: 20,
+              }}
+            >
+              <CartesianGrid stroke="#f5f5f5" />
+              <XAxis dataKey="name" scale="band" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Area type="monotone" dataKey="amt" fill="#8884d8" stroke="#8884d8" />
+              <Bar dataKey="pv" barSize={20} fill="#413ea0" />
+              <Line type="monotone" dataKey="uv" stroke="#ff7300" />
+              <Scatter dataKey="cnt" fill="red" />
+            </ComposedChart>
+          </ResponsiveContainer>
+            </Paper>
+            </Grid>
+        </Grid>
         </div>
       </Container>
 
