@@ -1,4 +1,4 @@
-import { NEW_COMMENT, DELETE_COMMENT,SET_USER, SET_USER_REFRESH, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_AUTHENTICATION, SET_UNAUTHENTICATION, UNLIKE_POST, LIKE_POST, SET_USER_LOADDING, SET_USER_UPDATE } from '../types';
+import { SET_USER_UPDATE_PROFILE, NEW_COMMENT, DELETE_COMMENT, SET_USER, SET_USER_REFRESH, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_AUTHENTICATION, SET_UNAUTHENTICATION, UNLIKE_POST, LIKE_POST, SET_USER_LOADDING, SET_USER_UPDATE } from '../types';
 
 const initialState = {
     authenticated: false,
@@ -79,11 +79,17 @@ export default function (state = initialState, action) {
             }
         case DELETE_COMMENT:
             let updateComments = state.comments.filter((comment) => comment.commentid !== action.payload.commentid)
-            console.log('upid '+updateComments, "ccid "+action.payload.commentid)
+            console.log('upid ' + updateComments, "ccid " + action.payload.commentid)
             return {
                 ...state,
                 loading: false,
                 comments: updateComments,
+            }
+        case SET_USER_UPDATE_PROFILE:
+            return {
+                ...state,
+                loading: false,
+                image: action.payload.url,
             }
         default:
             return state;

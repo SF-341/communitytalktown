@@ -1,5 +1,5 @@
-import { SET_USER, SET_USER_REFRESH, SET_UNAUTHENTICATION, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_USER_UPDATE } from '../types';
-import firebaseConfig, { firestore } from '../../config'
+import { SET_USER, SET_USER_REFRESH, SET_UNAUTHENTICATION, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_USER_UPDATE, SET_USER_UPDATE_PROFILE } from '../types';
+import firebaseConfig, { firestore, storage } from '../../config'
 
 
 export const loginUser = (userData) => (dispatch) => {
@@ -47,7 +47,7 @@ export const register = (newUser, user) => (dispatch) => {
                 .set(newUser)
         }).then(() => {
             dispatch(getUserData());
-            dispatch({type: CLEAR_ERRORS});
+            dispatch({ type: CLEAR_ERRORS });
         })
         .catch((error) => {
             dispatch({
@@ -126,6 +126,31 @@ export const updateUser = (data) => (dispatch) => {
             })
     } catch (error) {
         alert(error);
+    }
+    return true;
+}
+
+export const updateUserImage = (img) => (dispatch) => {
+    const userid = localStorage.IdToken;
+    const ref = firestore.doc("User/" + userid);
+    let Url;
+
+    const refImg = storage.ref('imagesProfile/' + img.name);
+    refImg.put(img)
+    // Url = newPost.image.name;
+    const storageRef = storage.ref().child('images/' + img.name);
+    storageRef.getDownloadURL().then(async (url) => {
+        Url = await url;
+
+    });
+
+    try {
+        ref.update({ image: Url })
+            .then(function () {
+                dispatch({ type: SET_USER_UPDATE_PROFILE, payload: { url: Url } });
+            })
+    } catch (error) {
+        console.log(error.message);
     }
     return true;
 }
