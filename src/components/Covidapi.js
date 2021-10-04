@@ -9,7 +9,7 @@ import { BarChart, RadialBarChart, RadialBar, ComposedChart, Line, Area, Bar, Ce
 
 // Redux stuff
 import { useSelector, useDispatch } from "react-redux";
-import { getCovid } from "../redux/actions/dataActions";
+import { getCovid, getCovidWeekday } from "../redux/actions/dataActions";
 import { isEmpty } from "lodash";
 
 const useStyles = makeStyles((theme) => ({
@@ -206,6 +206,7 @@ const Covidapi = () => {
   useEffect(() => {
     if (isEmpty(state.covid)) {
       dispatch(getCovid())
+      dispatch(getCovidWeekday())
     }
 
   }, [])
@@ -219,7 +220,7 @@ const Covidapi = () => {
       <Container>
         <div className={classes.root}>
           <Grid container spacing={1}>
-            
+
             <Grid item xs={12} sm={6}>
               <Paper className={classes.paper}>
                 <Box className={classes.boxPink} bgcolor="primary.main" color="primary.contrastText">
@@ -272,13 +273,15 @@ const Covidapi = () => {
                 <h6>{items && items ? items.total_recovered : "0"}</h6>
               </Paper>
             </Grid>
+
+
             <Grid item xs={12} sm={6}>
             <Paper className={classes.paper}>
             <ResponsiveContainer width="100%" height={300}>
             <BarChart
               width={500}
               height={300}
-              data={data1}
+              data={state.covid_weekday}
               margin={{
                 top: 5,
                 right: 30,
@@ -287,12 +290,12 @@ const Covidapi = () => {
               }}
             >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
+              <XAxis dataKey="txn_date" />
               <YAxis />
               <Tooltip />
               <Legend />
-              <Bar dataKey="New_Death" fill="#8884d8" />
-              <Bar dataKey="New_Case" fill="#82ca9d" />
+              <Bar dataKey="new_death" fill="#8884d8" />
+              <Bar dataKey="new_case" fill="#82ca9d" />
             </BarChart>
           </ResponsiveContainer>
             </Paper>

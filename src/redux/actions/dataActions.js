@@ -1,4 +1,4 @@
-import { NEW_COMMENT, DELETE_COMMENT, SET_POSTS, SET_POSTS_DATA, SET_COVID, LOADING_UI, CLEAR_ERRORS, SET_ERRORS, SET_USER_SELECT, SET_USER_ALLPOSTS, SET_USER_LOCATION, LOADING_DATA, SET_COMMENT } from '../types';
+import { SET_COVID_WEEKDAY, NEW_COMMENT, DELETE_COMMENT, SET_POSTS, SET_POSTS_DATA, SET_COVID, LOADING_UI, CLEAR_ERRORS, SET_ERRORS, SET_USER_SELECT, SET_USER_ALLPOSTS, SET_USER_LOCATION, LOADING_DATA, SET_COMMENT } from '../types';
 import { firestore, storage } from '../../config'
 
 
@@ -37,6 +37,24 @@ export const getCovid = () => (dispatch) => {
         .then((response) => response.json())
         .then(result => {
             dispatch({ type: SET_COVID, payload: result });
+            dispatch({ type: CLEAR_ERRORS });
+        }).catch((error) => {
+            dispatch({ type: SET_ERRORS, payload: "Cannot get covid data" })
+            console.log("Cannot get covid data");
+        })
+}
+
+export const getCovidWeekday = () => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+    fetch("https://covid19.ddc.moph.go.th/api/Cases/timeline-cases-all")
+        .then((response) => response.json())
+        .then(result => {
+            const list = [];
+            for (let i = 1; i < 8; i++) {
+                list.push(result[result.length - i])
+            }
+            
+            dispatch({ type: SET_COVID_WEEKDAY, payload: list });
             dispatch({ type: CLEAR_ERRORS });
         }).catch((error) => {
             dispatch({ type: SET_ERRORS, payload: "Cannot get covid data" })
