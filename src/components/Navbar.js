@@ -31,7 +31,8 @@ const Navbar = () => {
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
-  const closeMobileMenuSignout = () => {
+  const closeMobileMenuSignout = (e) => {
+    e.preventDefault();
     dispatch(logoutUser());
     setClick(false);
   };
@@ -142,26 +143,25 @@ const Navbar = () => {
             : button && (
               <Button buttonStyle="btn--outline">SIGN&nbsp;OUT</Button>
             )}
+
           <>&nbsp;&nbsp;</>
+
           {!state.authenticated ? (
             button && (
               <Link to="/signup">
                 <Button buttonStyle="btn--outline">SIGN&nbsp;UP</Button>
               </Link>
-            )
-          ) : (
-            <></>
-          )}
-          <div className={classes.root}>
-            {state.authenticated ? (
+            ))
+            :
+            (<div className={classes.root}>
               <Link to="/profile" style={{ textDecoration: 'none' }}>
-                {state.image !== null ? <Avatar src={state.image}></Avatar> : 
-                <Avatar className={classes.purple}>{userName ? userName[0] : ''}</Avatar>}
-              </Link>) : ''}
-          </div>
+                {state.image !== null ? <Avatar src={state.image}></Avatar> : <Avatar className={classes.purple}>{userName[0]}</Avatar>}
+              </Link>
+            </div>)}
         </div>
       </nav>
     </>
+
   );
 };
 

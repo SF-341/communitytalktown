@@ -32,6 +32,7 @@ const Home = () => {
     
     useEffect(() => {
         if (currentUser) {
+            console.log(currentUser)
             dispatch(refreshUserData());
             if (isEmpty(data.post)) {
                 dispatch(getPosts());

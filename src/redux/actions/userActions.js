@@ -113,7 +113,6 @@ export const logoutUser = () => (dispatch) => {
     })
 
 
-
 }
 
 export const updateUser = (data) => (dispatch) => {

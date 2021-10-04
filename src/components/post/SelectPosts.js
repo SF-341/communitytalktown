@@ -63,7 +63,7 @@ export default function SelectPosts() {
                         <Button
                             type="button"
                             onClick={() => { dispatch(locationposts()); }}
-                            color="Primary"
+                            color="primary"
                             variant="contained"
                             aria-label="right"
                             padding='auto'

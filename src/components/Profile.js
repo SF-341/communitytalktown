@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
+import { AuthContext } from './Auth'
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Grid, Button, IconButton, styled } from '@material-ui/core';
 import CameraAltOutlined from '@material-ui/icons/CameraAltOutlined';
@@ -19,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 const Profile = () => {
   const dispatch = useDispatch();
   const state = useSelector(state => state.user)
+  const { currentUser } = useContext(AuthContext);
 
   const email = state.email;
   const [firstName, setFirstName] = useState(state.firstname);
@@ -81,12 +83,17 @@ const Profile = () => {
     dispatch(updateUserImage(image))
   }
 
+  
+
   const classes = useStyles();
+
+  if (!currentUser) {
+    return <Redirect to="/login"/>
+  }
 
   return (
 
     <div className="container mt-5">
-      {!state.authenticated ? <Redirect to="/login" /> : ""}
       <><h1>Profile</h1>
         <form className={classes.root} onSubmit={handleSubmit} noValidate autoComplete="off">
           <Grid container spacing={5}>
