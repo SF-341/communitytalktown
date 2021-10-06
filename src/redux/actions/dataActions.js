@@ -1,4 +1,4 @@
-import { SET_COVID_WEEKDAY, NEW_COMMENT, DELETE_COMMENT, SET_POSTS, SET_POSTS_DATA, SET_COVID, LOADING_UI, CLEAR_ERRORS, SET_ERRORS, SET_USER_SELECT, SET_USER_ALLPOSTS, SET_USER_LOCATION, LOADING_DATA, SET_COMMENT } from '../types';
+import { SET_COVID_RANGE, SET_COVID_WEEKDAY, NEW_COMMENT, DELETE_COMMENT, SET_POSTS, SET_POSTS_DATA, SET_COVID, LOADING_UI, CLEAR_ERRORS, SET_ERRORS, SET_USER_SELECT, SET_USER_ALLPOSTS, SET_USER_LOCATION, LOADING_DATA, SET_COMMENT } from '../types';
 import { firestore, storage } from '../../config'
 
 
@@ -55,6 +55,29 @@ export const getCovidWeekday = () => (dispatch) => {
             }
             
             dispatch({ type: SET_COVID_WEEKDAY, payload: list });
+            dispatch({ type: CLEAR_ERRORS });
+        }).catch((error) => {
+            dispatch({ type: SET_ERRORS, payload: "Cannot get covid data" })
+            console.log("Cannot get covid data");
+        })
+}
+
+export const getCovidRanges = () => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+    fetch("https://covidapi.wonyus.repl.co/range")
+        .then((response) => response.json())
+        .then(result => {
+            const list = [];
+            
+            list.push({'name': '<15', 'uv': result['<15'], 'pv': (result['<15']), 'fill': '#8884d8' })
+            list.push({'name': '15-29', 'uv': result['15-29'], 'pv': (result['15-29']), 'fill': '#83a6ed' })
+            list.push({'name': '30-49', 'uv': result['30-49'], 'pv': (result['30-49']), 'fill': '#8dd1e1' })
+            list.push({'name': '50-69', 'uv': result['50-69'], 'pv': (result['50-69']), 'fill': '#82ca9d' })
+            list.push({'name': '>70', 'uv': result['>70'], 'pv': (result['>70']), 'fill': '#a4de6c' })
+            list.push({'name': 'unknow', 'uv': result['unknow'], 'pv': (result['unknow']), 'fill': '#d0ed57' })
+            
+
+            dispatch({ type: SET_COVID_RANGE, payload: list });
             dispatch({ type: CLEAR_ERRORS });
         }).catch((error) => {
             dispatch({ type: SET_ERRORS, payload: "Cannot get covid data" })

@@ -30,6 +30,7 @@ export const NEW_COMMENT = 'NEW_COMMENT'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
 export const SET_COMMENT = 'SET_COMMENT'
 export const SET_COVID_WEEKDAY = 'SET_COVID_WEEKDAY'
+export const SET_COVID_RANGE = 'SET_COVID_RANGE'
 
 // Address reducer types
 export const SET_ADDRESS_LOADING = 'SET_ADDRESS_LOADING'

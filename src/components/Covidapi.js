@@ -9,7 +9,7 @@ import { BarChart, RadialBarChart, RadialBar, ComposedChart, Line, Area, Bar, Ce
 
 // Redux stuff
 import { useSelector, useDispatch } from "react-redux";
-import { getCovid, getCovidWeekday } from "../redux/actions/dataActions";
+import { getCovid, getCovidWeekday, getCovidRanges } from "../redux/actions/dataActions";
 import { isEmpty } from "lodash";
 
 const useStyles = makeStyles((theme) => ({
@@ -75,87 +75,7 @@ const style = {
 const Covidapi = () => {
   const dispatch = useDispatch();
   const state = useSelector(state => state.data)
-  const data1 = [
-    {
-      name: 'Page A',
-      New_Death: 4000,
-      New_Case: 2400,
-    },
-    {
-      name: 'Page B',
-      New_Death: 3000,
-      New_Case: 1398,
-    },
-    {
-      name: 'Page C',
-      New_Death: 2000,
-      New_Case: 9800,
-    },
-    {
-      name: 'Page D',
-      New_Death: 2780,
-      New_Case: 3908,
-    },
-    {
-      name: 'Page E',
-      New_Death: 1890,
-      New_Case: 4800,
-    },
-    {
-      name: 'Page F',
-      New_Death: 2390,
-      New_Case: 3800,
-    },
-    {
-      name: 'Page G',
-      New_Death: 3490,
-      New_Case: 4300,
-    },
-  ];
-  const data2 = [
-    {
-      name: '18-24',
-      uv: 31.47,
-      pv: 2400,
-      fill: '#8884d8',
-    },
-    {
-      name: '25-29',
-      uv: 26.69,
-      pv: 4567,
-      fill: '#83a6ed',
-    },
-    {
-      name: '30-34',
-      uv: 15.69,
-      pv: 1398,
-      fill: '#8dd1e1',
-    },
-    {
-      name: '35-39',
-      uv: 8.22,
-      pv: 9800,
-      fill: '#82ca9d',
-    },
-    {
-      name: '40-49',
-      uv: 8.63,
-      pv: 3908,
-      fill: '#a4de6c',
-    },
-    {
-      name: '50+',
-      uv: 2.63,
-      pv: 4800,
-      fill: '#d0ed57',
-    },
-    {
-      name: 'unknow',
-      uv: 6.67,
-      pv: 4800,
-      fill: '#ffc658',
-    },
-  ];
+  
   const data3 = [
     {
       name: 'Page A',
@@ -205,15 +125,16 @@ const Covidapi = () => {
 
   useEffect(() => {
     if (isEmpty(state.covid)) {
-      dispatch(getCovid())
-      dispatch(getCovidWeekday())
+      dispatch(getCovid());
+      dispatch(getCovidWeekday());
+      dispatch(getCovidRanges());
+      
     }
 
   }, [])
 
 
   const classes = useStyles();
-
 
   return (
     <><div>
@@ -303,7 +224,7 @@ const Covidapi = () => {
             <Grid item xs={12} sm={6}>
             <Paper className={classes.paper}>
             <ResponsiveContainer width="100%" height={300}>
-            <RadialBarChart cx="50%" cy="50%" innerRadius="10%" outerRadius="80%" barSize={10} data={data2}>
+            <RadialBarChart cx="50%" cy="50%" innerRadius="10%" outerRadius="80%" barSize={10} data={state.covid_range}>
               <RadialBar
                 minAngle={15}
                 label={{ position: 'insideStart', fill: '#fff' }}

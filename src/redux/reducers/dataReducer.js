@@ -1,9 +1,10 @@
-import { SET_COVID_WEEKDAY, NEW_COMMENT, DELETE_COMMENT, SET_POSTS, SET_COVID, LOADING_DATA, LIKE_POST, UNLIKE_POST, SET_USER_SELECT, SET_USER_ALLPOSTS, SET_USER_LOCATION, SET_COMMENT } from '../types'
+import { SET_COVID_RANGE, SET_COVID_WEEKDAY, NEW_COMMENT, DELETE_COMMENT, SET_POSTS, SET_COVID, LOADING_DATA, LIKE_POST, UNLIKE_POST, SET_USER_SELECT, SET_USER_ALLPOSTS, SET_USER_LOCATION, SET_COMMENT } from '../types'
 
 const initialState = {
     posts: [],
     covid: [],
     covid_weekday: [],
+    covid_range: [],
     comments: [],
     loading: false,
     showallposts: true,
@@ -34,6 +35,12 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 covid_weekday: action.payload,
+                loading: false
+            }
+        case SET_COVID_RANGE:
+            return {
+                ...state,
+                covid_range: action.payload,
                 loading: false
             }
         case LIKE_POST:
