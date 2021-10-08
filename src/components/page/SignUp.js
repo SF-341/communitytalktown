@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
-import firebaseConfig from '../config'
+import firebaseConfig from '../../config'
 import { v4 as uuidv4 } from 'uuid'
 
 
@@ -13,8 +13,8 @@ import Select from '@material-ui/core/Select';
 
 //Redux stuff
 import { useSelector, useDispatch } from 'react-redux'
-import { register } from '../redux/actions/userActions';
-import { getProvinces, getDistrict, getSubDistrict } from '../redux/actions/addressAction'
+import { register } from '../../redux/actions/userActions';
+import { getProvinces, getDistrict, getSubDistrict } from '../../redux/actions/addressAction'
 
 
 const useStyles = makeStyles((theme) => ({

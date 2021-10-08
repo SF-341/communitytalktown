@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { AuthContext } from './Auth'
-import './Button.css';
+import './css/Button.css';
 
 // Redux stuff
 import { logoutUser } from "../redux/actions/userActions"

@@ -5,7 +5,7 @@ import Avatar from "@material-ui/core/Avatar";
 import { deepPurple } from "@material-ui/core/colors";
 import { Button } from "./Button";
 import { Link } from "react-router-dom";
-import "./Navbar.css";
+import "./css/Navbar.css";
 
 
 // Redux stuff

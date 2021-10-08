@@ -41,7 +41,8 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: '70%',
         width: 'auto',
         fit: 'crop',
-        auto: 'format'
+        auto: 'format',
+        backgroundSize : 'contain',
     },
     expand: {
         transform: 'rotate(0deg)',

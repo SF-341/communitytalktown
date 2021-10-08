@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { AuthProvider } from './components/Auth'
-import Home from './components/Home'
-import Dashboard from './components/Dashboard'
-import LogIn from './components/LogIn'
-import SignUp from './components/SignUp'
-import Covidapi from './components/Covidapi'
+import Home from './components/page/Home'
+import Dashboard from './components/page/Dashboard'
+import LogIn from './components/page/LogIn'
+import SignUp from './components/page/SignUp'
 import Navbar from './components/Navbar'
-import Profile from './components/Profile'
-import ResetPass from './components/ResetPass'
+import Profile from './components/page/Profile'
+import ResetPass from './components/page/ResetPass'
 
 
 // Redux 
@@ -29,7 +28,6 @@ function App() {
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/login" component={LogIn} />
             <Route exact path="/signup" component={SignUp} />
-            <Route exact path="/covidapi" component={Covidapi} />
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/resetpass" component={ResetPass} />
             

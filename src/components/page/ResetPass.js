@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Redirect } from "react-router-dom";
-import firebaseConfig from "../config";
+import firebaseConfig from "../../config";
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Grid, Button, Card, } from '@material-ui/core';
 

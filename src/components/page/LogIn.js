@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Redirect, Link } from "react-router-dom";
-import { AuthContext } from "./Auth";
+import { AuthContext } from "../Auth";
 
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,8 +9,8 @@ import { TextField, Grid, Button, Card, FormHelperText, FormControl } from '@mat
 
 // Redux stuff
 import { useSelector, useDispatch } from "react-redux";
-import { loginUser } from "../redux/actions/userActions";
-import { getCovid } from "../redux/actions/dataActions";
+import { loginUser } from "../../redux/actions/userActions";
+import { getCovid } from "../../redux/actions/dataActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -84,6 +84,8 @@ export const getUserData = () => (dispatch) => {
 }
 
 export const refreshUserData = () => (dispatch) => {
+    dispatch({ type: LOADING_UI })
+
     const IdToken = localStorage.getItem('IdToken');
     const documentRef = firestore.doc("User/" + IdToken);
     try {
@@ -93,6 +95,9 @@ export const refreshUserData = () => (dispatch) => {
                 type: SET_USER_REFRESH,
                 payload: data
             })
+            dispatch({
+                type: CLEAR_ERRORS
+            });
         });
     } catch (error) {
         dispatch({ type: SET_ERRORS, payload: error.message });

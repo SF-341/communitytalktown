@@ -1,18 +1,17 @@
 import React, { useContext, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
-import { AuthContext } from './Auth'
-import CreatePost from './post/CreatePost'
-import CreateComment from './post/CreateComment'
-import SelectPosts from './post/SelectPosts'
-// import RenderPost from './RenderPost'
+import { AuthContext } from '../Auth'
 
-import Post from './post/Post'
+//posts
+import CreatePost from '../post/CreatePost'
+import SelectPosts from '../post/SelectPosts'
+import Post from '../post/Post'
 
 // Redux stuff
 import { useSelector, useDispatch } from "react-redux";
-import { getPosts } from "../redux/actions/dataActions";
-import { refreshUserData } from "../redux/actions/userActions";
-import Loading from './UI/Loading'
+import { getPosts } from "../../redux/actions/dataActions";
+import { refreshUserData } from "../../redux/actions/userActions";
+import Loading from '../UI/Loading'
 import { isEmpty } from 'lodash'
 
 
