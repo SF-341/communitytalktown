@@ -73,7 +73,7 @@ const Post = ({ dataPost }) => {
     const dispatch = useDispatch();
     const state = useSelector(state => state.user)
 
-    
+
 
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
     const title = dataPost.title;
@@ -82,6 +82,8 @@ const Post = ({ dataPost }) => {
     const createAt = dataPost.createAt.toDate().toLocaleString('en-US', options);
     const imageSrc = dataPost.image;
     const likecount = dataPost.likecount;
+    const commentcount = dataPost.commentcount;
+    const userimage = dataPost.userimage;
     const checkDelete = state.authenticated && dataPost.email == state.email;
 
     const [open, setOpen] = useState(false);
@@ -139,9 +141,9 @@ const Post = ({ dataPost }) => {
         <><div className={classes.space}>
             <Card className={classes.root}>
                 <CardHeader
-                    avatar={<Avatar aria-label="recipe" className={classes.avatar}>
-                        <h1>U</h1>
-                    </Avatar>}
+
+
+                    avatar={userimage !== null ? <Avatar src={userimage}></Avatar> : <Avatar className={classes.avatar}>{username[0]}</Avatar>}
                     title={username}
                     subheader={createAt} />
 
@@ -179,6 +181,8 @@ const Post = ({ dataPost }) => {
                         <IconButton aria-label="DeleteIcon" onClick={deletePost}>
                             <DeleteIcon fontSize="large" />
                         </IconButton> : ''}
+                        
+                    
                     <IconButton
                         className={clsx(classes.expand, {
                             [classes.expandOpen]: expanded,
@@ -188,7 +192,9 @@ const Post = ({ dataPost }) => {
                         aria-label="comment"
                     >
                         <QuestionAnswerOutlinedIcon />
+                        <span>&nbsp;&nbsp;&nbsp;{commentcount}</span>
                     </IconButton>
+                    
                 </CardActions>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
@@ -200,9 +206,9 @@ const Post = ({ dataPost }) => {
                 </Collapse>
             </Card>
         </div>
-            
+
         </>
-    )   
+    )
 }
 
 export default Post;

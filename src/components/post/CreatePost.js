@@ -43,6 +43,7 @@ const CreatePost = () => {
             email: state.email,
             username: state.username,
             image,
+            userimage:state.image,
             createAt: new Date(),
             likecount: 0,
             commentcount: 0,

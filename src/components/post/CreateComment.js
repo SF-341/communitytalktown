@@ -32,7 +32,6 @@ export default function CreateComment({ postId }) {
     }
 
     function handleSubmit(e) {
-        console.log(image)
         e.preventDefault();
         const newComment = {
             id: uuidv4(),
