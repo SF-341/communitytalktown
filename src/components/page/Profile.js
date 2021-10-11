@@ -153,6 +153,7 @@ const Profile = () => {
                             <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => setUploadProfile(true)}>
                               <CameraAltOutlined />
                             </IconButton>
+                            &nbsp;&nbsp;&nbsp;{image && image.type}
                           </label>
 
                           {uploadProfile ? <Button onClick={updateImage} type="button" color="primary" aria-label="updateImg">SAVE</Button> : ""}

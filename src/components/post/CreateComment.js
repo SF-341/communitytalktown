@@ -83,18 +83,20 @@ export default function CreateComment({ postId }) {
                     placeholder="Comment"
 
                 />
+                
             </Grid>
             <Grid item xs={2} sm={2}>
-
+            {image && image.type}
                 <label htmlFor="icon-button-file">
-                    <Input accept="image/*" id="icon-button-file" type="file" onChange={handleChange} name="image"/>
-                    <IconButton  color="primary" aria-label="upload picture" component="span" >
+                    <Input accept="image/*" id="icon-button-file" type="file" onChange={handleChange} name="image" />
+                    <IconButton color="primary" aria-label="upload picture" component="span" >
                         <CameraAltOutlined />
                     </IconButton>
-                </label>
 
+                </label>
+                
                 <label htmlFor="icon-button">
-                    <IconButton  color="primary" type="submit" aria-label="upload picture" component="span" onClick={handleSubmit} >
+                    <IconButton color="primary" type="submit" aria-label="upload picture" component="span" onClick={handleSubmit} >
                         <SendRounded />
                     </IconButton>
                 </label>
