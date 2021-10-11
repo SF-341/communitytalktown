@@ -29,14 +29,15 @@ const useStyles = makeStyles((theme) => ({
     root: {
         margin: 'auto',
         maxWidth: 700,
-
+        
     },
     media: {
         height: 20,
         paddingTop: '30%',
         width: 300,
         auto: 'format',
-        paddingLeft: '10px'
+        paddingLeft: '10px',
+        backgroundSize: 'contain',
 
     },
     expand: {
@@ -73,7 +74,9 @@ const useStyles = makeStyles((theme) => ({
         flex: 1,
     },
     img:{
-        paddingLeft: "20%"
+        paddingLeft: "20%",
+        paddingBottom: "15px",
+
     }
 }));
 
