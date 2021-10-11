@@ -1,6 +1,4 @@
-import React, { useState, useContext, useEffect, useReducer } from 'react'
-import firebaseConfig, { firestore, storage } from '../../config'
-
+import React, { useState, useEffect } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -13,7 +11,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
 import DeleteIcon from '@material-ui/icons/Delete';
 import clsx from 'clsx';
 import QuestionAnswerOutlinedIcon from '@material-ui/icons/QuestionAnswerOutlined';
@@ -25,7 +22,6 @@ import Backdrop from '@material-ui/core/Backdrop';
 import { Like, UnLike } from '../../redux/actions/likeActions'
 import { getComment } from '../../redux/actions/dataActions'
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from 'react-router-dom';
 
 import CreateComment from './CreateComment'
 import RenderComment from './RenderComment'
@@ -42,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
         width: 'auto',
         fit: 'crop',
         auto: 'format',
-        backgroundSize : 'contain',
+        backgroundSize: 'contain',
     },
     expand: {
         transform: 'rotate(0deg)',
@@ -68,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
         color: '#fff',
         zIndex: theme.zIndex.drawer + 1
     },
-    imgBackdrop:{
+    imgBackdrop: {
         height: "80%"
     }
 }));
@@ -77,17 +73,16 @@ const Post = ({ dataPost }) => {
     const dispatch = useDispatch();
     const state = useSelector(state => state.user)
 
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+    
 
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
     const title = dataPost.title;
     const details = dataPost.details;
     const username = dataPost.username;
-
     const createAt = dataPost.createAt.toDate().toLocaleString('en-US', options);
     const imageSrc = dataPost.image;
     const likecount = dataPost.likecount;
     const checkDelete = state.authenticated && dataPost.email == state.email;
-
 
     const [open, setOpen] = useState(false);
     const handleClose = () => {
@@ -96,6 +91,10 @@ const Post = ({ dataPost }) => {
     const handleToggle = () => {
         setOpen(!open);
     };
+
+    function loadMore() {
+
+    }
 
     function likedPost() {
         if (state.likes && state.likes.find((like) => dataPost.id === like.postid)) {
@@ -113,7 +112,7 @@ const Post = ({ dataPost }) => {
         dispatch(UnLike(dataPost.id))
     }
 
-    
+
 
     const likeButton = likedPost() ?
         (<IconButton aria-label="add to favorites" onClick={handleUnLike} >
@@ -128,8 +127,7 @@ const Post = ({ dataPost }) => {
     };
 
     function deletePost() {
-        const documentRef = firestore.doc("Posts/" + dataPost.id);
-        documentRef.delete();
+        dispatch(deletePost(dataPost.id))
     }
 
     useEffect(() => {
@@ -157,9 +155,9 @@ const Post = ({ dataPost }) => {
                         open={open}
                         onClick={handleClose}
                     >
-                        <img 
-                        className={classes.imgBackdrop}
-                        src={imageSrc} />
+                        <img
+                            className={classes.imgBackdrop}
+                            src={imageSrc} />
                     </Backdrop></>
 
                 )
@@ -176,9 +174,6 @@ const Post = ({ dataPost }) => {
                 <CardActions disableSpacing>
                     {likeButton}
                     <span>{likecount}</span>
-                    <IconButton aria-label="share">
-                        <ShareIcon />
-                    </IconButton>
 
                     {checkDelete ?
                         <IconButton aria-label="DeleteIcon" onClick={deletePost}>
@@ -204,8 +199,10 @@ const Post = ({ dataPost }) => {
                     </CardContent>
                 </Collapse>
             </Card>
-        </div></>
-    )
+        </div>
+            
+        </>
+    )   
 }
 
 export default Post;

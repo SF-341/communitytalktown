@@ -41,6 +41,7 @@ const Profile = () => {
   const [lastName, setLastName] = useState(state.lastname);
   const [userName, setUserName] = useState(state.username);
   const [submit, setSubmit] = useState(true);
+  const [uploadProfile, setUploadProfile] = useState(false);
   const [text, setText] = useState(true);
   const [image, setImage] = useState(state.image);
 
@@ -94,6 +95,7 @@ const Profile = () => {
       dispatch(refreshUserData());
 
     }
+
   }, [])
 
 
@@ -142,17 +144,18 @@ const Profile = () => {
                               src={state.image}
                             />
                           </div>
+
                           <h5 className="card-title">
                             wonyus
                           </h5>
-
                           <label htmlFor="icon-button-file">
                             <Input accept="image/*" id="icon-button-file" type="file" onChange={handleChange} name="image" />
-                            <IconButton color="primary" aria-label="upload picture" component="span" >
+                            <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => setUploadProfile(true)}>
                               <CameraAltOutlined />
                             </IconButton>
                           </label>
-                          <Button onClick={updateImage} type="button" color="primary" aria-label="updateImg">Submit</Button>
+
+                          {uploadProfile ? <Button onClick={updateImage} type="button" color="primary" aria-label="updateImg">SAVE</Button> : ""}
 
                         </div>
                       </div>

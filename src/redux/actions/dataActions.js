@@ -53,7 +53,7 @@ export const getCovidWeekday = () => (dispatch) => {
             for (let i = 1; i < 8; i++) {
                 list.push(result[result.length - i])
             }
-            
+
             dispatch({ type: SET_COVID_WEEKDAY, payload: list });
             dispatch({ type: CLEAR_ERRORS });
         }).catch((error) => {
@@ -68,14 +68,14 @@ export const getCovidRanges = () => (dispatch) => {
         .then((response) => response.json())
         .then(result => {
             const list = [];
-            
-            list.push({'name': '<15', 'uv': result['<15'], 'pv': (result['<15']), 'fill': '#8884d8' })
-            list.push({'name': '15-29', 'uv': result['15-29'], 'pv': (result['15-29']), 'fill': '#83a6ed' })
-            list.push({'name': '30-49', 'uv': result['30-49'], 'pv': (result['30-49']), 'fill': '#8dd1e1' })
-            list.push({'name': '50-69', 'uv': result['50-69'], 'pv': (result['50-69']), 'fill': '#82ca9d' })
-            list.push({'name': '>70', 'uv': result['>70'], 'pv': (result['>70']), 'fill': '#a4de6c' })
-            list.push({'name': 'unknow', 'uv': result['unknow'], 'pv': (result['unknow']), 'fill': '#d0ed57' })
-            
+
+            list.push({ 'name': '<15', 'uv': result['<15'], 'pv': (result['<15']), 'fill': '#8884d8' })
+            list.push({ 'name': '15-29', 'uv': result['15-29'], 'pv': (result['15-29']), 'fill': '#83a6ed' })
+            list.push({ 'name': '30-49', 'uv': result['30-49'], 'pv': (result['30-49']), 'fill': '#8dd1e1' })
+            list.push({ 'name': '50-69', 'uv': result['50-69'], 'pv': (result['50-69']), 'fill': '#82ca9d' })
+            list.push({ 'name': '>70', 'uv': result['>70'], 'pv': (result['>70']), 'fill': '#a4de6c' })
+            list.push({ 'name': 'unknow', 'uv': result['unknow'], 'pv': (result['unknow']), 'fill': '#d0ed57' })
+
 
             dispatch({ type: SET_COVID_RANGE, payload: list });
             dispatch({ type: CLEAR_ERRORS });
@@ -115,11 +115,11 @@ export const createPost = (newPost) => async (dispatch) => {
     }
 }
 
-export const deletePost = (id) => (dispatch) => {
-    dispatch({ type: LOADING_UI });
-    const documentRef = firestore.doc("Posts/" + id);
+export const deletePost = (postId) => (dispatch) => {
+    dispatch({ type: LOADING_UI })
+    const documentRef = firestore.doc("Posts/" + postId);
     documentRef.delete();
-    dispatch({ type: CLEAR_ERRORS });
+    dispatch({ type:CLEAR_ERRORS })
 }
 
 export const createComment = (newComment) => async (dispatch) => {
@@ -281,3 +281,4 @@ export const locationposts = () => (dispatch) => {
     dispatch({ type: SET_USER_LOCATION })
     dispatch({ type: CLEAR_ERRORS });
 }
+
