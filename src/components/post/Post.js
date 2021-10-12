@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import firebaseConfig, { firestore, storage } from '../../config'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -76,6 +77,7 @@ const Post = ({ dataPost }) => {
 
 
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+    const id = dataPost.id;
     const title = dataPost.title;
     const details = dataPost.details;
     const username = dataPost.username;
@@ -128,8 +130,9 @@ const Post = ({ dataPost }) => {
         setExpanded(!expanded);
     };
 
-    function deletePost() {
-        dispatch(deletePost(dataPost.id))
+    const deletePost = () => {
+        const documentRef = firestore.doc(`Posts/${dataPost.id}`);
+        documentRef.delete();
     }
 
     useEffect(() => {
@@ -181,8 +184,8 @@ const Post = ({ dataPost }) => {
                         <IconButton aria-label="DeleteIcon" onClick={deletePost}>
                             <DeleteIcon fontSize="large" />
                         </IconButton> : ''}
-                        
-                    
+
+
                     <IconButton
                         className={clsx(classes.expand, {
                             [classes.expandOpen]: expanded,
@@ -194,7 +197,7 @@ const Post = ({ dataPost }) => {
                         <QuestionAnswerOutlinedIcon />
                         <span>&nbsp;&nbsp;&nbsp;{commentcount}</span>
                     </IconButton>
-                    
+
                 </CardActions>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>

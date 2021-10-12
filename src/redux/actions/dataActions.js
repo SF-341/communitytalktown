@@ -117,7 +117,7 @@ export const createPost = (newPost) => async (dispatch) => {
 
 export const deletePost = (postId) => (dispatch) => {
     dispatch({ type: LOADING_UI })
-    const documentRef = firestore.doc("Posts/" + postId);
+    const documentRef = firestore.doc(`Posts/${postId}`);
     documentRef.delete();
     dispatch({ type:CLEAR_ERRORS })
 }
