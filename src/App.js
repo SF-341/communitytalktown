@@ -8,6 +8,7 @@ import SignUp from './components/page/SignUp'
 import Navbar from './components/Navbar'
 import Profile from './components/page/Profile'
 import ResetPass from './components/page/ResetPass'
+import Contact from './components/page/Contact'
 
 
 // Redux 
@@ -30,7 +31,8 @@ function App() {
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/resetpass" component={ResetPass} />
-            
+            <Route exact path="/contact" component={Contact} />
+
           </Switch>
         </Router>
       </Provider>
