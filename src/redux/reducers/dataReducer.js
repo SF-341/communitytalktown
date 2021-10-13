@@ -1,4 +1,4 @@
-import { SET_COVID_RANGE, SET_COVID_WEEKDAY, NEW_COMMENT, DELETE_COMMENT, SET_POSTS, SET_COVID, LOADING_DATA, LIKE_POST, UNLIKE_POST, SET_USER_SELECT, SET_USER_ALLPOSTS, SET_USER_LOCATION, SET_COMMENT } from '../types'
+import { SET_COVID_RANGE, SET_COVID_WEEKDAY, NEW_COMMENT, DELETE_COMMENT, SET_POSTS, CREATE_POST, DELETE_POST, SET_COVID, LOADING_DATA, LIKE_POST, UNLIKE_POST, SET_USER_SELECT, SET_USER_ALLPOSTS, SET_USER_LOCATION, SET_COMMENT } from '../types'
 
 const initialState = {
     posts: [],
@@ -24,6 +24,18 @@ export default function (state = initialState, action) {
                 ...state,
                 posts: [...action.payload],
                 loading: false
+            }
+        case CREATE_POST:
+            state.posts = [action.payload, ...state.posts];
+            return {
+                ...state,
+            }
+        case DELETE_POST:
+            let tempPost = state.posts.filter((post) => post.id !== action.payload.id);
+            state.posts = [...tempPost];
+
+            return {
+                ...state,
             }
         case SET_COVID:
             return {
@@ -79,13 +91,13 @@ export default function (state = initialState, action) {
             let updatepost0 = action.payload.postdata;
             delete updatepost0.commentid;
             state.posts[indexpost0] = updatepost0;
-            
+
             const indexcomment = state.comments.findIndex((comment) => comment[0].postid === action.payload.postdata.id);
-            console.log(action.payload.postdata.id)
+
             if (indexcomment !== -1) {
                 let updatecomment = [action.payload.newcomment, ...state.comments[indexcomment]]
                 state.comments[indexcomment] = updatecomment
-            }else{
+            } else {
                 let updatecomment1 = [action.payload.newcomment]
                 state.comments.push(updatecomment1);
             }
@@ -94,7 +106,6 @@ export default function (state = initialState, action) {
             }
 
         case DELETE_COMMENT:
-            console.log(action.payload)
             let indexpost = state.posts.findIndex((post) => post.id === action.payload.postdata.id);
             let updatepost = action.payload.postdata;
             state.posts[indexpost] = updatepost;
@@ -103,15 +114,14 @@ export default function (state = initialState, action) {
             if (index1 !== -1) {
                 let temp = state.comments[index1];
                 const updatecommentdelete = temp.findIndex(comment => comment.id === action.payload.comment.id)
-                
+
                 let updatecomment = temp.filter(comment => comment.id !== action.payload.comment.id);
-                console.log(updatecomment)
-                if (updatecomment.length <= 0){
+                if (updatecomment.length <= 0) {
                     state.comments.splice(index1, 1);
-                }else{
+                } else {
                     state.comments[index1] = updatecomment;
                 }
-                
+
             }
             return {
                 ...state

@@ -32,8 +32,11 @@ const Home = () => {
     useEffect(() => {
         if (currentUser) {
             console.log(currentUser)
-            dispatch(refreshUserData());
-            if (isEmpty(data.post)) {
+            if (!user.authenticated){
+                dispatch(refreshUserData());
+            }
+            if (isEmpty(data.posts)) {
+                console.log("1");
                 dispatch(getPosts());
             }
         }

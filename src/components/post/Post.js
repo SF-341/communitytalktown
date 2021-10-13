@@ -21,7 +21,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 
 // Redux stuff
 import { Like, UnLike } from '../../redux/actions/likeActions'
-import { getComment } from '../../redux/actions/dataActions'
+import { getComment, deletePost } from '../../redux/actions/dataActions'
 import { useSelector, useDispatch } from "react-redux";
 
 import CreateComment from './CreateComment'
@@ -130,9 +130,10 @@ const Post = ({ dataPost }) => {
         setExpanded(!expanded);
     };
 
-    const deletePost = () => {
-        const documentRef = firestore.doc(`Posts/${dataPost.id}`);
-        documentRef.delete();
+    const delPost = () => {
+        dispatch(deletePost(dataPost.id));
+        // const documentRef = firestore.doc(`Posts/${dataPost.id}`);
+        // documentRef.delete();
     }
 
     useEffect(() => {
@@ -181,7 +182,7 @@ const Post = ({ dataPost }) => {
                     <span>{likecount}</span>
 
                     {checkDelete ?
-                        <IconButton aria-label="DeleteIcon" onClick={deletePost}>
+                        <IconButton aria-label="DeleteIcon" onClick={delPost}>
                             <DeleteIcon fontSize="large" />
                         </IconButton> : ''}
 

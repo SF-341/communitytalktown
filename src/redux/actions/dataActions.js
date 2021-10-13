@@ -1,4 +1,4 @@
-import { SET_COVID_RANGE, SET_COVID_WEEKDAY, NEW_COMMENT, DELETE_COMMENT, SET_POSTS, SET_POSTS_DATA, SET_COVID, LOADING_UI, CLEAR_ERRORS, SET_ERRORS, SET_USER_SELECT, SET_USER_ALLPOSTS, SET_USER_LOCATION, LOADING_DATA, SET_COMMENT } from '../types';
+import { CREATE_POST, DELETE_POST, SET_COVID_RANGE, SET_COVID_WEEKDAY, NEW_COMMENT, DELETE_COMMENT, SET_POSTS, SET_POSTS_DATA, SET_COVID, LOADING_UI, CLEAR_ERRORS, SET_ERRORS, SET_USER_SELECT, SET_USER_ALLPOSTS, SET_USER_LOCATION, LOADING_DATA, SET_COMMENT } from '../types';
 import { firestore, storage } from '../../config'
 
 
@@ -103,7 +103,7 @@ export const createPost = (newPost) => async (dispatch) => {
             });
             newPost.image = Url;
         }
-
+        dispatch({ type: CREATE_POST, payload: newPost })
         await refPost
             .doc(newPost.id)
             .set(newPost)
@@ -119,7 +119,8 @@ export const deletePost = (postId) => (dispatch) => {
     dispatch({ type: LOADING_UI })
     const documentRef = firestore.doc(`Posts/${postId}`);
     documentRef.delete();
-    dispatch({ type:CLEAR_ERRORS })
+    dispatch({ type: DELETE_POST, payload: { id: postId } });
+    dispatch({ type: CLEAR_ERRORS })
 }
 
 export const createComment = (newComment) => async (dispatch) => {
