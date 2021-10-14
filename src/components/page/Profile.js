@@ -146,7 +146,7 @@ const Profile = () => {
                           </div>
 
                           <h5 className="card-title">
-                            wonyus
+                            {state.firstname}
                           </h5>
                           <label htmlFor="icon-button-file">
                             <Input accept="image/*" id="icon-button-file" type="file" onChange={handleChange} name="image" />
