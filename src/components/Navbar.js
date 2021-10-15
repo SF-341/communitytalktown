@@ -1,11 +1,23 @@
 import React, { useContext, useState, useEffect } from "react";
 
-import { makeStyles } from "@material-ui/core/styles";
+
 import Avatar from "@material-ui/core/Avatar";
 import { deepPurple } from "@material-ui/core/colors";
 import { Button } from "./Button";
 import { Link } from "react-router-dom";
 import "./css/Navbar.css";
+
+import { ColorModeContext, MyApp } from './UI/Colormode'
+
+import IconButton from '@material-ui/core/IconButton';
+import { useTheme, ThemeProvider, createTheme, makeStyles } from '@material-ui/core/styles';
+import { TextField, Grid, Card, FormHelperText, FormControl, Box, Paper, Typography } from '@material-ui/core';
+
+
+import Brightness4Icon from '@material-ui/icons/Brightness4';
+import Brightness7Icon from '@material-ui/icons/Brightness7';
+import { blueGrey, grey } from '@mui/material/colors';
+
 
 
 // Redux stuff
@@ -20,6 +32,9 @@ const Navbar = () => {
   const [button, setButton] = useState(true);
   // const [isLoading, setIsLoading] = useState(true);
   const userName = state.username;
+
+  const theme = useTheme();
+  const colorMode = useContext(ColorModeContext);
 
 
   // if (isLoading) {
@@ -56,8 +71,8 @@ const Navbar = () => {
     root: {
       display: "flex",
       "& > *": {
-        margin: theme.spacing(2),
       },
+      margin: theme.spacing(2),
     },
     purple: {
       color: theme.palette.getContrastText(deepPurple[500]),
@@ -65,25 +80,49 @@ const Navbar = () => {
       width: theme.spacing(6),
       height: theme.spacing(6),
     },
+    bgcolor: {
+      backgroundColor: theme.palette.mode === "dark" ? grey[900] : grey[600],
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      fontSize: '1.2rem',
+      position: 'sticky',
+      top: 0,
+      zIndex: 999,
+
+    },
+    menuIcon: {
+      alignItems: "right",
+    }
   }));
 
   const classes = useStyles();
 
   return (
     <>
-      <nav className="navbar">
+
+      <nav className={classes.bgcolor}>
         <div className="navbar-container">
           <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
             CMTT&nbsp;
             <i className="far fa-comment" />
           </Link>
+
+          {!button ? (
+            <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
+              {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+            </IconButton>
+          ) : ''}
+
+
           <div className="menu-icon" onClick={handleClick}>
             <i className={click ? "fas fa-times" : "fas fa-bars"} />
           </div>
+
           <ul className={click ? "nav-menu active" : "nav-menu"}>
             <li className="nav-item">
               <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-                Home
+                <Typography>Home</Typography>
               </Link>
             </li>
             <li className="nav-item">
@@ -92,7 +131,8 @@ const Navbar = () => {
                 className="nav-links"
                 onClick={closeMobileMenu}
               >
-                Dashboard
+                <Typography>Dashboard</Typography>
+
               </Link>
             </li>
             <li className="nav-item">
@@ -101,7 +141,8 @@ const Navbar = () => {
                 className="nav-links"
                 onClick={closeMobileMenu}
               >
-                Contacts
+                <Typography>Contacts</Typography>
+
               </Link>
             </li>
 
@@ -134,6 +175,13 @@ const Navbar = () => {
             </li>
           </ul>
 
+
+          {button ? (<IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
+            {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+          </IconButton>) : ''}
+
+
+
           {!state.authenticated
             ? button && (
               <Link to="/login">
@@ -160,6 +208,8 @@ const Navbar = () => {
             </div>)}
         </div>
       </nav>
+
+
     </>
 
   );

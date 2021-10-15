@@ -117,9 +117,9 @@ const SignUp = () => {
                 <h1>Sign Up</h1>
                 <form onSubmit={handleSubmit} className={classes.root} noValidate autoComplete="off">
                     <Grid container spacing={3}>
-                        <Grid item xs><TextField type="text" label="Name" name="name" className="form-control" onChange={handleChange} required /></Grid>
-                        <Grid item xs><TextField label="Lastname" name="lastname" className="form-control" onChange={handleChange} required /></Grid>
-                        <Grid item xs><TextField type="text" label="Username" name="username" className="form-control" onChange={handleChange} required /></Grid>
+                        <Grid item xs><TextField type="text" label="Name" name="name"  onChange={handleChange} required /></Grid>
+                        <Grid item xs><TextField label="Lastname" name="lastname"  onChange={handleChange} required /></Grid>
+                        <Grid item xs><TextField type="text" label="Username" name="username"  onChange={handleChange} required /></Grid>
                     </Grid>
 
                     <Grid container spacing={3}>
@@ -154,11 +154,11 @@ const SignUp = () => {
                     </Grid>
 
                     <Grid container spacing={3}>
-                        <Grid item xs><TextField type="email" label="Email address" name="email" className="form-control" onChange={handleChange} required /></Grid>
-                        <Grid item xs><TextField error={!UI.loading && UI.error != null} type="password" label="Password" name="password" className="form-control" onChange={handleChange} required />
+                        <Grid item xs><TextField type="email" label="Email address" name="email"  onChange={handleChange} required /></Grid>
+                        <Grid item xs><TextField error={!UI.loading && UI.error != null} type="password" label="Password" name="password"  onChange={handleChange} required />
                             {!UI.loading && UI.error != null ? <FormHelperText error id="component-error-text">{UI.error}</FormHelperText> : ''}
                         </Grid>
-                        <Grid item xs><TextField error={!UI.loading && UI.error != null} type="password" label="Confirm Password" name="confirmPassword" className="form-control" onChange={handleChange} required /></Grid>
+                        <Grid item xs><TextField error={!UI.loading && UI.error != null} type="password" label="Confirm Password" name="confirmPassword"  onChange={handleChange} required /></Grid>
                     </Grid>
 
 

@@ -38,6 +38,7 @@ export const getCovid = () => (dispatch) => {
         .then(result => {
             dispatch({ type: SET_COVID, payload: result });
             dispatch({ type: CLEAR_ERRORS });
+            
         }).catch((error) => {
             dispatch({ type: SET_ERRORS, payload: "Cannot get covid data" })
             console.log("Cannot get covid data");
@@ -56,6 +57,7 @@ export const getCovidWeekday = () => (dispatch) => {
 
             dispatch({ type: SET_COVID_WEEKDAY, payload: list });
             dispatch({ type: CLEAR_ERRORS });
+
         }).catch((error) => {
             dispatch({ type: SET_ERRORS, payload: "Cannot get covid data" })
             console.log("Cannot get covid data");
@@ -64,7 +66,7 @@ export const getCovidWeekday = () => (dispatch) => {
 
 export const getCovidRanges = () => (dispatch) => {
     dispatch({ type: LOADING_UI });
-    fetch("https://covidapi.wonyus.repl.co/range")
+    fetch("http://127.0.0.1:8080/range")
         .then((response) => response.json())
         .then(result => {
             const list = [];
@@ -76,9 +78,9 @@ export const getCovidRanges = () => (dispatch) => {
             list.push({ 'name': '>70', 'uv': result['>70'], 'pv': (result['>70']), 'fill': '#a4de6c' })
             list.push({ 'name': 'unknow', 'uv': result['unknow'], 'pv': (result['unknow']), 'fill': '#d0ed57' })
 
-
             dispatch({ type: SET_COVID_RANGE, payload: list });
             dispatch({ type: CLEAR_ERRORS });
+
         }).catch((error) => {
             dispatch({ type: SET_ERRORS, payload: "Cannot get covid data" })
             console.log("Cannot get covid data");

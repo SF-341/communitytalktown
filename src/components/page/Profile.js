@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { AuthContext } from '../Auth'
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, Grid, Button, IconButton, styled } from '@material-ui/core';
+import { TextField, Grid, Button, IconButton, styled, Paper } from '@material-ui/core';
 import CameraAltOutlined from '@material-ui/icons/CameraAltOutlined';
 import Avatar from "@material-ui/core/Avatar";
 import '../css/Profile.css'
@@ -114,57 +114,61 @@ const Profile = () => {
       < div className="container mt-5" >
         {
           UI.loading && state.authenticated ? <Loading /> : (
-            <Grid container >
-              <Grid item xs={8}>
-                <><h1>Profile</h1>
-                  <form className={classes.root} onSubmit={handleSubmit} noValidate autoComplete="off">
-                    <Grid container spacing={5}>
-                      <Grid item xs={8}><TextField label="Name" name="firstname" className="form-control" disabled={text} defaultValue={state.firstname} onChange={handleChange} /></Grid>
-                      <Grid item xs={8}><TextField label="Lastname" name="lastname" className="form-control" disabled={text} defaultValue={state.lastname} onChange={handleChange} /></Grid>
-                      <Grid item xs={8}><TextField label="Username" name="username" className="form-control" disabled={text} defaultValue={state.username} onChange={handleChange} /></Grid>
-                      <Grid item xs={8}><TextField label="Email" name="email" className="form-control" disabled defaultValue={state.email} onChange={handleChange} /></Grid>
-                      <Grid item xs={8}><TextField label="Sub-district" name="subdistrict" className="form-control" disabled defaultValue={state.subdistrict} onChange={handleChange} /></Grid>
-                      <Grid item xs={8}><TextField label="District" name="district" className="form-control" disabled defaultValue={state.district} onChange={handleChange} /></Grid>
-                      <Grid item xs={8}><TextField label="Province" name="province" className="form-control" disabled defaultValue={state.province} onChange={handleChange} /></Grid>
-                    </Grid>
-                    <Grid container spacing={5}>
-                      <Grid item ><Button size="large" variant="outlined" onClick={edit}>Edit</Button></Grid>
-                      <Grid item ><Button type="submit" size="large" variant="outlined" disabled={submit}>Submit</Button></Grid>
-                    </Grid>
-                  </form></>
-              </Grid>
-              <Grid item xs={4}  >
-                <>
-                  <div >
-                    <div className="clearfix" >
-                      <div className="animated fadeIn">
-                        <div className="card-body">
-                          <div className="avatar">
-                            <img className="avatar"
-                              src={state.image}
-                            />
+            <Paper variant="elevation" elevation={5}>
+              <Grid container >
+                <Grid item xs={8}>
+                  <><h1>Profile</h1>
+                    <form className={classes.root} onSubmit={handleSubmit} noValidate autoComplete="off">
+                      <Grid container spacing={5}>
+                        <Grid item xs={8}><TextField variant="filled" label="Name" name="firstname" disabled={text} defaultValue={state.firstname} onChange={handleChange} /></Grid>
+                        <Grid item xs={8}><TextField variant="filled" label="Lastname" name="lastname" disabled={text} defaultValue={state.lastname} onChange={handleChange} /></Grid>
+                        <Grid item xs={8}><TextField variant="filled" label="Username" name="username" disabled={text} defaultValue={state.username} onChange={handleChange} /></Grid>
+                        <Grid item xs={8}><TextField variant="filled" label="Email" name="email" disabled defaultValue={state.email} onChange={handleChange} /></Grid>
+                        <Grid item xs={8}><TextField variant="filled" label="Sub-district" name="subdistrict" disabled defaultValue={state.subdistrict} onChange={handleChange} /></Grid>
+                        <Grid item xs={8}><TextField variant="filled" label="District" name="district" disabled defaultValue={state.district} onChange={handleChange} /></Grid>
+                        <Grid item xs={8}><TextField variant="filled" label="Province" name="province" disabled defaultValue={state.province} onChange={handleChange} /></Grid>
+                      </Grid>
+                      <Grid container spacing={5}>
+                        <Grid item ><Button size="large" variant="outlined" onClick={edit}>Edit</Button></Grid>
+                        <Grid item ><Button type="submit" size="large" variant="outlined" disabled={submit}>Submit</Button></Grid>
+                      </Grid>
+                    </form>
+                  </>
+                </Grid>
+                <Grid item xs={4}  >
+                  <>
+                    <div >
+                      <div className="clearfix" >
+                        <div className="animated fadeIn">
+                          <div className="card-body">
+                            <div className="avatar">
+                              <img className="avatar"
+                                src={state.image}
+                              />
+                            </div>
+
+                            <h5 className="card-title">
+                              {state.firstname}
+                            </h5>
+                            <label htmlFor="icon-button-file">
+                              <Input accept="image/*" id="icon-button-file" type="file" onChange={handleChange} name="image" />
+                              <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => setUploadProfile(true)}>
+                                <CameraAltOutlined />
+                              </IconButton>
+                              &nbsp;&nbsp;&nbsp;{image && image.type}
+                            </label>
+
+                            {uploadProfile ? <Button onClick={updateImage} type="button" color="primary" aria-label="updateImg">SAVE</Button> : ""}
+
                           </div>
-
-                          <h5 className="card-title">
-                            {state.firstname}
-                          </h5>
-                          <label htmlFor="icon-button-file">
-                            <Input accept="image/*" id="icon-button-file" type="file" onChange={handleChange} name="image" />
-                            <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => setUploadProfile(true)}>
-                              <CameraAltOutlined />
-                            </IconButton>
-                            &nbsp;&nbsp;&nbsp;{image && image.type}
-                          </label>
-
-                          {uploadProfile ? <Button onClick={updateImage} type="button" color="primary" aria-label="updateImg">SAVE</Button> : ""}
-
                         </div>
                       </div>
                     </div>
-                  </div>
-                </>
+                  </>
+                </Grid>
               </Grid>
-            </Grid>)
+            </Paper>
+          )
         }
       </div >
     </>
