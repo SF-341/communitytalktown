@@ -26,6 +26,12 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {
       textAlign: 'webkit-center',
+    },
+    boxupload: {
+      textAlign: 'webkit-center',
+    },
+    text: {
+      minWidth: theme.spacing(5)
     }
   },
 }));
@@ -146,20 +152,18 @@ const Profile = () => {
                                 src={state.image}
                               />
                             </div>
-
-                            <h5 className="card-title">
-                              {state.firstname}
-                            </h5>
-                            <label htmlFor="icon-button-file">
-                              <Input accept="image/*" id="icon-button-file" type="file" onChange={handleChange} name="image" />
-                              <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => setUploadProfile(true)}>
-                                <CameraAltOutlined />
-                              </IconButton>
-                              &nbsp;&nbsp;&nbsp;{image && image.type}
-                            </label>
-
-                            {uploadProfile ? <Button onClick={updateImage} type="button" color="primary" aria-label="updateImg">SAVE</Button> : ""}
-
+                            <div style={{ textAlign: '-webkit-center', display: "inline-flex", paddingTop: "20px" }}>
+                              <h5 style={{ margin: "auto" }}>  {state.firstname}</h5>&nbsp;&nbsp;&nbsp;
+                              <label htmlFor="icon-button-file">
+                                <Input accept="image/*" id="icon-button-file" type="file" onChange={handleChange} name="image" />
+                                
+                                {image ? <Button onClick={updateImage} type="button" aria-label="updateImg">UPDATE</Button> :
+                                  <IconButton aria-label="upload picture" component="span" onClick={() => setUploadProfile(true)}>
+                                    <CameraAltOutlined />
+                                  </IconButton>}
+                              </label>
+                            </div>
+                            {image && image.type}
                           </div>
                         </div>
                       </div>

@@ -26,7 +26,7 @@ const ResetPass = () => {
     });
 
   }
-  
+
   const useStyles = makeStyles((theme) => ({
     root: {
       '& > *': {
@@ -40,13 +40,12 @@ const ResetPass = () => {
 
     card: {
       minWidth: 400,
-      background: '#F9F9F9',
     },
-    headfront: {
-      color: "#515151",
+    text: {
+      minWidth: 250,
     }
   }));
-  
+
   const classes = useStyles();
 
   if (sended) {
@@ -63,9 +62,9 @@ const ResetPass = () => {
           <Card elevation={3} className={classes.card}>
 
             <form onSubmit={handleSubmit} className={classes.root} noValidate autoComplete="off" align="center">
-              <h1 className={classes.headfront}>Reset Password</h1>
+              <h1 >Reset Password</h1>
               <Grid item >
-                <TextField type="email" label="Email address" name="email" className="form-control" required />
+                <TextField className={classes.text} type="email" label="Email address" name="email" required />
               </Grid>
               <Grid item >
                 <Button type="submit" size="medium" variant="outlined">Send Reset Password</Button>

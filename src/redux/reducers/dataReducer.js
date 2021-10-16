@@ -113,7 +113,7 @@ export default function (state = initialState, action) {
             const index1 = state.comments.findIndex((comment) => comment[0].postid === action.payload.postdata.id);
             if (index1 !== -1) {
                 let temp = state.comments[index1];
-                const updatecommentdelete = temp.findIndex(comment => comment.id === action.payload.comment.id)
+                // const updatecommentdelete = temp.findIndex(comment => comment.id === action.payload.comment.id)
 
                 let updatecomment = temp.filter(comment => comment.id !== action.payload.comment.id);
                 if (updatecomment.length <= 0) {
