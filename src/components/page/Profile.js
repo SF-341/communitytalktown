@@ -49,7 +49,7 @@ const Profile = () => {
   const [submit, setSubmit] = useState(true);
   const [uploadProfile, setUploadProfile] = useState(false);
   const [text, setText] = useState(true);
-  const [image, setImage] = useState(state.image);
+  const [image, setImage] = useState(null);
 
   const handleChange = (e) => {
     if (e.target.name === "firstname") {
@@ -59,12 +59,10 @@ const Profile = () => {
     } else if (e.target.name === "lastname") {
       setLastName(e.target.value)
     } else if (e.target.name === "image") {
+      setUploadProfile(true)
       console.log(e.target.files[0]);
       setImage(e.target.files[0])
     }
-
-
-
   }
 
   const Input = styled('input')({
@@ -84,13 +82,15 @@ const Profile = () => {
       username: userName,
     }
 
-    if (dispatch(updateUser(data))) {
+    if (dispatch(updateUser(data))) {  
       setSubmit(true);
       setText(true);
     }
   }
 
   const updateImage = (e) => {
+    setImage(null);
+    setUploadProfile(false);
     e.preventDefault();
     dispatch(updateUserImage(image))
   }
@@ -104,16 +104,11 @@ const Profile = () => {
 
   }, [])
 
-
-
-
-
   const classes = useStyles();
 
   if (!currentUser) {
     return <Redirect to="/login" />
   }
-
 
   return (
     <>
@@ -157,8 +152,8 @@ const Profile = () => {
                               <label htmlFor="icon-button-file">
                                 <Input accept="image/*" id="icon-button-file" type="file" onChange={handleChange} name="image" />
                                 
-                                {image ? <Button onClick={updateImage} type="button" aria-label="updateImg">UPDATE</Button> :
-                                  <IconButton aria-label="upload picture" component="span" onClick={() => setUploadProfile(true)}>
+                                {image && uploadProfile ?  <Button onClick={updateImage} type="button" aria-label="updateImg">UPDATE</Button> :
+                                  <IconButton aria-label="upload picture" component="span">
                                     <CameraAltOutlined />
                                   </IconButton>}
                               </label>
