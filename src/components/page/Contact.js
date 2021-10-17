@@ -76,7 +76,7 @@ const Contact = () => {
             <Grid item xs >
               <Paper className={classes.paper}>
                 <img className={classes.image} alt="Avatar"
-                  src="https://i.pinimg.com/originals/11/e5/ce/11e5ce70c99c662f2e4c1127400d6756.jpg" alt="Narok"
+                  src="https://firebasestorage.googleapis.com/v0/b/searchbed-d2c6b.appspot.com/o/devpics%2Fwon.jpg?alt=media&token=fa2bdde3-b395-4082-a44d-5f21b26ef2fd" alt="Narok"
                 />
                 <h4>Imron Y.</h4>
                 <p>(Senior Developer)</p>
@@ -119,7 +119,7 @@ const Contact = () => {
         <div className={classes.contact_us}>
           <Paper className={classes.contact}>
             <h4 style={{ textAlign: "center" }}>Contact</h4>
-            <p><MailIcon style={{ fontSize: 40 }} /> : progteamchat@hotmail.com</p>
+            <p><MailIcon style={{ fontSize: 40 }} /> : progteamchat@gmail.com</p>
             <p><HomeIcon style={{ fontSize: 40 }} /> : home</p>
             <p><PhoneIphoneIcon style={{ fontSize: 40 }} /> : 02x-xxx-xxxx</p>
           </Paper>
