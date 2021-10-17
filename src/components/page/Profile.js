@@ -19,20 +19,20 @@ const useStyles = makeStyles((theme) => ({
     '& > *': {
       margin: theme.spacing(1),
     },
-    purple: {
+  },
+  TextInput: {
+    minWidth: 300
+  },
+  purple: {
 
-      width: theme.spacing(1),
-      height: theme.spacing(1),
-    },
-    content: {
-      textAlign: 'webkit-center',
-    },
-    boxupload: {
-      textAlign: 'webkit-center',
-    },
-    text: {
-      minWidth: theme.spacing(5)
-    }
+    width: theme.spacing(1),
+    height: theme.spacing(1),
+  },
+  content: {
+    textAlign: 'webkit-center',
+  },
+  boxupload: {
+    textAlign: 'webkit-center',
   },
 }));
 
@@ -82,7 +82,7 @@ const Profile = () => {
       username: userName,
     }
 
-    if (dispatch(updateUser(data))) {  
+    if (dispatch(updateUser(data))) {
       setSubmit(true);
       setText(true);
     }
@@ -121,13 +121,13 @@ const Profile = () => {
                   <><h1>Profile</h1>
                     <form className={classes.root} onSubmit={handleSubmit} noValidate autoComplete="off">
                       <Grid container spacing={5}>
-                        <Grid item xs={8}><TextField variant="filled" label="Name" name="firstname" disabled={text} defaultValue={state.firstname} onChange={handleChange} /></Grid>
-                        <Grid item xs={8}><TextField variant="filled" label="Lastname" name="lastname" disabled={text} defaultValue={state.lastname} onChange={handleChange} /></Grid>
-                        <Grid item xs={8}><TextField variant="filled" label="Username" name="username" disabled={text} defaultValue={state.username} onChange={handleChange} /></Grid>
-                        <Grid item xs={8}><TextField variant="filled" label="Email" name="email" disabled defaultValue={state.email} onChange={handleChange} /></Grid>
-                        <Grid item xs={8}><TextField variant="filled" label="Sub-district" name="subdistrict" disabled defaultValue={state.subdistrict} onChange={handleChange} /></Grid>
-                        <Grid item xs={8}><TextField variant="filled" label="District" name="district" disabled defaultValue={state.district} onChange={handleChange} /></Grid>
-                        <Grid item xs={8}><TextField variant="filled" label="Province" name="province" disabled defaultValue={state.province} onChange={handleChange} /></Grid>
+                        <Grid item xs={8}><TextField className={classes.TextInput} variant="filled" label="Name" name="firstname" disabled={text} defaultValue={state.firstname} onChange={handleChange} /></Grid>
+                        <Grid item xs={8}><TextField className={classes.TextInput} variant="filled" label="Lastname" name="lastname" disabled={text} defaultValue={state.lastname} onChange={handleChange} /></Grid>
+                        <Grid item xs={8}><TextField className={classes.TextInput} variant="filled" label="Username" name="username" disabled={text} defaultValue={state.username} onChange={handleChange} /></Grid>
+                        <Grid item xs={8}><TextField className={classes.TextInput} variant="filled" label="Email" name="email" disabled defaultValue={state.email} onChange={handleChange} /></Grid>
+                        <Grid item xs={8}><TextField className={classes.TextInput} variant="filled" label="Sub-district" name="subdistrict" disabled defaultValue={state.subdistrict} onChange={handleChange} /></Grid>
+                        <Grid item xs={8}><TextField className={classes.TextInput} variant="filled" label="District" name="district" disabled defaultValue={state.district} onChange={handleChange} /></Grid>
+                        <Grid item xs={8}><TextField className={classes.TextInput} variant="filled" label="Province" name="province" disabled defaultValue={state.province} onChange={handleChange} /></Grid>
                       </Grid>
                       <Grid container spacing={5}>
                         <Grid item ><Button size="large" variant="outlined" onClick={edit}>Edit</Button></Grid>
@@ -151,13 +151,14 @@ const Profile = () => {
                               <h5 style={{ margin: "auto" }}>  {state.firstname}</h5>&nbsp;&nbsp;&nbsp;
                               <label htmlFor="icon-button-file">
                                 <Input accept="image/*" id="icon-button-file" type="file" onChange={handleChange} name="image" />
-                                
-                                {image && uploadProfile ?  <Button onClick={updateImage} type="button" aria-label="updateImg">UPDATE</Button> :
+
+                                {image && uploadProfile ? <Button onClick={updateImage} type="button" aria-label="updateImg">UPDATE</Button> :
                                   <IconButton aria-label="upload picture" component="span">
                                     <CameraAltOutlined />
                                   </IconButton>}
                               </label>
                             </div>
+                            <br />
                             {image && image.type}
                           </div>
                         </div>

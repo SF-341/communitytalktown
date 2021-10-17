@@ -1,6 +1,7 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Redirect, Link } from "react-router-dom";
 import { AuthContext } from "../Auth";
+import poster from '../../image/img/poster.png'
 
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,7 +10,7 @@ import { TextField, Grid, Button, Card, FormHelperText, FormControl, Paper } fro
 
 // Redux stuff
 import { useSelector, useDispatch } from "react-redux";
-import { loginUser } from "../../redux/actions/userActions";
+import { loginUser, resetpassword } from "../../redux/actions/userActions";
 import { getCovid, getCovidWeekday, getCovidRanges } from "../../redux/actions/dataActions";
 
 const useStyles = makeStyles((theme) => ({
@@ -20,11 +21,20 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   card: {
-    minWidth: 400,
 
+    minWidth: 400,
+    height: 600,
   },
   text: {
     width: 250,
+  },
+  image: {
+    width: 500,
+    height: "auto",
+  },
+  container: {
+    padding: theme.spacing(5),
+    spacing: theme.spacing(2),
   }
 
 }));
@@ -32,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
 const LogIn = () => {
   const dispatch = useDispatch();
   const UI = useSelector(state => state.UI)
+  const user = useSelector(state => state.user)
+
+  const [showResetPassword, setShowResetPassword] = useState(false);
 
   useEffect(() => {
     dispatch(getCovid());
@@ -47,24 +60,20 @@ const LogIn = () => {
       email: email.value,
       password: password.value
     }
-
     dispatch(loginUser(userData));
-    // if (userData.email !== '' && userData.password !== '') {
-    //   dispatch(loginUser(userData));
-    // } else {
-    //   alert('email or password invalid')
-    // }
-
-
-    console.log(userData);
 
   };
 
-
+  const handleClick = (e) => {
+    e.preventDefault();
+    const { email } = e.target.elements;
+    dispatch(resetpassword(email.value));
+  }
 
   const classes = useStyles();
 
   const { currentUser } = useContext(AuthContext);
+  console.log(showResetPassword)
 
   if (currentUser) {
     return <Redirect to="/" />;
@@ -72,12 +81,25 @@ const LogIn = () => {
 
   return (
 
-    <div className="container mt-5">
+    <Grid container className={classes.container}>
 
-      <Grid container spacing={1}>
+      <Grid container justifyContent="center" xs={12} md={6} spacing={5} className={classes.container}>
+        <Card elevation={3} className={classes.card}>
+          {showResetPassword ?
+            <form onSubmit={handleClick} className={classes.root} noValidate autoComplete="off" align="center">
+              <h1 >Reset Password</h1>
+              <Grid item >
+                <TextField className={classes.text} type="email" label="Email address" name="email" required helperText= {user.resetpassword ? "Password Reset Email Sent!" : ""} color = "primary"/>
+                
+              </Grid>
+              <Grid item >
+                <Button type="submit" size="medium" variant="outlined">Send Reset Password</Button>
+                <br /><br />
+                <Button size="large" variant="outline" onClick={() => { setShowResetPassword(false) }}>Log in</Button>
+              </Grid>
+            </form>
 
-        <Grid container justifyContent="center" xs={12} md={6} spacing={2}>
-          <Card elevation={3} className={classes.card}>
+            :
 
             <form onSubmit={handleSubmit} className={classes.root} noValidate autoComplete="off" align="center">
               <h1 >Log In</h1>
@@ -95,20 +117,20 @@ const LogIn = () => {
                 <Button type="submit" size="large" variant="outlined">Submit</Button>
               </Grid>
               <Grid item>
-                <p className="forgot-password text-right"><Link to={'/ResetPass'}>Forgot password?</Link></p>
+                <Button size="large" variant="outline" onClick={() => { setShowResetPassword(true) }}>Forgot password?</Button>
               </Grid>
             </form>
-          </Card>
-        </Grid>
 
+          }
 
-
-
-        <Grid container justifyContent="center" xs={12} md={6} >
-          <h5>asd</h5>
-        </Grid>
+        </Card>
       </Grid>
-    </div>
+
+
+      <Grid container justifyContent="center" xs={12} md={6} >
+        <img className={classes.image} src={poster} />
+      </Grid>
+    </Grid>
 
   );
 };

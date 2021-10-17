@@ -7,6 +7,7 @@ export const LOAD_USER = 'LOAD_USER'
 export const SET_USER_UPDATE = 'SET_USER_UPDATE'
 export const SET_USER_REFRESH = 'SET_USER_REFRESH'
 export const SET_USER_UPDATE_PROFILE = 'SET_USER_UPDATE_PROFILE'
+export const SET_RESETPASSWORD = 'SET_RESETPASSWORD'
 
 
 // UI reducer types

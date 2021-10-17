@@ -11,7 +11,6 @@ const ResetPass = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const { email } = e.target.elements;
-
     firebaseConfig.auth().sendPasswordResetEmail(email.value).then(function () {
       console.log('Password Reset Email Sent!');
       setSended(true);
@@ -60,7 +59,6 @@ const ResetPass = () => {
 
         <Grid container justifyContent="center" xs={12} md={6} spacing={0}>
           <Card elevation={3} className={classes.card}>
-
             <form onSubmit={handleSubmit} className={classes.root} noValidate autoComplete="off" align="center">
               <h1 >Reset Password</h1>
               <Grid item >
