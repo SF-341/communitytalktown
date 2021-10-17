@@ -60,13 +60,16 @@ const CreatePost = () => {
         root: {
             margin: 'auto',
             maxWidth: 700,
-            paddingTop: 10,
+            paddingTop: 5,
             paddingBottom: 5,
         },
         field: {
             display: 'block',
             padding: 10,
         },
+        space: {
+            paddingTop: 20,
+        }
 
 
     });
@@ -76,6 +79,7 @@ const CreatePost = () => {
     const classes = useStyles();
 
     return (
+        <div className={classes.space}>
         <Card className={classes.root}>
             <Container className={classes.root} >
                 <Typography
@@ -151,7 +155,7 @@ const CreatePost = () => {
                 </form>
             </Container>
         </Card>
-
+</div>
     )
 }
 

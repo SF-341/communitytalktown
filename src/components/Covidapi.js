@@ -14,6 +14,7 @@ import { isEmpty } from "lodash";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    paddingTop: 20,
     flexGrow: 1,
   },
   paper: {
