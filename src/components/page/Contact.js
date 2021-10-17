@@ -17,145 +17,62 @@ const Contact = () => {
             maxWidth: 1200,
             paddingTop: 20,
             paddingBottom: 200,
+        },
 
-        },
-        icon: {
-            paddingLeft: 800,
-            padding: 'auto',
-        },
-        paper: {
-            padding: theme.spacing(2),
-            textAlign: 'center',
-            color: theme.palette.text.secondary,
-            width: 300,
-
-        },
-        owner: {
-            textAlign: '-webkit-center',
-        }
+        contact: {
+          padding: theme.spacing(2),
+          color: theme.palette.text.secondary,
+          justifyContent: "center",
+          width: "auto",
+          margin: "auto"
+      },
 
     }));
 
     const classes = useStyles();
     return (
-        <><div>
-            <Container>
-                <div className={classes.root}>
-                    <Grid container spacing={2} className={classes.owner}>
-                        <Grid item xs={4} >
-                            <Paper className={classes.paper}>
-                                <MailIcon style={{ fontSize: 200 }} />
-                                <Typography>
-                                    Hello World
-                                </Typography>
-                            </Paper>
-                        </Grid>
 
-                        <Grid item xs={4}>
-                            <Paper className={classes.paper}>
-                                <HomeIcon style={{ fontSize: 200 }} />
-                                <Typography>
-                                    Hello World
-                                </Typography>
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <Paper className={classes.paper}>
-                                <PhoneIphoneIcon style={{ fontSize: 200 }} />
-                                <Typography>
-                                    +08x-xxx-xxxx
-                                </Typography>
-                            </Paper>
-                        </Grid>
+        <div className="page">
+          <h1>Member</h1>
 
 
-                    </Grid>
-                </div>
-            </Container>
-            <Grid container spacing={2} className={classes.owner}>
-                <Grid item xs={3}>
-                    <Paper className={classes.paper}>
-                  <div >
-                    <div className="clearfix" >
-                      <div className="animated fadeIn">
-                        <div className="card-body">
-                          <div className="crop">
-                            <img className="crop"
-                              src="https://i.pinimg.com/originals/11/e5/ce/11e5ce70c99c662f2e4c1127400d6756.jpg" alt="Narok"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                        <Typography>
-                            Imron Y.
-                        </Typography>
-                    </Paper>
-                </Grid>
-                <Grid item xs={3}>
-                    <Paper className={classes.paper}>
-                    <div >
-                    <div className="clearfix" >
-                      <div className="animated fadeIn">
-                        <div className="card-body">
-                          <div className="crop">
-                            <img className="crop"
-                              src="https://s.isanook.com/wo/0/ui/33/168683/roses_are_rosie_122070817_1754447088045232_4791777944367399622_n.jpg" alt="Narok"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                        <Typography>
-                            Chittawan W.
-                        </Typography>
-                    </Paper>
-                </Grid>
-                <Grid item xs={3}>
-                    <Paper className={classes.paper}>
-                    <div >
-                    <div className="clearfix" >
-                      <div className="animated fadeIn">
-                        <div className="card-body">
-                          <div className="crop">
-                            <img className="crop"
-                              src="https://t1.daumcdn.net/news/201807/21/newsen/20180721171237719gxbl.jpg" alt="Narok"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                        <Typography>
-                            Jittiwat M.
-                        </Typography>
-                    </Paper>
-                </Grid>
-                <Grid item xs={3}>
-                    <Paper className={classes.paper}>
-                    <div >
-                    <div className="clearfix" >
-                      <div className="animated fadeIn">
-                        <div className="card-body">
-                          <div className="crop">
-                            <img className="crop"
-                              src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Prayuth_2018_cropped.jpg/220px-Prayuth_2018_cropped.jpg" alt="Narok"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                        <Typography>
-                            Unknown #13649
-                        </Typography>
-                    </Paper>
-                </Grid>
-            </Grid>
+          <div className="warpper-grid">
+            <div className="content">
+              <img className="crop"
+                src="https://i.pinimg.com/originals/11/e5/ce/11e5ce70c99c662f2e4c1127400d6756.jpg" alt="Narok"
+              />
+              <p>Imron Y.</p>
+            </div>
+            <div className="content">
+              <img className="crop" alt="Avatar"
+                src="https://s.isanook.com/wo/0/ui/33/168683/roses_are_rosie_122070817_1754447088045232_4791777944367399622_n.jpg" alt="Narok"
+              />
+              <p>Chittawan W.</p>
+            </div>
+            <div className="content">
+              <img className="crop" alt="Avatar"
+                src="https://t1.daumcdn.net/news/201807/21/newsen/20180721171237719gxbl.jpg" alt="Narok"
+              />
+              <p>Jittiwat M.</p>
+            </div>
+            <div className="content">
+              <img className="crop" alt="Avatar"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Prayuth_2018_cropped.jpg/220px-Prayuth_2018_cropped.jpg" alt="Narok"
+              />
+              <p>Unknown #13649</p>
+            </div>
+          </div>
+
+          <div className="contact_us">
+            <Paper className={classes.contact}>
+              <h5 style={{textAlign:"center"}}>contact us</h5>
+              <p><MailIcon style={{ fontSize: 40 }} /> : gmail.com</p>
+              <p><HomeIcon style={{ fontSize: 40 }} /> : home</p>
+              <p><PhoneIphoneIcon style={{ fontSize: 40 }} /> : tel</p>
+            </Paper>
+          </div>
+
         </div>
-        </>
 
     )
 
