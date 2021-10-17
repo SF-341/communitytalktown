@@ -9,6 +9,9 @@ import { Container } from '@material-ui/core/'
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
 import '../css/Contact.css'
 
+
+
+
 const Contact = () => {
 
     const useStyles = makeStyles((theme) => ({
@@ -32,9 +35,10 @@ const Contact = () => {
 
     const classes = useStyles();
     return (
-
+      
         <div className="page">
-          <h1>Developer</h1>
+          <Paper>
+          <h1>Developer Team</h1>
 
 
           <div className="warpper-grid">
@@ -42,34 +46,38 @@ const Contact = () => {
               <img className="crop"
                 src="https://i.pinimg.com/originals/11/e5/ce/11e5ce70c99c662f2e4c1127400d6756.jpg" alt="Narok"
               />
-              <p>Imron Y.</p>
+              <h4>Imron Y.</h4>
+              <p>(Senior Developer)</p>
             </div>
             <div className="content">
               <img className="crop" alt="Avatar"
-                src="https://s.isanook.com/wo/0/ui/33/168683/roses_are_rosie_122070817_1754447088045232_4791777944367399622_n.jpg" alt="Narok"
+                src=" https://firebasestorage.googleapis.com/v0/b/searchbed-d2c6b.appspot.com/o/devpics%2Fkerk.jpg?alt=media&token=9581653f-64f7-43fb-ad27-9bb1e0878ca0" alt="Narok"
               />
-              <p>Chittawan W.</p>
+              <h4>Chittawan W.</h4>
+              <p>(Junior Developer)</p>
             </div>
             <div className="content">
               <img className="crop" alt="Avatar"
-                src="https://t1.daumcdn.net/news/201807/21/newsen/20180721171237719gxbl.jpg" alt="Narok"
+                src="https://firebasestorage.googleapis.com/v0/b/searchbed-d2c6b.appspot.com/o/devpics%2Fkorn.jpg?alt=media&token=9a5e501a-fdb0-4d44-8020-1f1daff93fbf" alt="Narok"
               />
-              <p>Jittiwat M.</p>
+              <h4>Jittiwat M.</h4>
+              <p>(Doccument Controller)</p>
             </div>
             <div className="content">
               <img className="crop" alt="Avatar"
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Prayuth_2018_cropped.jpg/220px-Prayuth_2018_cropped.jpg" alt="Narok"
+                src="https://firebasestorage.googleapis.com/v0/b/searchbed-d2c6b.appspot.com/o/devpics%2Fnot.jpg?alt=media&token=26aee5ee-98bd-4c9e-8ad6-30527c9ad662" alt="Narok"
               />
-              <p>Navapon N.</p>
+              <h4>Navapon N.</h4>
+              <p>(General Stuff)</p>
             </div>
           </div>
-
+          </Paper>
           <div className="contact_us">
             <Paper className={classes.contact}>
               <h5 style={{textAlign:"center"}}>contact us</h5>
-              <p><MailIcon style={{ fontSize: 40 }} /> : gmail.com</p>
+              <p><MailIcon style={{ fontSize: 40 }} /> : progteamchat@hotmail.com</p>
               <p><HomeIcon style={{ fontSize: 40 }} /> : home</p>
-              <p><PhoneIphoneIcon style={{ fontSize: 40 }} /> : tel</p>
+              <p><PhoneIphoneIcon style={{ fontSize: 40 }} /> : 02x-xxx-xxxx</p>
             </Paper>
           </div>
 
