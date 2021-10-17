@@ -66,7 +66,7 @@ export const getCovidWeekday = () => (dispatch) => {
 
 export const getCovidRanges = () => (dispatch) => {
     dispatch({ type: LOADING_UI });
-    fetch("http://127.0.0.1:8080/range")
+    fetch("https://covidapi.wonyus.repl.co/range")
         .then((response) => response.json())
         .then(result => {
             const list = [];
