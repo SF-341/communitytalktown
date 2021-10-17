@@ -15,12 +15,13 @@ const Contact = () => {
         root: {
             margin: 'auto',
             maxWidth: 1200,
-            paddingTop: 20,
+            paddingTop: 40,
             paddingBottom: 200,
         },
 
         contact: {
           padding: theme.spacing(2),
+          paddingTop: 50,
           color: theme.palette.text.secondary,
           justifyContent: "center",
           width: "auto",
@@ -33,7 +34,7 @@ const Contact = () => {
     return (
 
         <div className="page">
-          <h1>Member</h1>
+          <h1>Developer</h1>
 
 
           <div className="warpper-grid">
@@ -59,7 +60,7 @@ const Contact = () => {
               <img className="crop" alt="Avatar"
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Prayuth_2018_cropped.jpg/220px-Prayuth_2018_cropped.jpg" alt="Narok"
               />
-              <p>Unknown #13649</p>
+              <p>Navapon N.</p>
             </div>
           </div>
 
