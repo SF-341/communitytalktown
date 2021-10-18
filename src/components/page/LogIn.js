@@ -117,7 +117,7 @@ const LogIn = () => {
                 <Button type="submit" size="large" variant="outlined">Submit</Button>
               </Grid>
               <Grid item>
-                <Button size="large" variant="outline" onClick={() => { setShowResetPassword(true) }}>Forgot password?</Button>
+                <Button size="large" color="secondary" variant="outline" onClick={() => { setShowResetPassword(true) }}>Forgot password?</Button>
               </Grid>
             </form>
 

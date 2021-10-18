@@ -1,6 +1,13 @@
 import { SET_USER, SET_USER_REFRESH, SET_UNAUTHENTICATION, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_USER_UPDATE, SET_USER_UPDATE_PROFILE, SET_RESETPASSWORD } from '../types';
 import firebaseConfig, { firestore, storage } from '../../config'
 
+export const sendFeedback = (val) => (dispatch) => {
+    dispatch({ type: LOADING_UI })
+    const refFeed = firebaseConfig.firestore().collection("Feedback");
+    refFeed.add({ "feedback": val });
+    dispatch({ type: CLEAR_ERRORS });
+}
+
 
 export const loginUser = (userData) => (dispatch) => {
     dispatch({ type: LOADING_UI })

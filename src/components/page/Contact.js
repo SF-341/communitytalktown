@@ -5,21 +5,31 @@ import MailIcon from "@material-ui/icons/Mail";
 import HomeIcon from '@mui/icons-material/Home';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import { Container } from '@material-ui/core/'
+import { Container, TextField } from '@material-ui/core/'
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
 import '../css/Contact.css'
+import { Button } from "@mui/material";
+
+
+// Redux stuff
+import { useDispatch } from "react-redux";
+import { sendFeedback } from "../../redux/actions/userActions";
 
 
 
 
 const Contact = () => {
 
+  const dispatch = useDispatch();
+  
+  const [feedback, setFeedback] = React.useState("");
+
   const useStyles = makeStyles((theme) => ({
     root: {
       margin: 'auto',
       maxWidth: "90%",
       paddingTop: 40,
-      
+
     },
 
     contact: {
@@ -57,12 +67,28 @@ const Contact = () => {
       paddingBottom: 20,
     },
     contact_us: {
-      margin : "auto",
+      margin: "auto",
       maxWidth: 500,
       paddingTop: 40,
+    },
+    feedback: {
+      paddingTop: 20,
+      paddingBottom: 20,
+      textAlign : "center",
+      minWidth: 300,
+      marginBottom : 20,
     }
 
   }));
+
+
+  const submitFeedback = (e) => {
+    
+    e.preventDefault();
+    dispatch(sendFeedback(feedback));
+    
+    alert("Sent feedback is successfully")
+  }
 
   const classes = useStyles();
   return (
@@ -117,6 +143,12 @@ const Contact = () => {
           </Grid>
         </Paper>
         <div className={classes.contact_us}>
+          <Paper className={classes.feedback}>
+            <form onSubmit={submitFeedback}>
+              <TextField type="text" placeholder="feedback" name="feedback" onChange={(e) => { setFeedback(e.target.value) }}></TextField>&nbsp;&nbsp;&nbsp;
+              <Button type="submit" color="secondary" variant="outlined" onClick={() => setFeedback(null)}> SENT</Button>
+            </form>
+          </Paper>
           <Paper className={classes.contact}>
             <h4 style={{ textAlign: "center" }}>Contact</h4>
             <p><MailIcon style={{ fontSize: 40 }} /> : progteamchat@gmail.com</p>
