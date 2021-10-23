@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         firebaseConfig.auth().onAuthStateChanged((user) => {
             setCurrentUser(user);
-           
+            setLoading(false);
         })
     }, [])
 
