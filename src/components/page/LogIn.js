@@ -94,7 +94,7 @@ const LogIn = () => {
               <Grid item >
                 <Button type="submit" size="medium" >Send Reset Password</Button>
                 <br /><br />
-                <Button size="large" variant="outline" onClick={() => { setShowResetPassword(false) }}>Log in</Button>
+                <Button size="large" variant="outlined" onClick={() => { setShowResetPassword(false) }}>Log in</Button>
               </Grid>
             </form>
 
@@ -116,7 +116,7 @@ const LogIn = () => {
                 <Button type="submit" size="large" variant="outlined">Submit</Button>
               </Grid>
               <Grid item>
-                <Button size="large" color="secondary" variant="outline" onClick={() => { setShowResetPassword(true) }}>Forgot password?</Button>
+                <Button size="large" color="secondary" variant="outlined" onClick={() => { setShowResetPassword(true) }}>Forgot password?</Button>
               </Grid>
             </form>
 
