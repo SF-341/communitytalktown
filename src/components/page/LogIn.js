@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Redirect, Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { AuthContext } from "../Auth";
 import poster from '../../image/img/poster.png'
 
 
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, Grid, Button, Card, FormHelperText, FormControl, Paper } from '@material-ui/core';
+import { TextField, Grid, Button, Card, FormHelperText } from '@material-ui/core';
 
 
 // Redux stuff
@@ -92,7 +92,7 @@ const LogIn = () => {
                 
               </Grid>
               <Grid item >
-                <Button type="submit" size="medium" variant="outlined">Send Reset Password</Button>
+                <Button type="submit" size="medium" >Send Reset Password</Button>
                 <br /><br />
                 <Button size="large" variant="outline" onClick={() => { setShowResetPassword(false) }}>Log in</Button>
               </Grid>

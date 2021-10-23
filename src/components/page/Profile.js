@@ -4,7 +4,6 @@ import { AuthContext } from '../Auth'
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Grid, Button, IconButton, styled, Paper } from '@material-ui/core';
 import CameraAltOutlined from '@material-ui/icons/CameraAltOutlined';
-import Avatar from "@material-ui/core/Avatar";
 import '../css/Profile.css'
 
 import Loading from '../UI/Loading'

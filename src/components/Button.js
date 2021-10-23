@@ -1,10 +1,10 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { AuthContext } from './Auth'
 import './css/Button.css';
 
 // Redux stuff
 import { logoutUser } from "../redux/actions/userActions"
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 const STYLES = ['btn--primary', 'btn--outline'];
 const SIZES = ['btn--medium', 'btn--large'];

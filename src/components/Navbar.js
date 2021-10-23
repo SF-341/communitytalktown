@@ -7,16 +7,16 @@ import { Button } from "./Button";
 import { Link } from "react-router-dom";
 import "./css/Navbar.css";
 
-import { ColorModeContext, MyApp } from './UI/Colormode'
+import { ColorModeContext } from './UI/Colormode'
 
 import IconButton from '@material-ui/core/IconButton';
-import { useTheme, ThemeProvider, createTheme, makeStyles } from '@material-ui/core/styles';
-import { TextField, Grid, Card, FormHelperText, FormControl, Box, Paper, Typography } from '@material-ui/core';
+import { useTheme, makeStyles } from '@material-ui/core/styles';
+import { Typography } from '@material-ui/core';
 
 
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
-import { blueGrey, grey } from '@mui/material/colors';
+import { grey } from '@mui/material/colors';
 
 
 

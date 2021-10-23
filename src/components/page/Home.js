@@ -21,9 +21,6 @@ import { isEmpty } from 'lodash'
 
 const Home = () => {
 
-    const theme = useTheme();
-    
-    
 
     const dispatch = useDispatch();
     const user = useSelector(state => state.user);

@@ -1,11 +1,11 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from '@material-ui/core/Typography';
+
 import MailIcon from "@material-ui/icons/Mail";
 import HomeIcon from '@mui/icons-material/Home';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import { Container, TextField } from '@material-ui/core/'
+import { TextField } from '@material-ui/core/'
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
 import '../css/Contact.css'
 import { Button } from "@mui/material";
@@ -102,7 +102,7 @@ const Contact = () => {
             <Grid item xs >
               <Paper className={classes.paper}>
                 <img className={classes.image} alt="Avatar"
-                  src="https://firebasestorage.googleapis.com/v0/b/searchbed-d2c6b.appspot.com/o/devpics%2Fwon.jpg?alt=media&token=fa2bdde3-b395-4082-a44d-5f21b26ef2fd" alt="Narok"
+                  src="https://firebasestorage.googleapis.com/v0/b/searchbed-d2c6b.appspot.com/o/devpics%2Fwon.jpg?alt=media&token=fa2bdde3-b395-4082-a44d-5f21b26ef2fd" 
                 />
                 <h4>Imron Y.</h4>
                 <p>(Senior Developer)</p>
@@ -112,7 +112,7 @@ const Contact = () => {
             <Grid item xs >
               <Paper className={classes.paper}>
                 <img className={classes.image} alt="Avatar"
-                  src=" https://firebasestorage.googleapis.com/v0/b/searchbed-d2c6b.appspot.com/o/devpics%2Fkerk.jpg?alt=media&token=9581653f-64f7-43fb-ad27-9bb1e0878ca0" alt="Narok"
+                  src=" https://firebasestorage.googleapis.com/v0/b/searchbed-d2c6b.appspot.com/o/devpics%2Fkerk.jpg?alt=media&token=9581653f-64f7-43fb-ad27-9bb1e0878ca0" 
                 />
                 <h4>Chittawan W.</h4>
                 <p>(Junior Developer)</p>
@@ -122,7 +122,7 @@ const Contact = () => {
             <Grid item xs >
               <Paper className={classes.paper}>
                 <img className={classes.image} alt="Avatar"
-                  src="https://firebasestorage.googleapis.com/v0/b/searchbed-d2c6b.appspot.com/o/devpics%2Fkorn.jpg?alt=media&token=9a5e501a-fdb0-4d44-8020-1f1daff93fbf" alt="Narok"
+                  src="https://firebasestorage.googleapis.com/v0/b/searchbed-d2c6b.appspot.com/o/devpics%2Fkorn.jpg?alt=media&token=9a5e501a-fdb0-4d44-8020-1f1daff93fbf" 
                 />
                 <h4>Jittiwat M.</h4>
                 <p>(Doccument Controller)</p>
@@ -132,7 +132,7 @@ const Contact = () => {
             <Grid item xs >
               <Paper className={classes.paper}>
                 <img className={classes.image} alt="Avatar"
-                  src="https://firebasestorage.googleapis.com/v0/b/searchbed-d2c6b.appspot.com/o/devpics%2Fnot.jpg?alt=media&token=26aee5ee-98bd-4c9e-8ad6-30527c9ad662" alt="Narok"
+                  src="https://firebasestorage.googleapis.com/v0/b/searchbed-d2c6b.appspot.com/o/devpics%2Fnot.jpg?alt=media&token=26aee5ee-98bd-4c9e-8ad6-30527c9ad662" 
                 />
                 <h4>Navapon N.</h4>
                 <p>(General Stuff)</p>

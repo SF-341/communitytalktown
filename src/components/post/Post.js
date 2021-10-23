@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import firebaseConfig, { firestore, storage } from '../../config'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -77,7 +76,6 @@ const Post = ({ dataPost }) => {
 
 
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-    const id = dataPost.id;
     const title = dataPost.title;
     const details = dataPost.details;
     const username = dataPost.username;
@@ -86,7 +84,7 @@ const Post = ({ dataPost }) => {
     const likecount = dataPost.likecount;
     const commentcount = dataPost.commentcount;
     const userimage = dataPost.userimage;
-    const checkDelete = state.authenticated && dataPost.email == state.email;
+    const checkDelete = state.authenticated && dataPost.email === state.email;
 
     const [open, setOpen] = useState(false);
     const handleClose = () => {
@@ -96,9 +94,9 @@ const Post = ({ dataPost }) => {
         setOpen(!open);
     };
 
-    function loadMore() {
+    // function loadMore() {
 
-    }
+    // }
 
     function likedPost() {
         if (state.likes && state.likes.find((like) => dataPost.id === like.postid)) {
@@ -153,7 +151,7 @@ const Post = ({ dataPost }) => {
 
                 {imageSrc !== null ? (<>
                     <form onClick={handleToggle}>
-                        <CardMedia className={classes.media} image={imageSrc} />
+                        <CardMedia className={classes.media} image={imageSrc}  alt="" />
                     </form>
 
                     <Backdrop

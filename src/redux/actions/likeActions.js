@@ -47,10 +47,9 @@ export const Like = (postid) => (dispatch) => {
 
             dispatch({ type: LIKE_POST, payload: postData });
 
-            await (
-                refDoc.update({ likecount: postData.likecount }),
-                refUser.update({ likes: userData.likes })
-            );
+            await refDoc.update({ likecount: postData.likecount });
+            await refUser.update({ likes: userData.likes });
+
         } else {
             console.log("liked it!")
         }
@@ -91,11 +90,10 @@ export const UnLike = (postid) => (dispatch) => {
                         .then(() => {
                             postData.likecount--;
                             dispatch({ type: UNLIKE_POST, payload: postData });
+                            
+                            refDoc.update({ likecount: postData.likecount });
+                            refUser.update({ likes: userData.likes });
 
-                            return (
-                                refDoc.update({ likecount: postData.likecount }),
-                                refUser.update({ likes: userData.likes })
-                            );
                         }));
 
             }

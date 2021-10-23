@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, Container, Box, CircularProgress } from '@material-ui/core';
+import { makeStyles, Container, CircularProgress } from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
-import firebaseConfig from '../../config'
 import { v4 as uuidv4 } from 'uuid'
 
 

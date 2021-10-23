@@ -1,18 +1,17 @@
 import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
-import { Typography, Button, Container, makeStyles, TextField, FormHelperText, styled, Grid, Paper, IconButton, InputBase, Divider, } from '@material-ui/core'
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
-import Card from '@material-ui/core/Card';
+import {  makeStyles, styled, Grid, Paper, IconButton, InputBase,  } from '@material-ui/core'
+
 import CameraAltOutlined from '@material-ui/icons/CameraAltOutlined';
-import MenuIcon from '@material-ui/core/Menu';
+
 import SendRounded from '@material-ui/icons/SendRounded';
 
 
 
 // Redux stuff
 import { useDispatch, useSelector } from 'react-redux'
-import { createComment, deleteComment } from '../../redux/actions/dataActions'
+import { createComment } from '../../redux/actions/dataActions'
 
 export default function CreateComment({ postId }) {
     const dispatch = useDispatch();

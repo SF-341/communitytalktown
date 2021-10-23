@@ -19,7 +19,7 @@ export default function SelectPosts() {
             dispatch(getProvinces());
         }
 
-    }, [])
+    })
 
     const useStyles = makeStyles({
         root: {

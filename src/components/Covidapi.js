@@ -1,11 +1,11 @@
-import React, { useState, useContext, useEffect,PureComponent } from "react";
-import { makeStyles, withStyle } from '@material-ui/core/styles';
+import React, { useEffect } from "react";
+import { makeStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+
 import Box from '@material-ui/core/Box';
 import { Container } from '@material-ui/core/'
-import { BarChart, RadialBarChart, RadialBar, ComposedChart, Line, Area, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,Scatter } from 'recharts';
+import { BarChart, RadialBarChart, RadialBar, ComposedChart, Line, Area, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,Scatter } from 'recharts';
 
 // Redux stuff
 import { useSelector, useDispatch } from "react-redux";
