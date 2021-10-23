@@ -15,7 +15,6 @@ export default function SelectPosts() {
     const [province, setProvince] = useState('');
 
     useEffect(() => {
-        console.log(address.provinces);
         if (address.provinces === null) {
             dispatch(getProvinces());
         }

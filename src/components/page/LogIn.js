@@ -73,7 +73,6 @@ const LogIn = () => {
   const classes = useStyles();
 
   const { currentUser } = useContext(AuthContext);
-  console.log(showResetPassword)
 
   if (currentUser) {
     return <Redirect to="/" />;
@@ -83,7 +82,7 @@ const LogIn = () => {
 
     <Grid container className={classes.container}>
 
-      <Grid container justifyContent="center" xs={12} md={6} spacing={5} className={classes.container}>
+      <Grid container justifyContent="center" spacing={5} className={classes.container}>
         <Card elevation={3} className={classes.card}>
           {showResetPassword ?
             <form onSubmit={handleClick} className={classes.root} noValidate autoComplete="off" align="center">
@@ -127,7 +126,7 @@ const LogIn = () => {
       </Grid>
 
 
-      <Grid container justifyContent="center" xs={12} md={6} >
+      <Grid container justifyContent="center"  >
         <img className={classes.image} src={poster} />
       </Grid>
     </Grid>
