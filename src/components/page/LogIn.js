@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   card: {
-
-    minWidth: 400,
+    margin: "auto",
+    maxWidth: 400,
     height: 600,
   },
   text: {
@@ -35,6 +35,8 @@ const useStyles = makeStyles((theme) => ({
   container: {
     padding: theme.spacing(5),
     spacing: theme.spacing(2),
+    margin: "auto",
+    textAlign: "center"
   }
 
 }));
@@ -80,16 +82,16 @@ const LogIn = () => {
 
   return (
 
-    <Grid container className={classes.container}>
+    <Grid container justifyContent="center" spacing={5} className={classes.container}>
 
-      <Grid container justifyContent="center" spacing={5} className={classes.container}>
+      <Grid item spacing={5} className={classes.container} xs>
         <Card elevation={3} className={classes.card}>
           {showResetPassword ?
             <form onSubmit={handleClick} className={classes.root} noValidate autoComplete="off" align="center">
               <h1 >Reset Password</h1>
               <Grid item >
-                <TextField className={classes.text} type="email" label="Email address" name="email" required helperText= {user.resetpassword ? "Password Reset Email Sent!" : ""} color = "primary"/>
-                
+                <TextField className={classes.text} type="email" label="Email address" name="email" required helperText={user.resetpassword ? "Password Reset Email Sent!" : ""} color="primary" />
+
               </Grid>
               <Grid item >
                 <Button type="submit" size="medium" >Send Reset Password</Button>
@@ -125,8 +127,7 @@ const LogIn = () => {
         </Card>
       </Grid>
 
-
-      <Grid container justifyContent="center"  >
+      <Grid item  className={classes.container} xs>
         <img className={classes.image} src={poster} />
       </Grid>
     </Grid>

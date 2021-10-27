@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
         }),
     },
     expandOpen: {
-        transform: 'rotate(180deg)',
+        transform: 'rotate(0deg)',
     },
     avatar: {
         backgroundColor: red[500],
@@ -79,7 +79,7 @@ const Post = ({ dataPost }) => {
     const title = dataPost.title;
     const details = dataPost.details;
     const username = dataPost.username;
-    const createAt = dataPost.createAt.toDate().toLocaleString('en-US', options);
+    const createAt = dataPost.createAt.hasOwnProperty("seconds") ? dataPost.createAt.toDate().toLocaleString('en-US', options) : dataPost.createAt.toLocaleTimeString('en-US', options);
     const imageSrc = dataPost.image;
     const likecount = dataPost.likecount;
     const commentcount = dataPost.commentcount;
@@ -125,6 +125,7 @@ const Post = ({ dataPost }) => {
     const [expanded, setExpanded] = useState(false);
 
     const handleExpandClick = () => {
+        dispatch(getComment(dataPost.id));
         setExpanded(!expanded);
     };
 
@@ -135,9 +136,8 @@ const Post = ({ dataPost }) => {
     }
 
     useEffect(() => {
-        dispatch(getComment(dataPost.id));
     }, [])
-
+    
     const classes = useStyles();
     return (
         <><div className={classes.space}>

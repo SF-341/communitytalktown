@@ -1,11 +1,30 @@
-import { CREATE_POST, DELETE_POST, SET_COVID_RANGE, SET_COVID_WEEKDAY, NEW_COMMENT, DELETE_COMMENT, SET_POSTS, SET_POSTS_DATA, SET_COVID, LOADING_UI, CLEAR_ERRORS, SET_ERRORS, SET_USER_SELECT, SET_USER_ALLPOSTS, SET_USER_LOCATION, SET_COMMENT } from '../types';
+import { CREATE_POST, SET_LASTPOST, SET_POSTS_NEXT, DELETE_POST, SET_COVID_RANGE, SET_COVID_WEEKDAY, NEW_COMMENT, DELETE_COMMENT, SET_POSTS, SET_POSTS_DATA, SET_COVID, LOADING_UI, CLEAR_ERRORS, SET_ERRORS, SET_USER_SELECT, SET_USER_ALLPOSTS, SET_USER_LOCATION, SET_COMMENT } from '../types';
 import { firestore, storage } from '../../config'
 
 
+// export const getPosts = () => (dispatch) => {
+//     dispatch({ type: LOADING_UI });
+//     const postsRef = firestore.collection("Posts").orderBy("createAt", "desc");
+//     postsRef.onSnapshot(querySnapshot => {
+//         const List = [];
+//         const ListSnapshot = querySnapshot.docs;
+//         ListSnapshot.forEach(function (doc) {
+//             const data = doc.data()
+//             List.push(
+//                 data
+//             );
+//         });
+//         dispatch({ type: SET_POSTS, payload: List })
+//         dispatch({ type: CLEAR_ERRORS });
+//     }
+//     );
+// }
+
 export const getPosts = () => (dispatch) => {
     dispatch({ type: LOADING_UI });
-    const postsRef = firestore.collection("Posts").orderBy("createAt", "desc");
-    postsRef.onSnapshot(querySnapshot => {
+    const postsRef = firestore.collection("Posts").orderBy("createAt", "desc").limit(3);
+    postsRef.get().then(querySnapshot => {
+        console.log(querySnapshot)
         const List = [];
         const ListSnapshot = querySnapshot.docs;
         ListSnapshot.forEach(function (doc) {
@@ -14,11 +33,32 @@ export const getPosts = () => (dispatch) => {
                 data
             );
         });
+        dispatch({ type: SET_LASTPOST, payload: List[List.length - 1] })
         dispatch({ type: SET_POSTS, payload: List })
         dispatch({ type: CLEAR_ERRORS });
     }
     );
 }
+
+export const getNextPosts = (lastdoc) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+    const postsRef = firestore.collection("Posts").orderBy("createAt", "desc").limit(3).startAfter(lastdoc.createAt);
+    postsRef.get().then(querySnapshot => {
+        const List = [];
+        const ListSnapshot = querySnapshot.docs;
+        ListSnapshot.forEach(function (doc) {
+            const data = doc.data()
+            List.push(
+                data
+            );
+        });
+        dispatch({ type: SET_LASTPOST, payload: List[List.length - 1] })
+        dispatch({ type: SET_POSTS_NEXT, payload: List })
+        dispatch({ type: CLEAR_ERRORS });
+    }
+    );
+}
+
 
 export const getPost = (docId) => (dispatch) => {
     dispatch({ type: LOADING_UI });
@@ -38,10 +78,9 @@ export const getCovid = () => (dispatch) => {
         .then(result => {
             dispatch({ type: SET_COVID, payload: result });
             dispatch({ type: CLEAR_ERRORS });
-            
+
         }).catch((error) => {
             dispatch({ type: SET_ERRORS, payload: "Cannot get covid data" })
-            console.log("Cannot get covid data");
         })
 }
 
@@ -60,7 +99,6 @@ export const getCovidWeekday = () => (dispatch) => {
 
         }).catch((error) => {
             dispatch({ type: SET_ERRORS, payload: "Cannot get covid data" })
-            console.log("Cannot get covid data");
         })
 }
 
@@ -83,7 +121,7 @@ export const getCovidRanges = () => (dispatch) => {
 
         }).catch((error) => {
             dispatch({ type: SET_ERRORS, payload: "Cannot get covid data" })
-            console.log("Cannot get covid data");
+
         })
 }
 
@@ -101,7 +139,6 @@ export const createPost = (newPost) => async (dispatch) => {
             const storageRef = storage.ref().child('images/' + newPost.image.name);
             await storageRef.getDownloadURL().then(async (url) => {
                 Url = await url;
-                console.log(Url)
             });
             newPost.image = Url;
         }
@@ -112,21 +149,19 @@ export const createPost = (newPost) => async (dispatch) => {
             .then(() => { dispatch({ type: CLEAR_ERRORS }) })
             .catch((error) => {
                 dispatch({ type: SET_ERRORS, payload: error.message })
-                console.log(error.message);
             });
     }
 }
 
 export const deletePost = (postId) => (dispatch) => {
     dispatch({ type: LOADING_UI })
-    const documentRef = firestore.doc(`Posts/${postId}`);
+    const documentRef = firestore.doc("Posts/" + postId);
     documentRef.delete();
     dispatch({ type: DELETE_POST, payload: { id: postId } });
     dispatch({ type: CLEAR_ERRORS })
 }
 
 export const createComment = (newComment) => async (dispatch) => {
-    console.log(newComment)
 
     let postData;
     let userData;
@@ -181,7 +216,6 @@ export const createComment = (newComment) => async (dispatch) => {
 
             }).catch(error => {
                 dispatch({ type: SET_ERRORS, payload: error.message })
-                console.log(error.message)
             })
     }
 }
@@ -227,7 +261,6 @@ export const deleteComment = (comment) => (dispatch) => {
             }
         }).catch(error => {
             dispatch({ type: SET_ERRORS, payload: error.message })
-            console.log(error.message)
         })
 }
 
@@ -240,7 +273,6 @@ export const getComment = (postId) => (dispatch) => {
         if (data.empty) {
             console.log("no comments")
 
-
         } else {
             let comment = data.docs;
             comment.forEach(function (doc) {
@@ -250,7 +282,6 @@ export const getComment = (postId) => (dispatch) => {
                 );
             });
 
-            console.log(comments);
             dispatch({ type: SET_COMMENT, payload: comments })
 
             dispatch({ type: CLEAR_ERRORS });
