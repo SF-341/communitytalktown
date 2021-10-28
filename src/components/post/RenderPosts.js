@@ -6,6 +6,7 @@ import { Button } from '@material-ui/core';
 
 
 //posts
+import LoadPostsdata from './LoadPostsdata';
 import SelectPosts from './SelectPosts'
 import Post from './Post'
 
@@ -24,15 +25,8 @@ const RenderPosts = () => {
     const address = useSelector(state => state.address);
 
     const { currentUser } = useContext(AuthContext);
-    const getPostsLocation = data.posts.filter(post => post.location === user.province)
-    const getPostsUserSelect = data.posts.filter(post => post.location === address.userselect)
-
-
-    const OnLoadPosts = (e) => {
-        e.stopPropagation();
-        e.nativeEvent.stopImmediatePropagation();
-        dispatch(getNextPosts(data.lastdoc));
-    }
+    const getPostsLocation = data.posts.filter(post => post.location === user.province);
+    const getPostsUserSelect = data.posts.filter(post => post.location === address.userselect);
 
 
     useEffect(() => {
@@ -60,7 +54,7 @@ const RenderPosts = () => {
                         <> {data.showselectposts && getPostsUserSelect.map((data) => (<Post key={data.id} dataPost={data} />))}</>
                         <> {data.showlocationsposts && getPostsLocation.map((data) => (<Post key={data.id} dataPost={data} />))}</></>)
                 }
-                {UI.loading ? <Loading /> : data.lastdoc === undefined ? "" : <Button onClick={OnLoadPosts} >Load Posts</Button>}
+                {UI.loading ? <Loading /> : data.lastdoc === undefined ? "" : <LoadPostsdata/>}
             </div>
         </>
     )
