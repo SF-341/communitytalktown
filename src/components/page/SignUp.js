@@ -94,7 +94,7 @@ const SignUp = () => {
     }
 
     useEffect(() => {
-        console.log(address.provinces);
+        
         if (address.provinces === null) {
             dispatch(getProvinces());
         }

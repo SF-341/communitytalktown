@@ -12,6 +12,7 @@ import { Select, FormControl, MenuItem, Grid, Button, InputLabel, Container } fr
 export default function SelectPosts() {
     const dispatch = useDispatch();
     const address = useSelector(state => state.address);
+    const user = useSelector(state => state.user);
     const [province, setProvince] = useState('');
 
     useEffect(() => {
@@ -19,7 +20,7 @@ export default function SelectPosts() {
             dispatch(getProvinces());
         }
 
-    })
+    }, [])
 
     const useStyles = makeStyles({
         root: {
@@ -57,6 +58,8 @@ export default function SelectPosts() {
                         </Button>
                     </label>
                 </Grid>
+
+                {user.authenticated ? 
                 <Grid item xs={3} style={{ paddingTop: '15px' }}>
                     <label htmlFor="contained-button-file" >
                         <Button
@@ -71,7 +74,8 @@ export default function SelectPosts() {
                             MY LOCATION
                         </Button>
                     </label>
-                </Grid>
+                </Grid> : '' }
+                
 
                 <Grid item xs={3} style={{ textAlign: 'end', paddingLeft: '15px' }}>
                     <FormControl className={classes.formControl} >

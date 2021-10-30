@@ -31,7 +31,6 @@ export default function CreateComment({ postId }) {
     }
 
     function handleSubmit(e) {
-        e.preventDefault();
         const newComment = {
             id: uuidv4(),
             userid: user.id,
@@ -42,7 +41,9 @@ export default function CreateComment({ postId }) {
             createAt: new Date(),
             image
         }
+        setDiscribtion('');
         dispatch(createComment(newComment));
+        
     }
 
 
@@ -54,7 +55,7 @@ export default function CreateComment({ postId }) {
     const useStyles = makeStyles({
 
         paper: {
-            p: '2px 4px',
+           
             display: 'flex',
             maxWidth: 700,
             paddingLeft: 20,
@@ -86,7 +87,7 @@ export default function CreateComment({ postId }) {
             <Grid item xs={2} sm={2}>
             {image && image.type}
                 <label htmlFor="icon-button-file">
-                    <Input accept="image/*" id="icon-button-file" type="file" onChange={handleChange} name="image" />
+                    <Input accept="image/*" id="icon-button-file" type="file" onChange={handleChange} disabled={!user.authenticated} name="image" />
                     <IconButton color="primary" aria-label="upload picture" component="span" >
                         <CameraAltOutlined />
                     </IconButton>
@@ -94,7 +95,7 @@ export default function CreateComment({ postId }) {
                 </label>
                 
                 <label htmlFor="icon-button">
-                    <IconButton color="primary" type="submit" aria-label="upload picture" component="span" onClick={handleSubmit} >
+                    <IconButton color="primary" type="submit" aria-label="upload picture" component="span" disabled={!user.authenticated} onClick={handleSubmit} >
                         <SendRounded />
                     </IconButton>
                 </label>

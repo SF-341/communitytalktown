@@ -1,4 +1,4 @@
-import { CREATE_POST, SET_LASTPOST, SET_POSTS_NEXT, DELETE_POST, SET_COVID_RANGE, SET_COVID_WEEKDAY, NEW_COMMENT, DELETE_COMMENT, SET_POSTS, SET_POSTS_DATA, SET_COVID, LOADING_UI, CLEAR_ERRORS, SET_ERRORS, SET_USER_SELECT, SET_USER_ALLPOSTS, SET_USER_LOCATION, SET_COMMENT } from '../types';
+import { SET_BACKDROP, CREATE_POST, SET_LASTPOST, SET_POSTS_NEXT, DELETE_POST, SET_COVID_RANGE, SET_COVID_WEEKDAY, NEW_COMMENT, DELETE_COMMENT, SET_POSTS, SET_POSTS_DATA, SET_COVID, LOADING_UI, CLEAR_ERRORS, SET_ERRORS, SET_USER_SELECT, SET_USER_ALLPOSTS, SET_USER_LOCATION, SET_COMMENT } from '../types';
 import { firestore, storage } from '../../config'
 
 
@@ -24,7 +24,6 @@ export const getPosts = () => (dispatch) => {
     dispatch({ type: LOADING_UI });
     const postsRef = firestore.collection("Posts").orderBy("createAt", "desc").limit(3);
     postsRef.get().then(querySnapshot => {
-        console.log(querySnapshot)
         const List = [];
         const ListSnapshot = querySnapshot.docs;
         ListSnapshot.forEach(function (doc) {
@@ -296,6 +295,10 @@ export const getComment = (postId) => (dispatch) => {
     //     dispatch({ type: SET_ERRORS, payload: error.message });
     //             console.log(error.message);
     // })
+}
+
+export const setbackdrop = (val) => (dispatch) => {
+    dispatch({ type: SET_BACKDROP, payload: val});
 }
 
 export const allposts = () => (dispatch) => {

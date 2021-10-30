@@ -13,7 +13,7 @@ const DashBoard = () => {
     const { currentUser } = useContext(AuthContext);
 
     useEffect(() => {
-        if (currentUser) {
+        if (!currentUser) {
             console.log(currentUser)
             dispatch(refreshUserData());
 

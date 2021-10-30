@@ -1,4 +1,4 @@
-import { SET_LASTPOST, SET_POSTS_NEXT, SET_COVID_RANGE, SET_COVID_WEEKDAY, NEW_COMMENT, DELETE_COMMENT, SET_POSTS, CREATE_POST, DELETE_POST, SET_COVID, LOADING_DATA, LIKE_POST, UNLIKE_POST, SET_USER_SELECT, SET_USER_ALLPOSTS, SET_USER_LOCATION, SET_COMMENT } from '../types'
+import { SET_USER, SET_BACKDROP, SET_LASTPOST, SET_POSTS_NEXT, SET_COVID_RANGE, SET_COVID_WEEKDAY, NEW_COMMENT, DELETE_COMMENT, SET_POSTS, CREATE_POST, DELETE_POST, SET_COVID, LOADING_DATA, LIKE_POST, UNLIKE_POST, SET_USER_SELECT, SET_USER_ALLPOSTS, SET_USER_LOCATION, SET_COMMENT } from '../types'
 
 const initialState = {
     lastdoc: null,
@@ -11,6 +11,7 @@ const initialState = {
     showallposts: true,
     showselectposts: false,
     showlocationsposts: false,
+    backdrop: false,
 };
 
 export default function (state = initialState, action) {
@@ -143,6 +144,17 @@ export default function (state = initialState, action) {
                 loading: false,
                 comments: [...state.comments, action.payload]
             }
+        case SET_BACKDROP:
+            return {
+                ...state,
+                backdrop: action.payload,
+            }
+        case SET_USER:
+            return {
+                ...state,
+                backdrop: false,
+            }
+
 
         default:
             return state;

@@ -30,9 +30,8 @@ const RenderPosts = () => {
 
 
     useEffect(() => {
-        if (currentUser) {
-            console.log(currentUser)
-            if (!user.authenticated) {
+        if (!currentUser) {
+            if (user.authenticated) {
                 dispatch(refreshUserData());
             }
             if (isEmpty(data.posts)) {
@@ -41,19 +40,17 @@ const RenderPosts = () => {
         }
     }, [])
 
-    console.log(data.lastdoc)
 
     return (
         <>
             <div>
                 <SelectPosts />
-
-                {!currentUser ? <Redirect to="/login" /> :
+                
                     (<>
                         <> {data.showallposts && data.posts.map((data) => (<Post key={data.id} dataPost={data} />))}</>
                         <> {data.showselectposts && getPostsUserSelect.map((data) => (<Post key={data.id} dataPost={data} />))}</>
                         <> {data.showlocationsposts && getPostsLocation.map((data) => (<Post key={data.id} dataPost={data} />))}</></>)
-                }
+                
                 {UI.loading ? <Loading /> : data.lastdoc === undefined ? "" : <LoadPostsdata/>}
             </div>
         </>

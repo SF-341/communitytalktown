@@ -124,8 +124,8 @@ const Comment = ({ dataComment }) => {
                     action={
                         checkDelete ?
                             (<><IconButton aria-label="DeleteIcon"
-                                aria-haspopup="true"
-                                aria-expanded={openn ? 'true' : undefined}
+                                aria-haspopup= 'true'
+                                aria-expanded={openn ? true : undefined}
                                 onClick={handleClick}>
                                 <MoreVert fontSize="small" />
                             </IconButton>

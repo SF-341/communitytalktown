@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-
+import { Link, Redirect } from 'react-router-dom';
+import LogInForm from '../form/LogInForm';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -16,11 +17,12 @@ import clsx from 'clsx';
 import QuestionAnswerOutlinedIcon from '@material-ui/icons/QuestionAnswerOutlined';
 import Collapse from '@material-ui/core/Collapse';
 import Backdrop from '@material-ui/core/Backdrop';
+import { Button } from '@material-ui/core/'
 
 
 // Redux stuff
 import { Like, UnLike } from '../../redux/actions/likeActions'
-import { getComment, deletePost } from '../../redux/actions/dataActions'
+import { getComment, deletePost, setbackdrop } from '../../redux/actions/dataActions'
 import { useSelector, useDispatch } from "react-redux";
 
 import CreateComment from './CreateComment'
@@ -94,9 +96,12 @@ const Post = ({ dataPost }) => {
         setOpen(!open);
     };
 
-    // function loadMore() {
 
-    // }
+    const handleClickBackDrop = () => {
+        dispatch(setbackdrop(true))
+    };
+
+
 
     function likedPost() {
         if (state.likes && state.likes.find((like) => dataPost.id === like.postid)) {
@@ -116,11 +121,12 @@ const Post = ({ dataPost }) => {
 
 
 
-    const likeButton = likedPost() ?
-        (<IconButton aria-label="add to favorites" onClick={handleUnLike} >
-            <FavoriteIcon color="secondary" /></IconButton>)
-        : (<IconButton aria-label="add to favorites" onClick={handleLike} >
-            <FavoriteIcon /></IconButton>)
+    const likeButton = !state.authenticated ? (<IconButton aria-label="add to favorites" onClick={handleClickBackDrop} ><FavoriteIcon /></IconButton>) :
+        likedPost() ?
+            (<IconButton aria-label="add to favorites" onClick={handleUnLike} >
+                <FavoriteIcon color="secondary" /></IconButton>)
+            : (<IconButton aria-label="add to favorites" onClick={handleLike} >
+                <FavoriteIcon /></IconButton>)
 
     const [expanded, setExpanded] = useState(false);
 
@@ -137,7 +143,7 @@ const Post = ({ dataPost }) => {
 
     useEffect(() => {
     }, [])
-    
+
     const classes = useStyles();
     return (
         <><div className={classes.space}>
@@ -151,7 +157,7 @@ const Post = ({ dataPost }) => {
 
                 {imageSrc !== null ? (<>
                     <form onClick={handleToggle}>
-                        <CardMedia className={classes.media} image={imageSrc}  alt="" />
+                        <CardMedia className={classes.media} image={imageSrc} alt="" />
                     </form>
 
                     <Backdrop
@@ -200,11 +206,14 @@ const Post = ({ dataPost }) => {
                 </CardActions>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
-                        <CreateComment postId={dataPost.id} />
+                        {state.authenticated ? <CreateComment postId={dataPost.id} /> : <form onClick={handleClickBackDrop}><CreateComment /></form>}
+
                     </CardContent>
+                    <>
                     <CardContent>
                         <RenderComment postId={dataPost.id} />
                     </CardContent>
+                    </>
                 </Collapse>
             </Card>
         </div>
