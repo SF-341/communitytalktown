@@ -74,6 +74,7 @@ const useStyles = makeStyles((theme) => ({
 const Post = ({ dataPost }) => {
     const dispatch = useDispatch();
     const state = useSelector(state => state.user)
+    const data = useSelector(state => state.data)
 
 
 
@@ -87,6 +88,7 @@ const Post = ({ dataPost }) => {
     const commentcount = dataPost.commentcount;
     const userimage = dataPost.userimage;
     const checkDelete = state.authenticated && dataPost.email === state.email;
+    const index = data.comments.filter(val => val[0].postid === dataPost.id );
 
     const [open, setOpen] = useState(false);
     const handleClose = () => {
@@ -131,7 +133,9 @@ const Post = ({ dataPost }) => {
     const [expanded, setExpanded] = useState(false);
 
     const handleExpandClick = () => {
-        dispatch(getComment(dataPost.id));
+        if (index.length === 0) {
+            dispatch(getComment(dataPost.id));
+        }
         setExpanded(!expanded);
     };
 
@@ -210,9 +214,9 @@ const Post = ({ dataPost }) => {
 
                     </CardContent>
                     <>
-                    <CardContent>
-                        <RenderComment postId={dataPost.id} />
-                    </CardContent>
+                        <CardContent>
+                            <RenderComment postId={dataPost.id} />
+                        </CardContent>
                     </>
                 </Collapse>
             </Card>
