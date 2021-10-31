@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Auth";
-
+import { Link } from "react-router-dom"
 
 
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Grid, Button, Card, FormHelperText } from '@material-ui/core';
+import { grey } from '@mui/material/colors';
+
 
 
 // Redux stuff
@@ -45,6 +47,13 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "right",
     paddingRight: 10,
     color: theme.palette.text.secondary,
+    cursor: 'pointer',
+    '&:hover': {
+      color: grey[900],
+    }
+  },
+  link: {
+    textDecoration: 'none',
   }
 
 }));
@@ -113,13 +122,22 @@ const LogInForm = () => {
                   {!UI.loading && UI.passworderror != null ? <FormHelperText error id="component-error-text">{UI.passworderror}</FormHelperText> : ''}
                   {!UI.loading && UI.error != null ? <FormHelperText error id="component-error-text">{UI.error}</FormHelperText> : ''}
                 </Grid>
-
-                <Grid item >
-                  <Button type="submit" size="large" variant="outlined">Submit</Button>
+                <Grid container justifyContent="center">
+                  <Grid item xs>
+                    <Button type="submit" size="large" variant="outlined">Submit</Button>
+                  </Grid>
+                  <Grid item xs>
+                    <Link to="/signup" className={classes.link}>
+                      <Button size="large" variant="outlined" >Sign up</Button>
+                    </Link>
+                  </Grid>
                 </Grid>
+
+
                 <Grid item>
                   <Button size="large" color="secondary" variant="outlined" onClick={() => { setShowResetPassword(true) }}>Forgot password?</Button>
                 </Grid>
+
               </form></>
 
           }
