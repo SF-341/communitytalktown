@@ -160,7 +160,6 @@ export const updateUser = (data) => (dispatch) => {
 }
 
 export const updateUserImage = (img) => async (dispatch) => {
-    console.log(img);
     const userid = localStorage.IdToken;
     const ref = firestore.doc("User/" + userid);
 
@@ -169,7 +168,6 @@ export const updateUserImage = (img) => async (dispatch) => {
     // Url = newPost.image.name;
     const storageRef = storage.ref().child('imagesProfile/' + img.name);
     await storageRef.getDownloadURL().then((url) => {
-        console.log(url)
         ref.update({ image: url })
             .then(function () {
                 dispatch({ type: SET_USER_UPDATE_PROFILE, payload: { url: url } });

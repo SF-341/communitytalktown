@@ -21,7 +21,6 @@ export const getProvinces = () => (dispatch) => {
 }
 
 export const getDistrict = (provinces) => (dispatch) => {
-    console.log(provinces);
     dispatch({ type: SET_ADDRESS_LOADING })
     fetch("https://thaiaddressapi-thaikub.herokuapp.com/v1/thailand/provinces/" + provinces + "/district", {
         method: "GET",
@@ -41,7 +40,6 @@ export const getDistrict = (provinces) => (dispatch) => {
 }
 
 export const getSubDistrict = (provinces, district) => (dispatch) => {
-    console.log(provinces, district);
     dispatch({ type: SET_ADDRESS_LOADING })
     fetch("https://thaiaddressapi-thaikub.herokuapp.com/v1/thailand/provinces/" + provinces + "/district/" + district, {
         method: "GET",

@@ -72,7 +72,6 @@ const Profile = () => {
       setLastName(e.target.value)
     } else if (e.target.name === "image") {
       setUploadProfile(true)
-      console.log(e.target.files[0]);
       setImage(e.target.files[0])
     }
   }

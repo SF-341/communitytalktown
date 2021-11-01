@@ -31,7 +31,6 @@ const ProvincesSel = () => {
                             province: item.province,
                     })
                 });
-                console.log(temp);
                 setDataProvince(temp);
                 
             })
@@ -50,7 +49,6 @@ const ProvincesSel = () => {
                             district: item,
                     })
                 });
-                console.log(temp);
                 setDataDistrict(temp);
             })
     }
@@ -68,7 +66,6 @@ const ProvincesSel = () => {
                             subdistrict: item,
                     })
                 });
-                console.log(temp);
                 setDataSubDistrict(temp);
             })
     }

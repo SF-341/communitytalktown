@@ -84,7 +84,6 @@ export default function (state = initialState, action) {
             }
         case DELETE_COMMENT:
             let updateComments = state.comments.filter((comment) => comment.commentid !== action.payload.commentid)
-            console.log('upid ' + updateComments, "ccid " + action.payload.commentid)
             return {
                 ...state,
                 loading: false,

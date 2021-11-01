@@ -122,7 +122,6 @@ const Covidapi = () => {
     },
   ];
   const items = state.covid[0];
-  console.log(items);
 
   useEffect(() => {
     if (isEmpty(state.covid)) {

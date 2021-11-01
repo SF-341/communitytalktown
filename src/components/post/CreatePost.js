@@ -28,7 +28,6 @@ const CreatePost = () => {
         } else if (e.target.name === "details") {
             setDetails(e.target.value)
         } else if (e.target.name === "image") {
-            console.log(e.target.files[0]);
             setImage(e.target.files[0])
 
         }

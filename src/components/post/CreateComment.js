@@ -25,7 +25,6 @@ export default function CreateComment({ postId }) {
         if (e.target.name === "discribtion") {
             setDiscribtion(e.target.value)
         } else if (e.target.name === "image") {
-            console.log(e.target.files[0]);
             setImage(e.target.files[0])
         }
     }

@@ -14,9 +14,7 @@ const DashBoard = () => {
 
     useEffect(() => {
         if (!currentUser) {
-            console.log(currentUser)
             dispatch(refreshUserData());
-
         }
     }, [])
 
