@@ -45,13 +45,14 @@ const RenderPosts = () => {
         <>
             <div>
                 <SelectPosts />
-                
-                    (<>
-                        <> {data.showallposts && data.posts.map((data) => (<Post key={data.id} dataPost={data} />))}</>
-                        <> {data.showselectposts && getPostsUserSelect.map((data) => (<Post key={data.id} dataPost={data} />))}</>
-                        <> {data.showlocationsposts && getPostsLocation.map((data) => (<Post key={data.id} dataPost={data} />))}</></>)
-                
-                {UI.loading ? <Loading /> : data.lastdoc === undefined ? "" : <LoadPostsdata/>}
+
+                <>
+                    <> {data.showallposts && data.posts.map((data) => (<Post key={data.id} dataPost={data} />))}</>
+                    <> {data.showselectposts && getPostsUserSelect.map((data) => (<Post key={data.id} dataPost={data} />))}</>
+                    <> {data.showlocationsposts && getPostsLocation.map((data) => (<Post key={data.id} dataPost={data} />))}</>
+                </>
+
+                {UI.loading ? <Loading /> : data.lastdoc === undefined ? "" : <LoadPostsdata />}
             </div>
         </>
     )

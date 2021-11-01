@@ -76,9 +76,9 @@ const LogIn = () => {
 
   const { currentUser } = useContext(AuthContext);
 
-  // if (currentUser) {
-  //   return <Redirect to="/" />;
-  // }
+  if (currentUser) {
+    return <Redirect to="/" />;
+  }
 
   return (
 
