@@ -13,6 +13,7 @@ import Loading from '../UI/Loading'
 // Redux stuff
 import { useSelector, useDispatch } from 'react-redux'
 import { updateUser, updateUserImage, refreshUserData } from '../../redux/actions/userActions'
+import { getPosts } from '../../redux/actions/dataActions'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -121,10 +122,8 @@ const Profile = () => {
   }
 
   useEffect(() => {
-    if (currentUser) {
       dispatch(refreshUserData());
-
-    }
+      dispatch(getPosts())
 
   }, [])
 

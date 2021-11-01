@@ -91,10 +91,12 @@ const LogInForm = () => {
 
     <Grid container justifyContent="center" spacing={5} className={classes.container}>
 
-      <Grid item spacing={5} className={classes.container} xs>
-        <Card d elevation={3} className={classes.card}>
-          <div><h2 onClick={handleClickBackDrop} className={classes.closebtn}>x</h2></div>
-          {showResetPassword ?
+      <Grid item className={classes.container} xs>
+        <Card elevation={3} className={classes.card}>
+          <div>
+            <h2 onClick={handleClickBackDrop} className={classes.closebtn}>x</h2>
+          </div>
+          {showResetPassword ? <>
             <form onSubmit={handleClick} className={classes.root} noValidate autoComplete="off" align="center">
               <h1 >Reset Password</h1>
               <Grid item >
@@ -107,7 +109,7 @@ const LogInForm = () => {
                 <Button size="large" variant="outlined" onClick={() => { setShowResetPassword(false) }}>Log in</Button>
               </Grid>
             </form>
-
+          </>
             : <>
               <form onSubmit={handleSubmit} className={classes.root} noValidate autoComplete="off" align="center">
 
@@ -138,7 +140,8 @@ const LogInForm = () => {
                   <Button size="large" color="secondary" variant="outlined" onClick={() => { setShowResetPassword(true) }}>Forgot password?</Button>
                 </Grid>
 
-              </form></>
+              </form>
+            </>
 
           }
 

@@ -84,7 +84,7 @@ const LogIn = () => {
 
     <Grid container justifyContent="center" spacing={5} className={classes.container}>
 
-      <Grid item spacing={5} className={classes.container} xs>
+      <Grid item className={classes.container} xs>
         <Card elevation={3} className={classes.card}>
           {showResetPassword ?
             <form onSubmit={handleClick} className={classes.root} noValidate autoComplete="off" align="center">
