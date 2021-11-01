@@ -123,7 +123,6 @@ const Profile = () => {
 
   useEffect(() => {
     if (currentUser) {
-      console.log(currentUser)
       dispatch(refreshUserData());
 
     }

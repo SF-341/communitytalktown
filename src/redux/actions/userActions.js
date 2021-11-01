@@ -18,7 +18,6 @@ export const loginUser = (userData) => (dispatch) => {
     firebaseConfig
         .auth()
         .signInWithEmailAndPassword(userData.email, userData.password).then((data) => {
-            console.log(data.user.providerData[0].email);
             refUser.onSnapshot(querySnapshot => {
                 const ListSnapshot = querySnapshot.docs;
                 ListSnapshot.forEach(doc => {

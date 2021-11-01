@@ -36,7 +36,6 @@ export default function (state = initialState, action) {
                 ...action.payload
             };
         case SET_USER_REFRESH:
-            console.log(action.payload);
             let auth = action.payload === undefined ? false : true;
             return {
                 authenticated: auth,
