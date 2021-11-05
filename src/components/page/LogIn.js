@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { AuthContext } from "../Auth";
-import poster from '../../image/img/poster.png'
 
-
+// css
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Grid, Button, Card, FormHelperText } from '@material-ui/core';
-
+import poster from '../../image/img/poster.png'
 
 // Redux stuff
 import { useSelector, useDispatch } from "react-redux";

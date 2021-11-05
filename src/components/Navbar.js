@@ -1,18 +1,17 @@
 import React, { useContext, useState, useEffect } from "react";
 
-
+// css
 import Avatar from "@material-ui/core/Avatar";
-import { deepPurple } from "@material-ui/core/colors";
+
 import { Button } from "./Button";
 import { Link } from "react-router-dom";
 import "./css/Navbar.css";
 
 import { ColorModeContext } from './UI/Colormode'
 
-import IconButton from '@material-ui/core/IconButton';
+import { deepPurple } from "@material-ui/core/colors";
 import { useTheme, makeStyles } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
-
+import { Typography, IconButton } from '@material-ui/core';
 
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import Brightness7Icon from '@material-ui/icons/Brightness7';

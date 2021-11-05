@@ -151,7 +151,7 @@ export const updateUser = (data) => (dispatch) => {
     try {
         ref.update({ username: data.username, firstname: data.firstname, lastname: data.lastname })
             .then(function () {
-                dispatch({ type: SET_USER_UPDATE });
+                dispatch({ type: SET_USER_UPDATE, payload:  { username: data.username, firstname: data.firstname, lastname: data.lastname }});
             })
     } catch (error) {
         alert(error);

@@ -1,12 +1,14 @@
+import React, { useContext, useEffect } from 'react';
+import { AuthContext } from '../Auth'
+
 //posts
 import CreatePost from '../post/CreatePost'
 import RenderPosts from '../post/RenderPosts';
-import React, { useContext, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
-import { AuthContext } from '../Auth'
 
+// login backdrob
 import LogInForm from '../form/LogInForm';
 
+// css
 import { makeStyles } from '@material-ui/core/styles';
 import Backdrop from '@material-ui/core/Backdrop';
 
@@ -36,7 +38,9 @@ const Home = () => {
     useEffect(() => {
         if (currentUser !== null && user.authenticated === false) {
             dispatch(refreshUserData());
-            dispatch(getPosts())
+            if (data.posts.length === 0) {
+                dispatch(getPosts())
+            }
         }
     }, [])
 

@@ -1,13 +1,14 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { AuthContext } from '../Auth'
+
+// css
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Grid, Button, IconButton, styled, Paper } from '@material-ui/core';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import CameraAltOutlined from '@material-ui/icons/CameraAltOutlined';
 import '../css/Profile.css'
-
 import Loading from '../UI/Loading'
 
 // Redux stuff
@@ -122,8 +123,10 @@ const Profile = () => {
   }
 
   useEffect(() => {
+    if (currentUser !== null && state.authenticated === false) {
       dispatch(refreshUserData());
       dispatch(getPosts())
+  }
 
   }, [])
 

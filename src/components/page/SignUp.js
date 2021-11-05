@@ -2,13 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 
-
+// css
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, Grid, Button, FormHelperText } from '@material-ui/core';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import { TextField, Grid, Button, FormHelperText, InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
+
 
 //Redux stuff
 import { useSelector, useDispatch } from 'react-redux'

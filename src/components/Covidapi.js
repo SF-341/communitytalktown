@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
-import { makeStyles} from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
 
-import Box from '@material-ui/core/Box';
-import { Container } from '@material-ui/core/'
+// css
+import { makeStyles} from '@material-ui/core/styles';
+import { Container, Box, Grid, Paper } from '@material-ui/core/'
 import { BarChart, RadialBarChart, RadialBar, ComposedChart, Line, Area, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,Scatter } from 'recharts';
 
 // Redux stuff
@@ -239,7 +237,7 @@ const Covidapi = () => {
             </Grid>
             <Grid item xs={12} sm={12}>
             <Paper className={classes.paper}>
-            <ResponsiveContainer width={1225} height={500}>
+            <ResponsiveContainer width="100%" height={500}>
             <ComposedChart
               width={1000}
               height={500}

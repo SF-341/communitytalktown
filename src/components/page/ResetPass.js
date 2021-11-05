@@ -1,11 +1,30 @@
 import React, { useState } from 'react'
 import { Redirect } from "react-router-dom";
 import firebaseConfig from "../../config";
+
+//css
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Grid, Button, Card, } from '@material-ui/core';
 
-const ResetPass = () => {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
 
+      margin: theme.spacing(7),
+      width: 300,
+
+    }
+  },
+
+  card: {
+    minWidth: 400,
+  },
+  text: {
+    minWidth: 250,
+  }
+}));
+
+const ResetPass = () => {
   const [sended, setSended] = useState(false);
 
   const handleSubmit = (e) => {
@@ -26,24 +45,7 @@ const ResetPass = () => {
 
   }
 
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      '& > *': {
 
-        margin: theme.spacing(7),
-        width: 300,
-
-      }
-
-    },
-
-    card: {
-      minWidth: 400,
-    },
-    text: {
-      minWidth: 250,
-    }
-  }));
 
   const classes = useStyles();
 

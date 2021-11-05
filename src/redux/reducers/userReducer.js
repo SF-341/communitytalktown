@@ -38,6 +38,7 @@ export default function (state = initialState, action) {
         case SET_USER_REFRESH:
             let auth = action.payload === undefined ? false : true;
             return {
+                ...state,
                 authenticated: auth,
                 loading: false,
                 ...action.payload
