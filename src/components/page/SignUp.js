@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 // css
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, Grid, Button, FormHelperText, InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
+import { TextField, Grid, Button, FormHelperText, InputLabel, MenuItem, FormControl, Select, Paper } from '@material-ui/core';
 
 
 //Redux stuff
@@ -16,7 +16,8 @@ import { getProvinces, getDistrict, getSubDistrict } from '../../redux/actions/a
 const useStyles = makeStyles((theme) => ({
     root: {
         '& > *': {
-            margin: theme.spacing(7),
+            marginTop: theme.spacing(4),
+            marginBottom: theme.spacing(4),
         },
     },
     formControl: {
@@ -25,6 +26,12 @@ const useStyles = makeStyles((theme) => ({
     selectEmpty: {
         marginTop: theme.spacing(2),
     },
+    paper: {
+        paddingTop: theme.spacing(2),
+        textAlign: 'center',
+        maxWidth: (window.innerWidth / 4),
+        margin: "auto",
+    }
 }));
 
 const SignUp = () => {
@@ -91,7 +98,7 @@ const SignUp = () => {
     }
 
     useEffect(() => {
-        
+
         if (address.provinces === null) {
             dispatch(getProvinces());
         }
@@ -110,34 +117,42 @@ const SignUp = () => {
     return (
         <>
             <div className="container mt-5" ref={wrapper}>
-                <h1>Sign Up</h1>
-                <form onSubmit={handleSubmit} className={classes.root} noValidate autoComplete="off">
-                    <Grid container spacing={3}>
-                        <Grid item xs><TextField type="text" label="Name" name="name"  onChange={handleChange} required /></Grid>
-                        <Grid item xs><TextField label="Lastname" name="lastname"  onChange={handleChange} required /></Grid>
-                        <Grid item xs><TextField type="text" label="Username" name="username"  onChange={handleChange} required /></Grid>
-                    </Grid>
+                <Paper className={classes.paper}>
+                    <h1>Sign Up</h1>
+                    <form onSubmit={handleSubmit} className={classes.root} noValidate autoComplete="off">
+                        <Grid container spacing={3}>
+                            {/* <Grid item xs><TextField type="text" label="Name" name="name"  onChange={handleChange} required /></Grid>
+                        <Grid item xs><TextField label="Lastname" name="lastname"  onChange={handleChange} required /></Grid> */}
+                            <Grid item xs><TextField className={classes.formControl} type="text" label="Username" name="username" onChange={handleChange} required /></Grid>
+                            {/* </Grid> */}
 
-                    <Grid container spacing={3}>
-                        <Grid item xs><FormControl className={classes.formControl} >
-                            <InputLabel id="province"  >province</InputLabel>
-                            <Select labelId="province" id="province" name="province" value={province} onChange={handleChange} disabled={address.loading}>
+                            {/* <Grid container spacing={3}> */}
+                            <Grid item xs={12}><TextField className={classes.formControl} type="email" label="Email address" name="email" onChange={handleChange} required /></Grid>
+                            <Grid item xs={12}><TextField className={classes.formControl} error={!UI.loading && UI.error != null} type="password" label="Password" name="password" onChange={handleChange} required />
+                                {!UI.loading && UI.error != null ? <FormHelperText error id="component-error-text">{UI.error}</FormHelperText> : ''}
+                            </Grid>
+                            <Grid item xs={12}><TextField className={classes.formControl} error={!UI.loading && UI.error != null} type="password" label="Confirm Password" name="confirmPassword" onChange={handleChange} required /></Grid>
 
-                                <MenuItem value=""><em>None</em></MenuItem>
-                                {address.provinces ? address.provinces.map((data) => (<MenuItem key={data.key} value={data.province}>{data.province}</MenuItem>)) : ""}
+                            {/* <Grid container spacing={3}> */}
+                            <Grid item xs={12}><FormControl className={classes.formControl} >
+                                <InputLabel id="province"  >province</InputLabel>
+                                <Select labelId="province" id="province" name="province" value={province} onChange={handleChange} disabled={address.loading}>
 
-                            </Select>
-                        </FormControl></Grid>
-                        <Grid item xs><FormControl className={classes.formControl}>
-                            <InputLabel id=""  >district</InputLabel>
-                            <Select labelId="district" id="district" name="district" value={district} onChange={handleChange} disabled={address.loading}>
+                                    <MenuItem value=""><em>None</em></MenuItem>
+                                    {address.provinces ? address.provinces.map((data) => (<MenuItem key={data.key} value={data.province}>{data.province}</MenuItem>)) : ""}
 
-                                <MenuItem value=""><em>None</em></MenuItem>
-                                {address.district ? address.district.map((item) => (<MenuItem key={item.key} value={item.district}>{item.district}</MenuItem>)) : ""}
+                                </Select>
+                            </FormControl></Grid>
+                            <Grid item xs={12}><FormControl className={classes.formControl}>
+                                <InputLabel id=""  >district</InputLabel>
+                                <Select labelId="district" id="district" name="district" value={district} onChange={handleChange} disabled={address.loading}>
 
-                            </Select>
-                        </FormControl></Grid>
-                        <Grid item xs><FormControl className={classes.formControl}>
+                                    <MenuItem value=""><em>None</em></MenuItem>
+                                    {address.district ? address.district.map((item) => (<MenuItem key={item.key} value={item.district}>{item.district}</MenuItem>)) : ""}
+
+                                </Select>
+                            </FormControl></Grid>
+                            {/* <Grid item xs><FormControl className={classes.formControl}>
                             <InputLabel id=""  >subdistrict</InputLabel>
                             <Select labelId="subdistrict" id="subdistrict" name="subdistrict" value={subdistrict} onChange={handleChange} disabled={address.loading}>
 
@@ -145,21 +160,15 @@ const SignUp = () => {
                                 {address.subdistrict ? address.subdistrict.map((item) => (<MenuItem key={item.key} value={item.subdistrict}>{item.subdistrict}</MenuItem>)) : ""}
 
                             </Select>
-                        </FormControl></Grid>
+                        </FormControl></Grid> */}
 
-                    </Grid>
-
-                    <Grid container spacing={3}>
-                        <Grid item xs><TextField type="email" label="Email address" name="email"  onChange={handleChange} required /></Grid>
-                        <Grid item xs><TextField error={!UI.loading && UI.error != null} type="password" label="Password" name="password"  onChange={handleChange} required />
-                            {!UI.loading && UI.error != null ? <FormHelperText error id="component-error-text">{UI.error}</FormHelperText> : ''}
+                            {/* </Grid> */}
                         </Grid>
-                        <Grid item xs><TextField error={!UI.loading && UI.error != null} type="password" label="Confirm Password" name="confirmPassword"  onChange={handleChange} required /></Grid>
-                    </Grid>
 
+                        <Button type="submit" size="large" variant="outlined">Submit</Button>
+                    </form>
+                </Paper>
 
-                    <Button type="submit" size="large" variant="outlined">Submit</Button>
-                </form>
             </div>
         </>
     )

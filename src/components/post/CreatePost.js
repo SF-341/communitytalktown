@@ -49,6 +49,8 @@ const CreatePost = () => {
             location: state.province,
         }
         dispatch(createPost(newPost));
+        setTitle("");
+        setDetails("");
         
     }
     const Input = styled('input')({
@@ -99,6 +101,7 @@ const CreatePost = () => {
                         label="Post Title"
                         variant="outlined"
                         color="secondary"
+                        value={title}
                         fullWidth
                         required
                     />
@@ -113,6 +116,7 @@ const CreatePost = () => {
                         color="secondary"
                         multiline
                         rows={4}
+                        value={details}
                         fullWidth
                         required
                     />

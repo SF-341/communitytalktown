@@ -78,10 +78,12 @@ const Profile = () => {
     }
   }
 
-  //snackbar Alert 
-  const [open, setOpen] = React.useState(false);
+  // snackbar alert //
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
 
-  
+  const [open, setOpen] = React.useState(false);
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -89,17 +91,22 @@ const Profile = () => {
     }
     setOpen(false);
   };
-  
-  //img input
+  // snackbar alert //
+
+  //img input //
   const Input = styled('input')({
     display: 'none',
   });
+  //img input //
 
+  // set Edit //
   const edit = () => {
     setSubmit(!submit);
     setText(!submit);
   }
+  // set Edit //
 
+  // user handleSubmit //
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
@@ -114,27 +121,34 @@ const Profile = () => {
       setOpen(true);
     }
   }
+  // user handleSubmit //
 
+  // update image //
   const updateImage = (e) => {
     setImage(null);
     setUploadProfile(false);
     e.preventDefault();
     dispatch(updateUserImage(image))
   }
+  // update image //
 
   useEffect(() => {
     if (currentUser !== null && state.authenticated === false) {
       dispatch(refreshUserData());
       dispatch(getPosts())
-  }
+    }
 
   }, [])
 
+  // use styled //
   const classes = useStyles();
+  // use styled //
 
+  // check user loged //
   if (!currentUser) {
     return <Redirect to="/login" />
   }
+  // check user loged //
 
   return (
     <>
@@ -204,7 +218,7 @@ const Profile = () => {
           update success!
         </Alert>
       </Snackbar>
-      
+
     </>
 
 

@@ -13,6 +13,8 @@ import '../css/Contact.css'
 import { useDispatch, useSelector} from 'react-redux'
 import { refreshUserData } from '../../redux/actions/userActions'
 import { sendFeedback } from "../../redux/actions/userActions";
+import { getPosts } from '../../redux/actions/dataActions'
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -93,6 +95,7 @@ const Contact = () => {
   useEffect(() => {
     if (currentUser !== null && user.authenticated === false) {
       dispatch(refreshUserData());
+      dispatch(getPosts())
     }
   }, [])
 
@@ -151,7 +154,7 @@ const Contact = () => {
         <div className={classes.contact_us}>
           <Paper className={classes.feedback}>
             <form onSubmit={submitFeedback}>
-              <TextField type="text" placeholder="feedback" name="feedback" onChange={(e) => { setFeedback(e.target.value) }}></TextField>&nbsp;&nbsp;&nbsp;
+              <TextField type="text" placeholder="feedback" name="feedback" onChange={(e) => { setFeedback(e.target.value) }}></TextField>
               <Button type="submit" color="secondary" variant="outlined" onClick={() => setFeedback(null)}> SENT</Button>
             </form>
           </Paper>

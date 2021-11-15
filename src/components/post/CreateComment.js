@@ -79,6 +79,7 @@ export default function CreateComment({ postId }) {
                     onChange={handleChange} name="discribtion"
                     className={classes.fieldcomment}
                     placeholder="Comment"
+                    value={discribtion}
 
                 />
                 
