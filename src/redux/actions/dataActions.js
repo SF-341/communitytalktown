@@ -2,24 +2,7 @@ import { SET_BACKDROP, CREATE_POST, SET_LASTPOST, SET_POSTS_NEXT, DELETE_POST, S
 import { firestore, storage } from '../../config'
 
 
-// export const getPosts = () => (dispatch) => {
-//     dispatch({ type: LOADING_UI });
-//     const postsRef = firestore.collection("Posts").orderBy("createAt", "desc");
-//     postsRef.onSnapshot(querySnapshot => {
-//         const List = [];
-//         const ListSnapshot = querySnapshot.docs;
-//         ListSnapshot.forEach(function (doc) {
-//             const data = doc.data()
-//             List.push(
-//                 data
-//             );
-//         });
-//         dispatch({ type: SET_POSTS, payload: List })
-//         dispatch({ type: CLEAR_ERRORS });
-//     }
-//     );
-// }
-
+// query post from database limit 3 post
 export const getPosts = () => (dispatch) => {
     dispatch({ type: LOADING_UI });
     const postsRef = firestore.collection("Posts").orderBy("createAt", "desc").limit(3);
@@ -39,6 +22,7 @@ export const getPosts = () => (dispatch) => {
     );
 }
 
+// query next post from database
 export const getNextPosts = (lastdoc) => (dispatch) => {
     dispatch({ type: LOADING_UI });
     const postsRef = firestore.collection("Posts").orderBy("createAt", "desc").limit(3).startAfter(lastdoc.createAt);
@@ -58,7 +42,7 @@ export const getNextPosts = (lastdoc) => (dispatch) => {
     );
 }
 
-
+// query post from database
 export const getPost = (docId) => (dispatch) => {
     dispatch({ type: LOADING_UI });
 
@@ -70,6 +54,7 @@ export const getPost = (docId) => (dispatch) => {
     })
 }
 
+// get covid api
 export const getCovid = () => (dispatch) => {
     dispatch({ type: LOADING_UI });
     fetch("https://covid19.ddc.moph.go.th/api/Cases/today-cases-all")
@@ -83,6 +68,7 @@ export const getCovid = () => (dispatch) => {
         })
 }
 
+// get covid api
 export const getCovidWeekday = () => (dispatch) => {
     dispatch({ type: LOADING_UI });
     fetch("https://covid19.ddc.moph.go.th/api/Cases/timeline-cases-all")
@@ -101,6 +87,7 @@ export const getCovidWeekday = () => (dispatch) => {
         })
 }
 
+// get covid api
 export const getCovidRanges = () => (dispatch) => {
     dispatch({ type: LOADING_UI });
     fetch("https://covidapi.wonyus.repl.co/range")
@@ -124,6 +111,8 @@ export const getCovidRanges = () => (dispatch) => {
         })
 }
 
+
+//create post
 export const createPost = (newPost) => async (dispatch) => {
     dispatch({ type: LOADING_UI });
     const refPost = firestore.collection("Posts");
@@ -152,6 +141,7 @@ export const createPost = (newPost) => async (dispatch) => {
     }
 }
 
+//delete post
 export const deletePost = (postId) => (dispatch) => {
     dispatch({ type: LOADING_UI })
     const documentRef = firestore.doc("Posts/" + postId);
@@ -160,6 +150,7 @@ export const deletePost = (postId) => (dispatch) => {
     dispatch({ type: CLEAR_ERRORS })
 }
 
+//create comment
 export const createComment = (newComment) => async (dispatch) => {
 
     let postData;
@@ -219,6 +210,7 @@ export const createComment = (newComment) => async (dispatch) => {
     }
 }
 
+//delete comment
 export const deleteComment = (comment) => (dispatch) => {
 
     let postData;
@@ -263,6 +255,7 @@ export const deleteComment = (comment) => (dispatch) => {
         })
 }
 
+//get comment
 export const getComment = (postId) => (dispatch) => {
     // dispatch({ type: LOADING_DATA });
     let comments = []
@@ -291,28 +284,28 @@ export const getComment = (postId) => (dispatch) => {
     }
 
     )
-    // .catch(error => {
-    //     dispatch({ type: SET_ERRORS, payload: error.message });
-    //             console.log(error.message);
-    // })
 }
 
+// set open back drop
 export const setbackdrop = (val) => (dispatch) => {
     dispatch({ type: SET_BACKDROP, payload: val});
 }
 
+// set show all post
 export const allposts = () => (dispatch) => {
     dispatch({ type: LOADING_UI });
     dispatch({ type: SET_USER_ALLPOSTS })
     dispatch({ type: CLEAR_ERRORS });
 }
 
+// set show select post
 export const selectposts = (province) => (dispatch) => {
     dispatch({ type: LOADING_UI });
     dispatch({ type: SET_USER_SELECT, payload: province })
     dispatch({ type: CLEAR_ERRORS });
 }
 
+// set show from location
 export const locationposts = () => (dispatch) => {
     dispatch({ type: LOADING_UI });
     dispatch({ type: SET_USER_LOCATION })

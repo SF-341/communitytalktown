@@ -1,6 +1,7 @@
 import { SET_USER, SET_USER_REFRESH, SET_UNAUTHENTICATION, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_USER_UPDATE, SET_USER_UPDATE_PROFILE, SET_RESETPASSWORD } from '../types';
 import firebaseConfig, { firestore, storage } from '../../config'
 
+// sent feedback
 export const sendFeedback = (val) => (dispatch) => {
     dispatch({ type: LOADING_UI })
     const refFeed = firebaseConfig.firestore().collection("Feedback");
@@ -8,7 +9,7 @@ export const sendFeedback = (val) => (dispatch) => {
     dispatch({ type: CLEAR_ERRORS });
 }
 
-
+// sign in 
 export const loginUser = (userData) => (dispatch) => {
     dispatch({ type: LOADING_UI })
 
@@ -35,6 +36,7 @@ export const loginUser = (userData) => (dispatch) => {
         })
 }
 
+// reset password
 export const resetpassword = (email) => (dispatch) => {
     dispatch({ type: LOADING_UI })
 
@@ -58,6 +60,7 @@ export const resetpassword = (email) => (dispatch) => {
 
 }
 
+// signup
 export const register = (newUser, user) => (dispatch) => {
     dispatch({ type: LOADING_UI })
 
@@ -83,7 +86,7 @@ export const register = (newUser, user) => (dispatch) => {
         })
 }
 
-
+// query user data
 export const getUserData = () => (dispatch) => {
     dispatch({ type: LOADING_UI })
 
@@ -108,6 +111,7 @@ export const getUserData = () => (dispatch) => {
 
 }
 
+// refresh user data
 export const refreshUserData = () => (dispatch) => {
     dispatch({ type: LOADING_UI })
 
@@ -130,6 +134,7 @@ export const refreshUserData = () => (dispatch) => {
     }
 }
 
+// signout
 export const logoutUser = () => (dispatch) => {
     dispatch({ type: LOADING_UI });
 
@@ -145,6 +150,7 @@ export const logoutUser = () => (dispatch) => {
 
 }
 
+// update user data
 export const updateUser = (data) => (dispatch) => {
     const userid = localStorage.IdToken;
     const ref = firestore.doc("User/" + userid);
@@ -159,6 +165,7 @@ export const updateUser = (data) => (dispatch) => {
     return true;
 }
 
+// update profile user
 export const updateUserImage = (img) => async (dispatch) => {
     const userid = localStorage.IdToken;
     const ref = firestore.doc("User/" + userid);

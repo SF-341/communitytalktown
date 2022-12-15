@@ -3,19 +3,7 @@ import { firestore } from '../../config'
 
 import { UNLIKE_POST, LIKE_POST, SET_USER_LOADDING } from '../types'
 
-
-// export const unLike = (postId) => {
-//     const userId = localStorage.getItem("IdToken")
-//     const refLike = firestore.collection("like");
-// }
-
-// export const Like = (postId) => (dispatch) => {
-//     const userId = localStorage.getItem("IdToken")
-//     const refLike = firestore.collection("like");
-
-// }
-
-
+// save like post to todatabase
 export const Like = (postid) => (dispatch) => {
     dispatch({ type: SET_USER_LOADDING })
     let postData;
@@ -56,7 +44,7 @@ export const Like = (postid) => (dispatch) => {
     }).catch(error => { console.log(error.message) })
 }
 
-
+// save unlike post to todatabase
 export const UnLike = (postid) => (dispatch) => {
     dispatch({ type: SET_USER_LOADDING })
     let userData;
